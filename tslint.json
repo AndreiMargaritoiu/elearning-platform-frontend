@@ -1,0 +1,53 @@
+{
+    "extends": [
+      "tslint:latest",
+      "tslint-config-prettier",
+      "tslint-plugin-prettier"
+    ],
+    "linterOptions": {
+      "exclude": [
+        "node_modules/**",
+        "server/**"
+      ]
+    },
+    "rules": {
+      "prettier": [
+        true,
+        {
+          "singleQuote": true,
+          "trailingComma": "all"
+        }
+      ],
+      "no-submodule-imports": false,
+      "member-access": [
+        true,
+        "no-public"
+      ],
+      "quotemark": [
+        true,
+        "single",
+        "jsx-double",
+        "avoid-escape"
+      ],
+      "interface-name": false,
+      "no-console": false,
+      "variable-name": {
+        "options": [
+          "allow-leading-underscore",
+          "allow-pascal-case"
+        ]
+      },
+      "trailing-comma": [
+        true,
+        {
+          "multiline": "always",
+          "singleline": "never"
+        }
+      ],
+      "object-literal-sort-keys": false,
+      "no-implicit-dependencies": [
+        true,
+        "dev"
+      ]
+    }
+  }
