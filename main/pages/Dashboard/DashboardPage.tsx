@@ -17,10 +17,11 @@ const DashboardPage: FC<DashboardPageProps & DashboardDispatchProps> = (
   });
 
   console.log(playlists);
+  console.log(videos);
 
   return (
     <StyledDashboard>
-      {playlists.playlists!.map((playlist) => (
+      {playlists.playlists.map((playlist) => (
         <label>{playlist.name}</label>
       ))}
     </StyledDashboard>

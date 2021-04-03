@@ -6,18 +6,18 @@ import {
   getVideosAction,
   getVideosErrorAction,
   getVideosSuccessAction,
-} from './videosActions';
-import { GetVideosResponse } from '../../domain/Video';
+} from './videoActions';
+import { GetVideosRequest, Video } from '../../domain/Video';
 
-export const getVideosThunk = () => async (
+export const getVideosThunk = (request: GetVideosRequest) => async (
   dispatch: Dispatch,
 ): Promise<Result<void, string>> => {
   try {
     dispatch(getVideosAction());
 
-    const VideosResponse: GetVideosResponse = await Context.apiService.getVideos();
+    const videos: Video[] = await Context.apiService.getVideos(request);
 
-    dispatch(getVideosSuccessAction({ videos: VideosResponse.videos }));
+    dispatch(getVideosSuccessAction(videos));
 
     return resultFormatter.ok<void, string>();
   } catch (e) {

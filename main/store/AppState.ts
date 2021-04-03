@@ -1,7 +1,12 @@
-import { GetPlaylistsResponse } from '../domain/Playlist';
-import { GetVideosResponse } from '../domain/Video';
+import { Mentorship } from '../domain/Mentorship';
+import { Playlist } from '../domain/Playlist';
+import { User } from '../domain/User';
+import { Video } from '../domain/Video';
 
 export interface AppState {
-  videos: GetVideosResponse;
-  playlists: GetPlaylistsResponse;
+  appUser: User;
+  users: User[];
+  videos: Video[];
+  playlists: Playlist[];
+  mentorships: Mentorship[];
 }

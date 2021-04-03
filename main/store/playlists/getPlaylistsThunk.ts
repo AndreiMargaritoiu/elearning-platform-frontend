@@ -6,24 +6,22 @@ import {
   getPlaylistsAction,
   getPlaylistsErrorAction,
   getPlaylistsSuccessAction,
-} from './playlistsActions';
-import { GetPlaylistsResponse } from '../../domain/Playlist';
+} from './playlistActions';
+import { GetPlaylistsRequest, Playlist } from '../../domain/Playlist';
 
-export const getPlaylistsThunk = () => async (
+export const getPlaylistsThunk = (request: GetPlaylistsRequest) => async (
   dispatch: Dispatch,
 ): Promise<Result<void, string>> => {
   try {
     dispatch(getPlaylistsAction());
 
-    console.log('we are here');
-
-    const playlistsResponse: GetPlaylistsResponse = await Context.apiService.getPlaylists();
-
-    dispatch(
-      getPlaylistsSuccessAction({ playlists: playlistsResponse.playlists! }),
+    const playlistsResponse: Playlist[] = await Context.apiService.getPlaylists(
+      request,
     );
 
-    console.log('we are also here');
+    console.log(playlistsResponse);
+
+    dispatch(getPlaylistsSuccessAction(playlistsResponse));
 
     return resultFormatter.ok<void, string>();
   } catch (e) {
