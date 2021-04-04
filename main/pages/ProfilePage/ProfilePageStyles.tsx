@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-export const StyledSignup = styled.div`
+export const StyledProfilePage = styled.div`
   display: grid;
   grid-column-gap: 24px;
   grid-row-gap: 24px;

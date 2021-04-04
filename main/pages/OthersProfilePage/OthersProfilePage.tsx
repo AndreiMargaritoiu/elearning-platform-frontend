@@ -2,15 +2,15 @@ import React, { FC, useEffect } from 'react';
 
 import { Video } from '../../domain/Video';
 import {
-  DashboardDispatchProps,
-  DashboardPageProps,
-} from './DashboardPageContainer';
-import { StyledDashboard } from './DashboardPageStyles';
+  ProfileDispatchProps,
+  OthersProfilePageProps,
+} from './OthersProfilePageContainer';
+import { StyledOthersProfilePage } from './OthersProfilePageStyles';
 
-const DashboardPage: FC<DashboardPageProps & DashboardDispatchProps> = (
+const OthersProfilePage: FC<OthersProfilePageProps & ProfileDispatchProps> = (
   props,
 ) => {
-  const { videos, getVideos } = props;
+  const { playlists, videos, getPlaylists, getVideos } = props;
 
   // useEffect(() => {
   //   const getPlaylistsRequest: GetPlaylistsRequest = {};
@@ -19,15 +19,16 @@ const DashboardPage: FC<DashboardPageProps & DashboardDispatchProps> = (
   //   getVideos(getVideosRequest);
   // });
 
+  console.log(playlists);
   console.log(videos);
 
   return (
-    <StyledDashboard>
+    <StyledOthersProfilePage>
       {videos.map((video: Video) => (
         <label>{video.title}</label>
       ))}
-    </StyledDashboard>
+    </StyledOthersProfilePage>
   );
 };
 
-export { DashboardPage };
+export { OthersProfilePage };

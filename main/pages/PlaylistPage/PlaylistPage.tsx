@@ -2,14 +2,12 @@ import React, { FC, useEffect } from 'react';
 
 import { Video } from '../../domain/Video';
 import {
-  DashboardDispatchProps,
-  DashboardPageProps,
-} from './DashboardPageContainer';
-import { StyledDashboard } from './DashboardPageStyles';
+  PlaylistDispatchProps,
+  PlaylistPageProps,
+} from './PlaylistPageContainer';
+import { StyledPlaylistPage } from './PlaylistPageStyles';
 
-const DashboardPage: FC<DashboardPageProps & DashboardDispatchProps> = (
-  props,
-) => {
+const PlaylistPage: FC<PlaylistPageProps & PlaylistDispatchProps> = (props) => {
   const { videos, getVideos } = props;
 
   // useEffect(() => {
@@ -22,12 +20,12 @@ const DashboardPage: FC<DashboardPageProps & DashboardDispatchProps> = (
   console.log(videos);
 
   return (
-    <StyledDashboard>
+    <StyledPlaylistPage>
       {videos.map((video: Video) => (
         <label>{video.title}</label>
       ))}
-    </StyledDashboard>
+    </StyledPlaylistPage>
   );
 };
 
-export { DashboardPage };
+export { PlaylistPage };

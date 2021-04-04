@@ -1,33 +1,24 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-import { GetPlaylistsResponse } from '../../domain/Playlist';
-import { GetVideosResponse } from '../../domain/Video';
+import { GetVideosRequest, Video } from '../../domain/Video';
 import { AppState } from '../../store/AppState';
-import { getPlaylistsThunk } from '../../store/playlists/getPlaylistsThunk';
 import { getVideosThunk } from '../../store/videos/getVideosThunk';
 import { DashboardPage } from './DashboardPage';
 
 export interface DashboardPageProps {
-  playlists: GetPlaylistsResponse;
-  videos: GetVideosResponse;
+  videos: Video[];
 }
 
 export interface DashboardDispatchProps {
-  getPlaylists(): void;
-  getVideos(): void;
+  getVideos(request: GetVideosRequest): void;
 }
 
-const mapStateToProps = ({
-  playlists,
-  videos,
-}: AppState): DashboardPageProps => ({
-  playlists,
+const mapStateToProps = ({ videos }: AppState): DashboardPageProps => ({
   videos,
 });
 
 const mapDispatch: DashboardDispatchProps = {
-  getPlaylists: getPlaylistsThunk,
   getVideos: getVideosThunk,
 };
 
