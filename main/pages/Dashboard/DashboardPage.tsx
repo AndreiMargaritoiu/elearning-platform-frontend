@@ -10,7 +10,7 @@ import { StyledDashboard } from './DashboardPageStyles';
 const DashboardPage: FC<DashboardPageProps & DashboardDispatchProps> = (
   props,
 ) => {
-  const { videos, getVideos } = props;
+  const { appUser, videos, getVideos } = props;
 
   // useEffect(() => {
   //   const getPlaylistsRequest: GetPlaylistsRequest = {};
@@ -23,6 +23,7 @@ const DashboardPage: FC<DashboardPageProps & DashboardDispatchProps> = (
 
   return (
     <StyledDashboard>
+      <label>Hello ${appUser.username}</label>
       {videos.map((video: Video) => (
         <label>{video.title}</label>
       ))}

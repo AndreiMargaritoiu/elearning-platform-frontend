@@ -1,9 +1,10 @@
 import App, { AppContext, AppProps } from 'next/app';
-import Router from 'next/router';
+import Router, { useRouter } from 'next/router';
 import React from 'react';
 import { Provider } from 'react-redux';
 import { Store } from 'redux';
 import swal from 'sweetalert2';
+import { FirebaseAuthenticator } from '../main/components/FirebaseAuthenticator';
 
 import { withStore } from '../main/components/withRedux';
 import { Context } from '../main/Context';
@@ -15,6 +16,8 @@ Context.initialize({
   apiService: new HttpApiService(),
   routerService: Router,
 });
+
+const publicRoutes = ['/login', 'signup', 'forgot-password'];
 
 class ElearningPlatform extends App<
   AppProps & { reduxStore: Store<AppState> }
@@ -32,13 +35,18 @@ class ElearningPlatform extends App<
   }
 
   render() {
-    const { Component, pageProps, reduxStore } = this.props;
+    const { Component, pageProps, reduxStore, router } = this.props;
+    const route = router.route;
 
     return (
       <Provider store={reduxStore}>
-        <main id="content">
+        {publicRoutes.includes(route) ? (
           <Component {...pageProps} />
-        </main>
+        ) : (
+          <FirebaseAuthenticator>
+            <Component {...pageProps} />
+          </FirebaseAuthenticator>
+        )}
       </Provider>
     );
   }

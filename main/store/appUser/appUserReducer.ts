@@ -1,34 +1,16 @@
 import { User } from '../../domain/User';
-import {
-  InitialStateActionType,
-  SetInitialStateAction,
-} from '../setInitialStateAction';
-import { AppUserActionType, GetUserSuccessAction } from './appUserAction';
+import { AppUserActionType, SetUser } from './appUserAction';
 
-type ActionType = SetInitialStateAction | GetUserSuccessAction;
-
-export const initialState: User = {
-  email: '',
-  username: '',
-  following: [],
-  searchIndex: [],
-  uid: '',
-  profilePictureUrl: '',
-};
+const user: User | null = null;
 
 export const appUserReducer = (
-  store = initialState,
-  action: ActionType,
-): User => {
+  state: User | null = user,
+  action: SetUser,
+): User | null => {
   switch (action.type) {
-    case InitialStateActionType.SET_INITIAL_STATE:
-      return initialState;
-    case AppUserActionType.GET_USER_SUCCESS:
-      return {
-        ...store,
-        ...action.payload,
-      };
+    case AppUserActionType.SET_USER:
+      return action.payload.user;
     default:
-      return store;
+      return state;
   }
 };

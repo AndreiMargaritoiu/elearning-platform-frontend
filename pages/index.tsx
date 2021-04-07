@@ -1,20 +1,17 @@
 import { NextPage } from 'next';
-import Head from 'next/head';
 import React from 'react';
 
-import { DashboardPageContainer } from '../main/pages/Dashboard/DashboardPageContainer';
+import { app } from '../main/components/firebase';
+import { Context } from '../main/Context';
 
-const Dashboard: NextPage = () => {
-  const pageTitle = 'Dashboard';
+const Home: NextPage = () => {
+  if (app.auth().currentUser) {
+    Context.routerService.push('dashboard');
+  } else {
+    Context.routerService.push('login');
+  }
 
-  return (
-    <div>
-      <Head>
-        <title>{pageTitle}</title>
-      </Head>
-      <DashboardPageContainer />
-    </div>
-  );
+  return <label>Loading...</label>;
 };
 
-export default Dashboard;
+export default Home;

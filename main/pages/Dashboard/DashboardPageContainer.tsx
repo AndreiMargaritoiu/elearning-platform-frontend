@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { User } from '../../domain/User';
 
 import { GetVideosRequest, Video } from '../../domain/Video';
 import { AppState } from '../../store/AppState';
@@ -8,13 +9,18 @@ import { DashboardPage } from './DashboardPage';
 
 export interface DashboardPageProps {
   videos: Video[];
+  appUser: User;
 }
 
 export interface DashboardDispatchProps {
   getVideos(request: GetVideosRequest): void;
 }
 
-const mapStateToProps = ({ videos }: AppState): DashboardPageProps => ({
+const mapStateToProps = ({
+  appUser,
+  videos,
+}: AppState): DashboardPageProps => ({
+  appUser,
   videos,
 });
 

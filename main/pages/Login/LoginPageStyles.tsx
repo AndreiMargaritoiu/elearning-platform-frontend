@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-export const StyledLoginPageContainer = styled.div`
+export const StyledLoginPage = styled.div`
   display: grid;
   grid-column-gap: 24px;
   grid-row-gap: 24px;
