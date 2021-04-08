@@ -1,11 +1,21 @@
 import React, { FC, useEffect } from 'react';
+import Grid from '@material-ui/core/Grid';
+import Link from 'next/link';
 
 import { Video } from '../../domain/Video';
 import {
   DashboardDispatchProps,
   DashboardPageProps,
 } from './DashboardPageContainer';
-import { StyledDashboard } from './DashboardPageStyles';
+import {
+  StyledDashboard,
+  StyledVideoCard,
+  StyledVideoCardDescription,
+  StyledVideoCardThumbnail,
+  StyledVideoCardTitle,
+  StyledVideoCardUserDiv,
+} from './DashboardPageStyles';
+import { Context } from '../../Context';
 
 const DashboardPage: FC<DashboardPageProps & DashboardDispatchProps> = (
   props,
@@ -23,10 +33,28 @@ const DashboardPage: FC<DashboardPageProps & DashboardDispatchProps> = (
 
   return (
     <StyledDashboard>
-      <label>Hello ${appUser.username}</label>
-      {videos.map((video: Video) => (
-        <label>{video.title}</label>
-      ))}
+      <Grid container spacing={3}>
+        {videos.map((video: Video) => (
+          <Grid item xs={12} sm={6} md={4}>
+            <Link
+              href={`${Context.BASE_PATH}/videos/[id]`}
+              as={`${Context.BASE_PATH}/videos/${video.id}`}
+            >
+              <StyledVideoCard>
+                <StyledVideoCardUserDiv>{video.uid}</StyledVideoCardUserDiv>
+                <StyledVideoCardThumbnail
+                  imgSrc={video.thumbnailUrl || ''}
+                  role="img"
+                />
+                <StyledVideoCardTitle>{video.title}</StyledVideoCardTitle>
+                <StyledVideoCardDescription>
+                  {video.description}
+                </StyledVideoCardDescription>
+              </StyledVideoCard>
+            </Link>
+          </Grid>
+        ))}
+      </Grid>
     </StyledDashboard>
   );
 };

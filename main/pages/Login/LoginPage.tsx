@@ -7,8 +7,9 @@ import {
 } from '@material-ui/core';
 
 import { StyledLoginPage } from './LoginPageStyles';
-import { auth } from '../../components/firebase';
+
 import { Context } from '../../Context';
+import { auth } from '../../services/Firebase';
 
 export interface LoginFormValues {
   email: string;

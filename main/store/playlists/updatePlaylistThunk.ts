@@ -6,7 +6,7 @@ import {
   updatePlaylistAction,
   updatePlaylistErrorAction,
   updatePlaylistSuccessAction,
-} from './playlistActions';
+} from './playlistsActions';
 import { Playlist, UpdatePlaylistRequest } from '../../domain/Playlist';
 
 export const updatePlaylistThunk = (

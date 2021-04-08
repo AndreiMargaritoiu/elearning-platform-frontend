@@ -6,9 +6,9 @@ import {
 import {
   DeletePlaylistSuccessAction,
   GetPlaylistsSuccessAction,
-  PlaylistActionType,
+  PlaylistsActionType,
   UpdatePlaylistSuccessAction,
-} from './playlistActions';
+} from './playlistsActions';
 
 type ActionType =
   | SetInitialStateAction
@@ -19,16 +19,16 @@ type ActionType =
 export const initialState: Playlist[] = [];
 
 export const playlistsReducer = (
-  mentoringState: Playlist[] = initialState,
+  playlistsState: Playlist[] = initialState,
   action: ActionType,
 ): Playlist[] => {
   switch (action.type) {
     case InitialStateActionType.SET_INITIAL_STATE:
       return initialState;
-    case PlaylistActionType.GET_PLAYLISTS_SUCCESS:
+    case PlaylistsActionType.GET_PLAYLISTS_SUCCESS:
       return action.payload.playlists;
-    case PlaylistActionType.UPDATE_PLAYLIST_SUCCESS:
-      return mentoringState.map((playlist: Playlist) =>
+    case PlaylistsActionType.UPDATE_PLAYLIST_SUCCESS:
+      return playlistsState.map((playlist: Playlist) =>
         playlist.id === action.payload.playlist.id
           ? {
               ...playlist,
@@ -39,11 +39,11 @@ export const playlistsReducer = (
             }
           : playlist,
       );
-    case PlaylistActionType.DELETE_PLAYLIST_SUCCESS:
-      return mentoringState.filter(
+    case PlaylistsActionType.DELETE_PLAYLIST_SUCCESS:
+      return playlistsState.filter(
         (playlist: Playlist) => playlist.id !== action.payload.playlistId,
       );
     default:
-      return mentoringState;
+      return playlistsState;
   }
 };

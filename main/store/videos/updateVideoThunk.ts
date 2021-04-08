@@ -6,7 +6,7 @@ import {
   updateVideoAction,
   updateVideoErrorAction,
   updateVideoSuccessAction,
-} from './videoActions';
+} from './videosActions';
 import { Video, UpdateVideoRequest } from '../../domain/Video';
 
 export const updateVideoThunk = (

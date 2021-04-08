@@ -6,6 +6,7 @@ import { Video } from '../domain/Video';
 export interface AppState {
   appUser: User;
   users: User[];
+  video: Video;
   videos: Video[];
   playlists: Playlist[];
   mentorships: Mentorship[];

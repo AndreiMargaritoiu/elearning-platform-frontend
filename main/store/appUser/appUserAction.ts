@@ -9,11 +9,11 @@ export enum AppUserActionType {
 export interface SetUser extends Action {
   type: AppUserActionType.SET_USER;
   payload: {
-    user: User | null;
+    user: User;
   };
 }
 
-export const setUser = (user: User | null): SetUser => ({
+export const setUser = (user: User): SetUser => ({
   type: AppUserActionType.SET_USER,
   payload: { user },
 });

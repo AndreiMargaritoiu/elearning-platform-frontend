@@ -28,6 +28,10 @@ export class HttpApiService implements ApiService {
     return this.axiosInstance.get<GetVideosRequest, Video[]>('videos', request);
   }
 
+  getVideo(videoId: string): Promise<Video> {
+    return this.axiosInstance.get<string, Video>(`videos/${videoId}`);
+  }
+
   updateVideo(videoId: string, request: UpdateVideoRequest): Promise<Video> {
     return this.axiosInstance.patch<UpdateVideoRequest, Video>(
       `videos/${videoId}`,

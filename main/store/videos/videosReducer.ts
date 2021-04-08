@@ -7,8 +7,8 @@ import {
   DeleteVideoSuccessAction,
   GetVideosSuccessAction,
   UpdateVideoSuccessAction,
-  VideoActionType,
-} from './videoActions';
+  VideosActionType,
+} from './videosActions';
 
 type ActionType =
   | SetInitialStateAction
@@ -19,16 +19,16 @@ type ActionType =
 export const initialState: Video[] = [];
 
 export const videosReducer = (
-  mentoringState: Video[] = initialState,
+  videosState: Video[] = initialState,
   action: ActionType,
 ): Video[] => {
   switch (action.type) {
     case InitialStateActionType.SET_INITIAL_STATE:
       return initialState;
-    case VideoActionType.GET_VIDEOS_SUCCESS:
+    case VideosActionType.GET_VIDEOS_SUCCESS:
       return action.payload.videos;
-    case VideoActionType.UPDATE_VIDEO_SUCCESS:
-      return mentoringState.map((video: Video) =>
+    case VideosActionType.UPDATE_VIDEO_SUCCESS:
+      return videosState.map((video: Video) =>
         video.id === action.payload.video.id
           ? {
               ...video,
@@ -38,11 +38,11 @@ export const videosReducer = (
             }
           : video,
       );
-    case VideoActionType.DELETE_VIDEO_SUCCESS:
-      return mentoringState.filter(
+    case VideosActionType.DELETE_VIDEO_SUCCESS:
+      return videosState.filter(
         (video: Video) => video.id !== action.payload.videoId,
       );
     default:
-      return mentoringState;
+      return videosState;
   }
 };

@@ -6,7 +6,7 @@ import {
   getVideosAction,
   getVideosErrorAction,
   getVideosSuccessAction,
-} from './videoActions';
+} from './videosActions';
 import { GetVideosRequest, Video } from '../../domain/Video';
 
 export const getVideosThunk = (request: GetVideosRequest) => async (

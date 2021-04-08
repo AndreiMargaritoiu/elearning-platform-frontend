@@ -6,7 +6,7 @@ import {
   deleteVideoAction,
   deleteVideoErrorAction,
   deleteVideoSuccessAction,
-} from './videoActions';
+} from './videosActions';
 
 export const deleteVideoThunk = (videoId: string) => async (
   dispatch: Dispatch,

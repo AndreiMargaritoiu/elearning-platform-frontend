@@ -6,7 +6,7 @@ import {
   deletePlaylistAction,
   deletePlaylistErrorAction,
   deletePlaylistSuccessAction,
-} from './playlistActions';
+} from './playlistsActions';
 
 export const deletePlaylistThunk = (playlistId: string) => async (
   dispatch: Dispatch,

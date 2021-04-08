@@ -5,7 +5,7 @@ import Router from 'next/router';
 import { AppState } from '../store/AppState';
 import { User, userConverter } from '../domain/User';
 import { setUserThunk } from '../store/appUser/setUserThunk';
-import { app, database } from './firebase';
+import { app, database } from '../services/Firebase';
 
 interface StateProps {
   appUser: User;

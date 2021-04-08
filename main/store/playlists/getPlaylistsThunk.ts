@@ -6,7 +6,7 @@ import {
   getPlaylistsAction,
   getPlaylistsErrorAction,
   getPlaylistsSuccessAction,
-} from './playlistActions';
+} from './playlistsActions';
 import { GetPlaylistsRequest, Playlist } from '../../domain/Playlist';
 
 export const getPlaylistsThunk = (request: GetPlaylistsRequest) => async (

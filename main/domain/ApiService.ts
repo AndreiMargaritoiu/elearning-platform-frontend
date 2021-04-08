@@ -14,6 +14,7 @@ import { GetVideosRequest, UpdateVideoRequest, Video } from './Video';
 
 export interface ApiService {
   getVideos(request: GetVideosRequest): Promise<Video[]>;
+  getVideo(videoId: string): Promise<Video>;
   updateVideo(videoId: string, request: UpdateVideoRequest): Promise<Video>;
   deleteVideo(videoId: string): Promise<void>;
 
