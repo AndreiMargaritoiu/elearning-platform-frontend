@@ -7,15 +7,17 @@ import {
   getMentorshipsErrorAction,
   getMentorshipsSuccessAction,
 } from './mentorshipActions';
-import { Mentorship } from '../../domain/Mentorship';
+import { GetMentorshipsRequest, Mentorship } from '../../domain/Mentorship';
 
-export const getMentorshipsThunk = () => async (
+export const getMentorshipsThunk = (request: GetMentorshipsRequest) => async (
   dispatch: Dispatch,
 ): Promise<Result<void, string>> => {
   try {
     dispatch(getMentorshipsAction());
 
-    const mentorships: Mentorship[] = await Context.apiService.getMentorships();
+    const mentorships: Mentorship[] = await Context.apiService.getMentorships(
+      request,
+    );
 
     dispatch(getMentorshipsSuccessAction(mentorships));
 

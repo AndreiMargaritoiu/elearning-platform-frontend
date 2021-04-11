@@ -24,7 +24,6 @@ export const StyledMentoringPage = styled.div`
 export const StyledMentoringOffers = styled.div`
   display: flex;
   flex-direction: column;
-  width: 48%;
 
   @media ${queries.mobile} {
     width: 100%;
@@ -34,11 +33,6 @@ export const StyledMentoringOffers = styled.div`
 export const StyledPersonalMentoringOffers = styled.div`
   display: flex;
   flex-direction: row;
-`;
-
-export const StyledMentorshipActions = styled.div`
-  display: flex;
-  flex-direction: column;
 `;
 
 export const StyledMentoringOwnerTitle = styled.label`

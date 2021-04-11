@@ -2,6 +2,7 @@ import { NextPage, NextPageContext } from 'next';
 import Head from 'next/head';
 import React from 'react';
 import { Store } from 'redux';
+import { SearchMentorshipsRequest } from '../../main/domain/SearchMentorshipsRequest';
 
 import { MentoringPageContainer } from '../../main/pages/MentoringPage/MentoringPageContainer';
 import { AppState } from '../../main/store/AppState';
@@ -23,10 +24,12 @@ const MentoringNextPage: NextPage = () => {
 
 MentoringNextPage.getInitialProps = async ({
   reduxStore,
+  query,
 }: NextPageContext & { reduxStore: Store<AppState> }) => {
   reduxStore.dispatch(setInitialStateAction());
 
-  const result = await getMentorshipsThunk()(reduxStore.dispatch);
+  const request = SearchMentorshipsRequest.create(query);
+  const result = await getMentorshipsThunk(request)(reduxStore.dispatch);
 
   if (!result.isOk) {
     return { statusCode: result.error };

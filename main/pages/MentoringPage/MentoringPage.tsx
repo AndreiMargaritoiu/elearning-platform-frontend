@@ -18,21 +18,13 @@ import {
   StyledMentoringOffers,
   StyledMentoringOwnerTitle,
   StyledMentoringPage,
-  StyledMentorshipActions,
   StyledPersonalMentoringOffers,
 } from './MentoringPageStyles';
 
 const MentoringPage: FC<MentoringPageProps & MentoringDispatchProps> = (
   props,
 ) => {
-  const {
-    appUser,
-    mentorships,
-    getMentorships,
-    addMentorship,
-    updateMentorship,
-    deleteMentorship,
-  } = props;
+  const { appUser, mentorships, getMentorships, addMentorship } = props;
 
   //   useEffect(() => {
   //     const getPlaylistsRequest: GetPlaylistsRequest = {};
@@ -63,23 +55,19 @@ const MentoringPage: FC<MentoringPageProps & MentoringDispatchProps> = (
 
   return (
     <StyledMentoringPage>
-      <>
+      {/* <>
         {modalState.isOpen && (
           <MentoringModal
             modalState={modalState}
             setModalState={setModalState}
-            updateMentoringInfo={updateMentorship}
+            updateMentoringInfo={addMentorship}
           />
         )}
-      </>
+      </> */}
       <StyledMentoringOffers>
-        <StyledMentoringOwnerTitle>Offers</StyledMentoringOwnerTitle>
-        {mentorships
-          .filter(
-            (mentorship: Mentorship) =>
-              mentorship.mentorEmail !== appUser.email,
-          )
-          .map((mentorship: Mentorship) => (
+        <StyledMentoringOwnerTitle>Yours</StyledMentoringOwnerTitle>
+        {mentorships.map((mentorship: Mentorship) => (
+          <StyledPersonalMentoringOffers>
             <StyledMentoringCard>
               <StyledMentoringCardUserDiv>
                 {mentorship.mentorEmail}
@@ -91,46 +79,22 @@ const MentoringPage: FC<MentoringPageProps & MentoringDispatchProps> = (
                 Price: {mentorship.price}
               </StyledMentoringCardPrice>
             </StyledMentoringCard>
-          ))}
-      </StyledMentoringOffers>
-      <StyledMentoringOffers>
-        <StyledMentoringOwnerTitle>Yours</StyledMentoringOwnerTitle>
-        {mentorships
-          .filter(
-            (mentorship: Mentorship) =>
-              mentorship.mentorEmail === appUser.email,
-          )
-          .map((mentorship: Mentorship) => (
-            <StyledPersonalMentoringOffers>
-              <StyledMentoringCard>
-                <StyledMentoringCardUserDiv>
-                  {mentorship.mentorEmail}
-                </StyledMentoringCardUserDiv>
-                <StyledMentoringCardDescription>
-                  {mentorship.description}
-                </StyledMentoringCardDescription>
-                <StyledMentoringCardPrice>
-                  Price: {mentorship.price}
-                </StyledMentoringCardPrice>
-              </StyledMentoringCard>
-              <StyledMentorshipActions>
-                <Button
-                  variant="contained"
-                  className="qa-automation-add-user-button add-user-button"
-                  onClick={() => handleEditMentorship(mentorship)}
-                >
-                  EDIT
-                </Button>
-                <Button
-                  variant="contained"
-                  className="qa-automation-add-user-button add-user-button"
-                  onClick={() => deleteMentorship(mentorship.id)}
-                >
-                  DELETE
-                </Button>
-              </StyledMentorshipActions>
-            </StyledPersonalMentoringOffers>
-          ))}
+            {/* <StyledMentorshipActions>
+              <Button
+                variant="contained"
+                onClick={() => handleEditMentorship(mentorship)}
+              >
+                EDIT
+              </Button>
+              <Button
+                variant="contained"
+                onClick={() => deleteMentorship(mentorship.id)}
+              >
+                DELETE
+              </Button>
+            </StyledMentorshipActions> */}
+          </StyledPersonalMentoringOffers>
+        ))}
       </StyledMentoringOffers>
     </StyledMentoringPage>
   );

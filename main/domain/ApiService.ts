@@ -1,5 +1,6 @@
 import {
   AddMentorshipRequest,
+  GetMentorshipsRequest,
   Mentorship,
   UpdateMentorshipRequest,
 } from './Mentorship';
@@ -26,7 +27,7 @@ export interface ApiService {
   ): Promise<Playlist>;
   deletePlaylist(playlistId: string): Promise<void>;
 
-  getMentorships(): Promise<Mentorship[]>;
+  getMentorships(request: GetMentorshipsRequest): Promise<Mentorship[]>;
   addMentorship(request: AddMentorshipRequest): Promise<Mentorship>;
   updateMentorship(
     mentroshipId: string,

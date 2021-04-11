@@ -7,6 +7,10 @@ export interface Mentorship {
   createdAt: number;
 }
 
+export interface GetMentorshipsRequest {
+  uid?: string;
+}
+
 export interface AddMentorshipRequest {
   description: string;
   price: number;

@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 
 import {
   AddMentorshipRequest,
+  GetMentorshipsRequest,
   Mentorship,
   UpdateMentorshipRequest,
 } from '../../domain/Mentorship';
@@ -20,13 +21,8 @@ export interface MentoringPageProps {
 }
 
 export interface MentoringDispatchProps {
-  getMentorships(): void;
+  getMentorships(request: GetMentorshipsRequest): void;
   addMentorship(request: AddMentorshipRequest): void;
-  updateMentorship(
-    mentorshipId: string,
-    request: UpdateMentorshipRequest,
-  ): void;
-  deleteMentorship(mentorshipId: string): void;
 }
 
 const mapStateToProps = ({
@@ -40,8 +36,6 @@ const mapStateToProps = ({
 const mapDispatch: MentoringDispatchProps = {
   getMentorships: getMentorshipsThunk,
   addMentorship: addMentorshipThunk,
-  updateMentorship: updateMentorshipThunk,
-  deleteMentorship: deleteMentorshipThunk,
 };
 
 export const MentoringPageContainer = connect<

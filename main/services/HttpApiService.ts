@@ -1,6 +1,7 @@
 import { ApiService } from '../domain/ApiService';
 import {
   AddMentorshipRequest,
+  GetMentorshipsRequest,
   Mentorship,
   UpdateMentorshipRequest,
 } from '../domain/Mentorship';
@@ -70,8 +71,8 @@ export class HttpApiService implements ApiService {
   }
 
   // Mentoring
-  getMentorships(): Promise<Mentorship[]> {
-    return this.axiosInstance.get<any, Mentorship[]>('mentoring');
+  getMentorships(request: GetMentorshipsRequest): Promise<Mentorship[]> {
+    return this.axiosInstance.get<any, Mentorship[]>('mentoring', request);
   }
 
   addMentorship(request: AddMentorshipRequest): Promise<Mentorship> {
