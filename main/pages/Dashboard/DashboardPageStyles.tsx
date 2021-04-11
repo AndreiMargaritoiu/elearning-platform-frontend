@@ -6,7 +6,6 @@ export const StyledDashboard = styled.div`
   flex-direction: column;
   margin: 0 48px;
   padding: 24px;
-  align-items: center;
   background-color: ${color.light.tertiary};
 
   @media ${queries.tablet} {

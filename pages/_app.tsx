@@ -4,6 +4,7 @@ import React from 'react';
 import { Provider } from 'react-redux';
 import { Store } from 'redux';
 import swal from 'sweetalert2';
+import 'react-multi-carousel/lib/styles.css';
 
 import { FirebaseAuthenticator } from '../main/components/FirebaseAuthenticator';
 import { PageLayout } from '../main/components/PageLayout';

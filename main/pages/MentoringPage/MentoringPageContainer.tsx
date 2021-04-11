@@ -6,6 +6,7 @@ import {
   Mentorship,
   UpdateMentorshipRequest,
 } from '../../domain/Mentorship';
+import { User } from '../../domain/User';
 import { AppState } from '../../store/AppState';
 import { addMentorshipThunk } from '../../store/mentoring/addMentorshipThunk';
 import { deleteMentorshipThunk } from '../../store/mentoring/deleteMentorshipThunk';
@@ -15,6 +16,7 @@ import { MentoringPage } from './MentoringPage';
 
 export interface MentoringPageProps {
   mentorships: Mentorship[];
+  appUser: User;
 }
 
 export interface MentoringDispatchProps {
@@ -27,8 +29,12 @@ export interface MentoringDispatchProps {
   deleteMentorship(mentorshipId: string): void;
 }
 
-const mapStateToProps = ({ mentorships }: AppState): MentoringPageProps => ({
+const mapStateToProps = ({
   mentorships,
+  appUser,
+}: AppState): MentoringPageProps => ({
+  mentorships,
+  appUser,
 });
 
 const mapDispatch: MentoringDispatchProps = {

@@ -8,6 +8,7 @@ export interface AppState {
   users: User[];
   video: Video;
   videos: Video[];
+  playlist: Playlist;
   playlists: Playlist[];
   mentorships: Mentorship[];
 }

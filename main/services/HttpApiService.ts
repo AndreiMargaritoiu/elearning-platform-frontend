@@ -40,7 +40,7 @@ export class HttpApiService implements ApiService {
   }
 
   deleteVideo(videoId: string): Promise<void> {
-    return this.axiosInstance.delete<any, void>(`videos/${videoId}`);
+    return this.axiosInstance.delete<string, void>(`videos/${videoId}`);
   }
 
   // Playlists
@@ -49,6 +49,10 @@ export class HttpApiService implements ApiService {
       'playlists',
       request,
     );
+  }
+
+  getPlaylist(playlistId: string): Promise<Playlist> {
+    return this.axiosInstance.get<string, Playlist>(`playlists/${playlistId}`);
   }
 
   updatePlaylist(
@@ -62,7 +66,7 @@ export class HttpApiService implements ApiService {
   }
 
   deletePlaylist(playlistId: string): Promise<void> {
-    return this.axiosInstance.delete<any, void>(`playlists/${playlistId}`);
+    return this.axiosInstance.delete<string, void>(`playlists/${playlistId}`);
   }
 
   // Mentoring
@@ -88,7 +92,7 @@ export class HttpApiService implements ApiService {
   }
 
   deleteMentorship(mentroshipId: string): Promise<void> {
-    return this.axiosInstance.delete<any, void>(`mentoring/${mentroshipId}`);
+    return this.axiosInstance.delete<string, void>(`mentoring/${mentroshipId}`);
   }
 
   // Users

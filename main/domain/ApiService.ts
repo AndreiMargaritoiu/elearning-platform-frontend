@@ -19,6 +19,7 @@ export interface ApiService {
   deleteVideo(videoId: string): Promise<void>;
 
   getPlaylists(request: GetPlaylistsRequest): Promise<Playlist[]>;
+  getPlaylist(playlistId: string): Promise<Playlist>;
   updatePlaylist(
     playlistId: string,
     request: UpdatePlaylistRequest,

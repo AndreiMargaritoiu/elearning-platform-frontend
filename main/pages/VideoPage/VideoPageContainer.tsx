@@ -3,15 +3,16 @@ import { connect } from 'react-redux';
 
 import { Video } from '../../domain/Video';
 import { AppState } from '../../store/AppState';
-import { getVideoThunk } from '../../store/video/getVideoThunk';
 import { VideoPage } from './VideoPage';
 
 export interface VideoPageProps {
   video: Video;
+  videos: Video[];
 }
 
-const mapStateToProps = ({ video }: AppState): VideoPageProps => ({
+const mapStateToProps = ({ video, videos }: AppState): VideoPageProps => ({
   video,
+  videos,
 });
 
 export const VideoPageContainer = connect<VideoPageProps, {}, {}, AppState>(
