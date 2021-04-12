@@ -26,6 +26,7 @@ import {
 
 import Media from 'react-media';
 import { User } from '../../domain/User';
+import { useRouter } from 'next/router';
 
 interface NavigationProps {
   appUser: User;
@@ -43,8 +44,8 @@ export const navItems = [
       },
       {
         label: 'Videos',
-        link: `${Context.BASE_PATH}/mentoring`,
-        linkAs: `${Context.BASE_PATH}/mentoring`,
+        link: `${Context.BASE_PATH}/dashboard`,
+        linkAs: `${Context.BASE_PATH}/dashboard`,
       },
     ],
   },
@@ -97,7 +98,13 @@ export const NavigationBar: React.FC<NavigationProps> = (props) => {
   const [contentToggle, setContentToggle] = useState<boolean>(false);
   const [menuToggle, setMenuToggle] = useState<boolean>(false);
 
-  const router = Context.routerService;
+  const router = useRouter();
+
+  let isMobile: boolean = false;
+
+  useEffect(() => {
+    isMobile = window.innerWidth < 768;
+  });
 
   useOnClickOutside(
     navNode,
@@ -108,8 +115,6 @@ export const NavigationBar: React.FC<NavigationProps> = (props) => {
     },
     null,
   );
-
-  const isMobile = window.innerWidth < 768;
 
   const onSetMenuToggleClick = () => {
     if (isMobile) {
@@ -246,7 +251,7 @@ export const NavigationBar: React.FC<NavigationProps> = (props) => {
           </NavigationItem>
           <Dropdown className={loginToggle ? 'toggled user-menu' : 'user-menu'}>
             <DropdownWrapper>
-              <Link href="/profile" as="/profile">
+              <Link href="/me" as="/me">
                 <MenuButton className="logout">VIEW PROFILE</MenuButton>
               </Link>
               <Separator></Separator>

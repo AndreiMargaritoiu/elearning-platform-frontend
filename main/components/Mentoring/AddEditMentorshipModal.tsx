@@ -84,7 +84,7 @@ export const MentoringModal: React.FC<MentoringModalProps> = (
                   setModalDescription(event.target.value)
                 }
               />
-              {!isEdit && <FormHelperText>Required</FormHelperText>}
+              <FormHelperText>Required</FormHelperText>
             </FormControl>
             <FormControl variant="outlined" className="text-field">
               <InputLabel htmlFor="component-outlined">Price</InputLabel>
@@ -101,7 +101,7 @@ export const MentoringModal: React.FC<MentoringModalProps> = (
                   </InputAdornment>
                 }
               />
-              {!isEdit && <FormHelperText>Required</FormHelperText>}
+              <FormHelperText>Required</FormHelperText>
             </FormControl>
           </MentoringModalBodyContainer>
         </form>

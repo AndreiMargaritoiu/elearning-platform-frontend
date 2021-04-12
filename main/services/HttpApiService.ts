@@ -101,6 +101,10 @@ export class HttpApiService implements ApiService {
     return this.axiosInstance.get<any, User[]>('users');
   }
 
+  getUser(userId: string): Promise<User> {
+    return this.axiosInstance.get<string, User>(`users/${userId}`);
+  }
+
   // Activity
   saveTrackedItem(request: TrackItemRequest): Promise<void> {
     return this.axiosInstance.post<TrackItemRequest, void>('tracking', request);

@@ -36,6 +36,7 @@ export interface ApiService {
   deleteMentorship(mentroshipId: string): Promise<void>;
 
   getUsers(): Promise<User[]>;
+  getUser(userId: string): Promise<User>;
 
   saveTrackedItem(request: TrackItemRequest): void;
 }

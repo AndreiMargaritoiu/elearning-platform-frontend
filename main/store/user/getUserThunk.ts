@@ -3,27 +3,25 @@ import { Dispatch } from 'redux';
 import { Result, resultFormatter } from '../../domain/Result';
 import { Context } from '../../Context';
 import {
-  getUsersAction,
-  getUsersErrorAction,
-  getUsersSuccessAction,
-} from './usersActions';
+  getUserAction,
+  getUserErrorAction,
+  getUserSuccessAction,
+} from './userActions';
 import { User } from '../../domain/User';
 
-export const getUsersThunk = () => async (
+export const getUserThunk = (userId: string) => async (
   dispatch: Dispatch,
 ): Promise<Result<void, string>> => {
   try {
-    dispatch(getUsersAction());
+    dispatch(getUserAction());
 
-    const usersResponse: User[] = await Context.apiService.getUsers();
+    const user: User = await Context.apiService.getUser(userId);
 
-    console.log(usersResponse);
-
-    dispatch(getUsersSuccessAction(usersResponse));
+    dispatch(getUserSuccessAction(user));
 
     return resultFormatter.ok<void, string>();
   } catch (e) {
-    dispatch(getUsersErrorAction(e));
+    dispatch(getUserErrorAction(e));
     return resultFormatter.error<void, string>(e);
   }
 };

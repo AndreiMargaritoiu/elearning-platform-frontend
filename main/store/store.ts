@@ -7,13 +7,15 @@ import { mentorshipsReducer } from './mentoring/mentorshipReducer';
 import { playlistsReducer } from './playlists/playlistsReducer';
 import { appUserReducer } from './appUser/appUserReducer';
 import { videosReducer } from './videos/videosReducer';
-import { userReducer } from './users/userReducer';
+import { usersReducer } from './users/usersReducer';
 import { videoReducer } from './video/videoReducer';
 import { playlistReducer } from './playlist/playlistReducer';
+import { userReducer } from './user/userReducer';
 
 const rootReducer: Reducer<AppState> = combineReducers<AppState>({
   appUser: appUserReducer,
-  users: userReducer,
+  user: userReducer,
+  users: usersReducer,
   video: videoReducer,
   videos: videosReducer,
   playlist: playlistReducer,

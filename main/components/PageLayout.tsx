@@ -25,7 +25,7 @@ const UnconnectedPageLayout: React.FC<Props> = (props) => {
 
   return (
     <>
-      {/* <Header appUser={appUser} logout={logout} /> */}
+      <Header appUser={appUser} logout={logout} />
       <main id="content">{children}</main>
     </>
   );

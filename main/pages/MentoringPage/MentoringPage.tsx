@@ -3,7 +3,7 @@ import React, { FC, useState } from 'react';
 import {
   MentoringModal,
   MentoringModalState,
-} from '../../components/MentoringPage/AddEditMentorshipModal';
+} from '../../components/Mentoring/AddEditMentorshipModal';
 
 import { Mentorship } from '../../domain/Mentorship';
 import {
@@ -55,15 +55,6 @@ const MentoringPage: FC<MentoringPageProps & MentoringDispatchProps> = (
 
   return (
     <StyledMentoringPage>
-      {/* <>
-        {modalState.isOpen && (
-          <MentoringModal
-            modalState={modalState}
-            setModalState={setModalState}
-            updateMentoringInfo={addMentorship}
-          />
-        )}
-      </> */}
       <StyledMentoringOffers>
         <StyledMentoringOwnerTitle>Yours</StyledMentoringOwnerTitle>
         {mentorships.map((mentorship: Mentorship) => (
@@ -79,20 +70,6 @@ const MentoringPage: FC<MentoringPageProps & MentoringDispatchProps> = (
                 Price: {mentorship.price}
               </StyledMentoringCardPrice>
             </StyledMentoringCard>
-            {/* <StyledMentorshipActions>
-              <Button
-                variant="contained"
-                onClick={() => handleEditMentorship(mentorship)}
-              >
-                EDIT
-              </Button>
-              <Button
-                variant="contained"
-                onClick={() => deleteMentorship(mentorship.id)}
-              >
-                DELETE
-              </Button>
-            </StyledMentorshipActions> */}
           </StyledPersonalMentoringOffers>
         ))}
       </StyledMentoringOffers>

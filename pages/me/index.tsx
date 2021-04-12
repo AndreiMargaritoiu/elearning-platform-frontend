@@ -28,17 +28,22 @@ const ProfileNextPage: NextPage = () => {
 
 ProfileNextPage.getInitialProps = async ({
   reduxStore,
-  query,
 }: NextPageContext & { reduxStore: Store<AppState> }) => {
   reduxStore.dispatch(setInitialStateAction());
 
-  const request = SearchPlaylistsRequest.create(query);
+  const request = SearchPlaylistsRequest.create({
+    uid: reduxStore.getState().appUser.uid,
+  });
   const result = await getPlaylistsThunk(request)(reduxStore.dispatch);
 
-  const request2 = SearchVideosRequest.create(query);
+  const request2 = SearchVideosRequest.create({
+    uid: reduxStore.getState().appUser.uid,
+  });
   const result2 = await getVideosThunk(request2)(reduxStore.dispatch);
 
-  const request3 = SearchMentorshipsRequest.create(query);
+  const request3 = SearchMentorshipsRequest.create({
+    uid: reduxStore.getState().appUser.uid,
+  });
   const result3 = await getMentorshipsThunk(request3)(reduxStore.dispatch);
 
   if (!result.isOk) {

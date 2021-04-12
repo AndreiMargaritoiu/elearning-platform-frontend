@@ -1,15 +1,19 @@
 import { NextPage } from 'next';
-import React from 'react';
+import { useRouter } from 'next/router';
+import React, { useEffect } from 'react';
 
-import { Context } from '../main/Context';
 import { app } from '../main/services/Firebase';
 
 const Home: NextPage = () => {
-  if (app.auth().currentUser) {
-    Context.routerService.push('dashboard');
-  } else {
-    Context.routerService.push('login');
-  }
+  const router = useRouter();
+
+  useEffect(() => {
+    if (app.auth().currentUser) {
+      router.push('dashboard');
+    } else {
+      router.push('login');
+    }
+  });
 
   return <label>Loading...</label>;
 };

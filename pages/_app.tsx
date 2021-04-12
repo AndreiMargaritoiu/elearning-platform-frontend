@@ -19,7 +19,7 @@ Context.initialize({
   routerService: Router,
 });
 
-const publicRoutes = ['', 'login', 'signup', 'forgot-password'];
+const publicRoutes = ['', '/login', '/signup', '/forgot-password'];
 
 class ElearningPlatform extends App<
   AppProps & { reduxStore: Store<AppState> }
