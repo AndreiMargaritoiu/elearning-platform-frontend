@@ -1,4 +1,5 @@
 import { ApiService } from '../domain/ApiService';
+import { Inquiry, SendInquiryRequest } from '../domain/Inquiry';
 import {
   AddMentorshipRequest,
   GetMentorshipsRequest,
@@ -72,7 +73,17 @@ export class HttpApiService implements ApiService {
 
   // Mentoring
   getMentorships(request: GetMentorshipsRequest): Promise<Mentorship[]> {
-    return this.axiosInstance.get<any, Mentorship[]>('mentoring', request);
+    if (request.categories) {
+      return this.axiosInstance.get<any, Mentorship[]>(
+        `mentoring?category=${request.categories}`,
+      );
+    } else if (request.uid) {
+      return this.axiosInstance.get<any, Mentorship[]>(
+        `mentoring?uid=${request.uid}`,
+      );
+    } else {
+      return this.axiosInstance.get<any, Mentorship[]>('mentoring');
+    }
   }
 
   addMentorship(request: AddMentorshipRequest): Promise<Mentorship> {
@@ -108,5 +119,17 @@ export class HttpApiService implements ApiService {
   // Activity
   saveTrackedItem(request: TrackItemRequest): Promise<void> {
     return this.axiosInstance.post<TrackItemRequest, void>('tracking', request);
+  }
+
+  // Inquiries
+  getMyInquiries(userId: string): Promise<Inquiry[]> {
+    return this.axiosInstance.get<string, Inquiry[]>(`inquiries/${userId}`);
+  }
+
+  sendInquiry(request: SendInquiryRequest): Promise<Inquiry> {
+    return this.axiosInstance.post<SendInquiryRequest, Inquiry>(
+      'inquiries',
+      request,
+    );
   }
 }

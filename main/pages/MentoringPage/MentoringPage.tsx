@@ -1,77 +1,131 @@
 import { Button } from '@material-ui/core';
+import Link from 'next/link';
 import React, { FC, useState } from 'react';
-import {
-  MentoringModal,
-  MentoringModalState,
-} from '../../components/Mentoring/AddEditMentorshipModal';
+import { Context } from '../../Context';
+import { SendInquiryRequest } from '../../domain/Inquiry';
 
-import { Mentorship } from '../../domain/Mentorship';
+import {
+  FilterCategories,
+  GetMentorshipsRequest,
+  Mentorship,
+} from '../../domain/Mentorship';
+import { User } from '../../domain/User';
 import {
   MentoringDispatchProps,
   MentoringPageProps,
 } from './MentoringPageContainer';
 import {
+  StyledFilterItem,
   StyledMentoringCard,
+  StyledMentoringCardBodyDiv,
   StyledMentoringCardDescription,
   StyledMentoringCardPrice,
   StyledMentoringCardUserDiv,
+  StyledMentoringFilters,
   StyledMentoringOffers,
   StyledMentoringOwnerTitle,
   StyledMentoringPage,
-  StyledPersonalMentoringOffers,
+  StyledMentorProfilePicture,
 } from './MentoringPageStyles';
 
 const MentoringPage: FC<MentoringPageProps & MentoringDispatchProps> = (
   props,
 ) => {
-  const { appUser, mentorships, getMentorships, addMentorship } = props;
+  const { appUser, mentorships, users, getMentorships, sendInquiry } = props;
 
-  //   useEffect(() => {
-  //     const getPlaylistsRequest: GetPlaylistsRequest = {};
-  //     getPlaylists(getPlaylistsRequest);
-  //     const getMentoringsRequest: GetPlaylistsRequest = {};
-  //     getMentorings(getMentoringsRequest);
-  //   });
+  const [chosenFilter, setChosenFilter] = useState<string>('All');
+
+  const predefinedFilters = [
+    'All',
+    FilterCategories.SCHOOL,
+    FilterCategories.FACULTY,
+    FilterCategories.OTHER,
+  ];
 
   console.log(mentorships);
 
-  const [modalState, setModalState] = useState<MentoringModalState>({
-    isOpen: false,
-    isEdit: false,
-    id: '',
-    description: '',
-    price: 0,
-  });
+  const handlePredefinedFilter = (filterItem: string) => {
+    setChosenFilter(filterItem);
+    if (filterItem !== 'All') {
+      const request: GetMentorshipsRequest = {
+        categories: [filterItem],
+      };
+      getMentorships(request);
+    } else {
+      getMentorships({});
+    }
+  };
 
-  const handleEditMentorship = (mentorship: Mentorship) => {
-    setModalState({
-      isOpen: true,
-      isEdit: true,
-      id: mentorship.id,
-      description: mentorship.description,
-      price: mentorship.price,
-    });
+  const handleSendInquiry = (mentorId: string) => {
+    const request: SendInquiryRequest = {
+      mentorId,
+      inquirerEmail: appUser.email,
+    };
+    sendInquiry(request);
+  };
+
+  const getProfilePictureUrl = (mentorId: string): string => {
+    const currentUser: User | undefined = users.find(
+      (it: User) => it.uid === mentorId,
+    );
+
+    return currentUser ? currentUser.profilePictureUrl : '';
   };
 
   return (
     <StyledMentoringPage>
-      <StyledMentoringOffers>
-        <StyledMentoringOwnerTitle>Yours</StyledMentoringOwnerTitle>
-        {mentorships.map((mentorship: Mentorship) => (
-          <StyledPersonalMentoringOffers>
-            <StyledMentoringCard>
-              <StyledMentoringCardUserDiv>
-                {mentorship.mentorEmail}
-              </StyledMentoringCardUserDiv>
-              <StyledMentoringCardDescription>
-                {mentorship.description}
-              </StyledMentoringCardDescription>
-              <StyledMentoringCardPrice>
-                Price: {mentorship.price}
-              </StyledMentoringCardPrice>
-            </StyledMentoringCard>
-          </StyledPersonalMentoringOffers>
+      <StyledMentoringOwnerTitle>
+        Inspire others, get inspired
+      </StyledMentoringOwnerTitle>
+      <StyledMentoringFilters>
+        {predefinedFilters.map((filterItem) => (
+          <StyledFilterItem
+            active={chosenFilter === filterItem}
+            onClick={() => handlePredefinedFilter(filterItem)}
+          >
+            {filterItem}
+          </StyledFilterItem>
         ))}
+      </StyledMentoringFilters>
+      <StyledMentoringOffers>
+        {mentorships
+          .filter(
+            (mentorship: Mentorship) => mentorship.mentorId !== appUser.uid,
+          )
+          .map((mentorship: Mentorship) => (
+            <StyledMentoringCard>
+              <Link
+                href={`${Context.BASE_PATH}/profiles/[id]`}
+                as={`${Context.BASE_PATH}/profiles/${mentorship.mentorId}`}
+              >
+                <StyledMentoringCardUserDiv>
+                  {/* <StyledMentorProfilePicture
+                    imgSrc={getProfilePictureUrl(mentorship.mentorId)}
+                    role="img"
+                  /> */}
+                  {mentorship.mentorEmail}
+                </StyledMentoringCardUserDiv>
+              </Link>
+              <StyledMentoringCardBodyDiv>
+                <StyledMentoringOffers>
+                  <StyledMentoringCardDescription>
+                    {mentorship.description}
+                  </StyledMentoringCardDescription>
+                  <StyledMentoringCardPrice>
+                    Price: {mentorship.price} €/hour
+                  </StyledMentoringCardPrice>
+                </StyledMentoringOffers>
+                <StyledMentoringOffers>
+                  <Button
+                    variant="contained"
+                    onClick={() => handleSendInquiry(mentorship.mentorId)}
+                  >
+                    ASK DETAILS
+                  </Button>
+                </StyledMentoringOffers>
+              </StyledMentoringCardBodyDiv>
+            </StyledMentoringCard>
+          ))}
       </StyledMentoringOffers>
     </StyledMentoringPage>
   );

@@ -1,3 +1,4 @@
+import { Inquiry, SendInquiryRequest } from './Inquiry';
 import {
   AddMentorshipRequest,
   GetMentorshipsRequest,
@@ -38,5 +39,8 @@ export interface ApiService {
   getUsers(): Promise<User[]>;
   getUser(userId: string): Promise<User>;
 
-  saveTrackedItem(request: TrackItemRequest): void;
+  saveTrackedItem(request: TrackItemRequest): Promise<void>;
+
+  sendInquiry(request: SendInquiryRequest): Promise<Inquiry>;
+  getMyInquiries(userId: string): Promise<Inquiry[]>;
 }

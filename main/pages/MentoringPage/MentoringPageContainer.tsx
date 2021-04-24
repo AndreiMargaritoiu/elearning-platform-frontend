@@ -1,41 +1,38 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { SendInquiryRequest } from '../../domain/Inquiry';
 
-import {
-  AddMentorshipRequest,
-  GetMentorshipsRequest,
-  Mentorship,
-  UpdateMentorshipRequest,
-} from '../../domain/Mentorship';
+import { GetMentorshipsRequest, Mentorship } from '../../domain/Mentorship';
 import { User } from '../../domain/User';
 import { AppState } from '../../store/AppState';
-import { addMentorshipThunk } from '../../store/mentoring/addMentorshipThunk';
-import { deleteMentorshipThunk } from '../../store/mentoring/deleteMentorshipThunk';
+import { sendInquiryThunk } from '../../store/inquiries/SendInquiryThunk';
 import { getMentorshipsThunk } from '../../store/mentoring/getMentorshipsThunk';
-import { updateMentorshipThunk } from '../../store/mentoring/updateMentorshipThunk';
 import { MentoringPage } from './MentoringPage';
 
 export interface MentoringPageProps {
   mentorships: Mentorship[];
   appUser: User;
+  users: User[];
 }
 
 export interface MentoringDispatchProps {
   getMentorships(request: GetMentorshipsRequest): void;
-  addMentorship(request: AddMentorshipRequest): void;
+  sendInquiry(request: SendInquiryRequest): void;
 }
 
 const mapStateToProps = ({
   mentorships,
   appUser,
+  users,
 }: AppState): MentoringPageProps => ({
   mentorships,
   appUser,
+  users,
 });
 
 const mapDispatch: MentoringDispatchProps = {
   getMentorships: getMentorshipsThunk,
-  addMentorship: addMentorshipThunk,
+  sendInquiry: sendInquiryThunk,
 };
 
 export const MentoringPageContainer = connect<

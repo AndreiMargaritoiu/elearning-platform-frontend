@@ -1,3 +1,4 @@
+import { Inquiry } from '../domain/Inquiry';
 import { Mentorship } from '../domain/Mentorship';
 import { Playlist } from '../domain/Playlist';
 import { User } from '../domain/User';
@@ -12,4 +13,5 @@ export interface AppState {
   playlist: Playlist;
   playlists: Playlist[];
   mentorships: Mentorship[];
+  inquiries: Inquiry[];
 }
