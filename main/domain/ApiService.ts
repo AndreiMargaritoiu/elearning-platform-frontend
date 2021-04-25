@@ -1,26 +1,25 @@
 import { Inquiry, SendInquiryRequest } from './Inquiry';
 import {
   AddMentorshipRequest,
-  GetMentorshipsRequest,
   Mentorship,
   UpdateMentorshipRequest,
 } from './Mentorship';
-import {
-  GetPlaylistsRequest,
-  Playlist,
-  UpdatePlaylistRequest,
-} from './Playlist';
+import { Playlist, UpdatePlaylistRequest } from './Playlist';
+import { SearchMentorshipsRequest } from './SearchMentorshipsRequest';
+import { SearchPlaylistsRequest } from './SearchPlaylistsRequest';
+import { SearchVideosRequest } from './SearchVideosRequest';
 import { TrackItemRequest } from './Tracking';
 import { User } from './User';
-import { GetVideosRequest, UpdateVideoRequest, Video } from './Video';
+import { UpdateVideoRequest, Video } from './Video';
+import { AddWorkshopRequest, Workshop } from './Workshop';
 
 export interface ApiService {
-  getVideos(request: GetVideosRequest): Promise<Video[]>;
+  getVideos(request: SearchVideosRequest): Promise<Video[]>;
   getVideo(videoId: string): Promise<Video>;
   updateVideo(videoId: string, request: UpdateVideoRequest): Promise<Video>;
   deleteVideo(videoId: string): Promise<void>;
 
-  getPlaylists(request: GetPlaylistsRequest): Promise<Playlist[]>;
+  getPlaylists(request: SearchPlaylistsRequest): Promise<Playlist[]>;
   getPlaylist(playlistId: string): Promise<Playlist>;
   updatePlaylist(
     playlistId: string,
@@ -28,7 +27,7 @@ export interface ApiService {
   ): Promise<Playlist>;
   deletePlaylist(playlistId: string): Promise<void>;
 
-  getMentorships(request: GetMentorshipsRequest): Promise<Mentorship[]>;
+  getMentorships(request: SearchMentorshipsRequest): Promise<Mentorship[]>;
   addMentorship(request: AddMentorshipRequest): Promise<Mentorship>;
   updateMentorship(
     mentroshipId: string,
@@ -43,4 +42,7 @@ export interface ApiService {
 
   sendInquiry(request: SendInquiryRequest): Promise<Inquiry>;
   getMyInquiries(userId: string): Promise<Inquiry[]>;
+
+  getAllWorkshops(): Promise<Workshop[]>;
+  addWorkshop(request: AddWorkshopRequest): Promise<Workshop>;
 }

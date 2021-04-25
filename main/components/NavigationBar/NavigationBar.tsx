@@ -50,6 +50,11 @@ export const navItems = [
     ],
   },
   {
+    label: 'Discover',
+    link: `${Context.BASE_PATH}/discover`,
+    linkAs: `${Context.BASE_PATH}/discover`,
+  },
+  {
     label: 'Mentoring',
     link: `${Context.BASE_PATH}/mentoring`,
     linkAs: `${Context.BASE_PATH}/mentoring`,

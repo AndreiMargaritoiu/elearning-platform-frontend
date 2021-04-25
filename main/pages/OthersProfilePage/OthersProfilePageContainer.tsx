@@ -1,10 +1,13 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { GetMentorshipsRequest, Mentorship } from '../../domain/Mentorship';
+import { Mentorship } from '../../domain/Mentorship';
 
-import { GetPlaylistsRequest, Playlist } from '../../domain/Playlist';
+import { Playlist } from '../../domain/Playlist';
+import { SearchMentorshipsRequest } from '../../domain/SearchMentorshipsRequest';
+import { SearchPlaylistsRequest } from '../../domain/SearchPlaylistsRequest';
+import { SearchVideosRequest } from '../../domain/SearchVideosRequest';
 import { User } from '../../domain/User';
-import { GetVideosRequest, Video } from '../../domain/Video';
+import { Video } from '../../domain/Video';
 import { AppState } from '../../store/AppState';
 import { getMentorshipsThunk } from '../../store/mentoring/getMentorshipsThunk';
 import { getPlaylistsThunk } from '../../store/playlists/getPlaylistsThunk';
@@ -20,9 +23,9 @@ export interface OthersProfilePageProps {
 }
 
 export interface OthersProfileDispatchProps {
-  getPlaylists(request: GetPlaylistsRequest): void;
-  getVideos(request: GetVideosRequest): void;
-  getMentorships(request: GetMentorshipsRequest): void;
+  getPlaylists(request: SearchPlaylistsRequest): void;
+  getVideos(request: SearchVideosRequest): void;
+  getMentorships(request: SearchMentorshipsRequest): void;
 }
 
 const mapStateToProps = ({

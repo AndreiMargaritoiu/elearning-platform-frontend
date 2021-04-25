@@ -10,11 +10,6 @@ export interface Playlist {
   thumbnailUrl: string;
 }
 
-export interface GetPlaylistsRequest {
-  category?: string;
-  uid?: string;
-}
-
 export interface UpdatePlaylistRequest {
   title?: string;
   description?: string;

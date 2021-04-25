@@ -9,11 +9,6 @@ export interface Video {
   searchIndex: string[];
 }
 
-export interface GetVideosRequest {
-  uid?: string;
-  playlistId?: string;
-}
-
 export interface UpdateVideoRequest {
   title?: string;
   description?: string;

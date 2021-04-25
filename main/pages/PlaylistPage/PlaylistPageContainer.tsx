@@ -1,8 +1,9 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Playlist } from '../../domain/Playlist';
+import { SearchVideosRequest } from '../../domain/SearchVideosRequest';
 
-import { GetVideosRequest, Video } from '../../domain/Video';
+import { Video } from '../../domain/Video';
 import { AppState } from '../../store/AppState';
 import { getVideosThunk } from '../../store/videos/getVideosThunk';
 import { PlaylistPage } from './PlaylistPage';
@@ -13,7 +14,7 @@ export interface PlaylistPageProps {
 }
 
 export interface PlaylistDispatchProps {
-  getVideos(request: GetVideosRequest): void;
+  getVideos(request: SearchVideosRequest): void;
 }
 
 const mapStateToProps = ({

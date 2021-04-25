@@ -5,13 +5,10 @@ import { color, queries } from '../../components/theme';
 export const StyledPlaylistPage = styled.div`
   display: flex;
   flex-direction: column;
-  margin: 0 48px;
-  padding: 24px;
-  background-color: ${color.light.tertiary};
+  margin: 10%;
 
   @media ${queries.tablet} {
     margin: 0 24px;
-    padding: 16px;
   }
 
   @media ${queries.mobile} {

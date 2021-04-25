@@ -4,9 +4,8 @@ import { color, queries } from '../../components/theme';
 export const StyledVideoPage = styled.div`
   display: flex;
   flex-direction: column;
-  margin: 0 48px;
+  margin: 0 10%;
   padding: 24px;
-  background-color: ${color.light.tertiary};
 
   @media ${queries.tablet} {
     margin: 0 24px;
@@ -23,7 +22,6 @@ export const StyledMainVideoCard = styled.div`
   flex-direction: column;
   padding: 36px;
   background-color: ${color.light.primary};
-  height: 600px;
 
   @media ${queries.tablet} {
     padding: 24px;
@@ -69,8 +67,7 @@ export const StyledSecondaryVideosContainer = styled.div`
 export const StyledSecondaryVideoCard = styled.div`
   display: flex;
   flex-direction: column;
-  padding: 36px;
-  margin-bottom: 16px;
+  padding: 16px;
   background-color: ${color.light.primary};
   cursor: pointer;
   width: 300px;
@@ -82,5 +79,15 @@ export const StyledSecondaryVideoCard = styled.div`
 
   @media ${queries.mobile} {
     padding: 16px;
+  }
+`;
+
+export const StyledVideoAuthor = styled.label`
+  text-decoration: none;
+  cursor: pointer;
+  margin-left: 8px;
+
+  &:hover {
+    color: ${color.other.primary};
   }
 `;

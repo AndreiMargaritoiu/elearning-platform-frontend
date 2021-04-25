@@ -1,7 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-import { GetPlaylistsRequest, Playlist } from '../../domain/Playlist';
+import { Playlist } from '../../domain/Playlist';
+import { SearchPlaylistsRequest } from '../../domain/SearchPlaylistsRequest';
 import { AppState } from '../../store/AppState';
 import { getPlaylistsThunk } from '../../store/playlists/getPlaylistsThunk';
 import { PlaylistsFeedPage } from './PlaylistsFeedPage';
@@ -11,7 +12,7 @@ export interface PlaylistsFeedPageProps {
 }
 
 export interface PlaylistsFeedDispatchProps {
-  getPlaylists(request: GetPlaylistsRequest): void;
+  getPlaylists(request: SearchPlaylistsRequest): void;
 }
 
 const mapStateToProps = ({ playlists }: AppState): PlaylistsFeedPageProps => ({

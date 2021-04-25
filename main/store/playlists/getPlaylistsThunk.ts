@@ -7,9 +7,10 @@ import {
   getPlaylistsErrorAction,
   getPlaylistsSuccessAction,
 } from './playlistsActions';
-import { GetPlaylistsRequest, Playlist } from '../../domain/Playlist';
+import { Playlist } from '../../domain/Playlist';
+import { SearchPlaylistsRequest } from '../../domain/SearchPlaylistsRequest';
 
-export const getPlaylistsThunk = (request: GetPlaylistsRequest) => async (
+export const getPlaylistsThunk = (request: SearchPlaylistsRequest) => async (
   dispatch: Dispatch,
 ): Promise<Result<void, string>> => {
   try {

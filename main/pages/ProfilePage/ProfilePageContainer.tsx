@@ -1,22 +1,13 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import {
-  GetMentorshipsRequest,
-  Mentorship,
-  UpdateMentorshipRequest,
-} from '../../domain/Mentorship';
+import { Mentorship, UpdateMentorshipRequest } from '../../domain/Mentorship';
 
-import {
-  GetPlaylistsRequest,
-  Playlist,
-  UpdatePlaylistRequest,
-} from '../../domain/Playlist';
+import { Playlist, UpdatePlaylistRequest } from '../../domain/Playlist';
+import { SearchMentorshipsRequest } from '../../domain/SearchMentorshipsRequest';
+import { SearchPlaylistsRequest } from '../../domain/SearchPlaylistsRequest';
+import { SearchVideosRequest } from '../../domain/SearchVideosRequest';
 import { User } from '../../domain/User';
-import {
-  GetVideosRequest,
-  UpdateVideoRequest,
-  Video,
-} from '../../domain/Video';
+import { UpdateVideoRequest, Video } from '../../domain/Video';
 import { AppState } from '../../store/AppState';
 import { deleteMentorshipThunk } from '../../store/mentoring/deleteMentorshipThunk';
 import { getMentorshipsThunk } from '../../store/mentoring/getMentorshipsThunk';
@@ -37,13 +28,13 @@ export interface ProfilePageProps {
 }
 
 export interface ProfileDispatchProps {
-  getPlaylists(request: GetPlaylistsRequest): void;
+  getPlaylists(request: SearchPlaylistsRequest): void;
   deletePlaylist(playlistId: string): void;
   updatePlaylist(playlistId: string, request: UpdatePlaylistRequest): void;
-  getVideos(request: GetVideosRequest): void;
+  getVideos(request: SearchVideosRequest): void;
   deleteVideo(videoId: string): void;
   updateVideo(videoId: string, request: UpdateVideoRequest): void;
-  getMentorships(request: GetMentorshipsRequest): void;
+  getMentorships(request: SearchMentorshipsRequest): void;
   deleteMentorship(mentorshipId: string): void;
   updateMentorship(
     mentorshipId: string,

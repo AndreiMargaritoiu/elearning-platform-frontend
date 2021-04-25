@@ -3,6 +3,7 @@ import { Mentorship } from '../domain/Mentorship';
 import { Playlist } from '../domain/Playlist';
 import { User } from '../domain/User';
 import { Video } from '../domain/Video';
+import { Workshop } from '../domain/Workshop';
 
 export interface AppState {
   appUser: User;
@@ -14,4 +15,5 @@ export interface AppState {
   playlists: Playlist[];
   mentorships: Mentorship[];
   inquiries: Inquiry[];
+  workshops: Workshop[];
 }

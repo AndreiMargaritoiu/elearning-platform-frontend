@@ -21,22 +21,30 @@ export const StyledDashboard = styled.div`
 export const StyledVideoCard = styled.div`
   display: flex;
   flex-direction: column;
-  padding: 36px;
   background-color: ${color.light.primary};
   cursor: pointer;
-
-  @media ${queries.tablet} {
-    padding: 24px;
-  }
-
-  @media ${queries.mobile} {
-    padding: 16px;
-  }
 `;
 
 export const StyledVideoCardUserDiv = styled.div`
   display: flex;
   flex-direction: row;
+  padding: 12px 24px;
+  border-bottom: 1px solid ${color.dark.quaternary};
+  margin-bottom: 12px;
+
+  @media ${queries.mobile} {
+    padding: 8px 16px;
+  }
+`;
+
+export const StyledVideoCardContentDiv = styled.div`
+  display: flex;
+  flex-direction: column;
+  padding: 12px 24px;
+
+  @media ${queries.mobile} {
+    padding: 8px 16px;
+  }
 `;
 
 export const StyledVideoCardTitle = styled.label`
@@ -60,6 +68,10 @@ export const StyledVideoCardDescription = styled.label`
 
   @media ${queries.mobile} {
     font-size: 16px;
+  }
+
+  .bottom-navigation {
+    max-width: 300px;
   }
 `;
 

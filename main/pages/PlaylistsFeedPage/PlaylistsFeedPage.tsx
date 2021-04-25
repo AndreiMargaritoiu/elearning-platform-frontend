@@ -1,8 +1,14 @@
 import { Grid } from '@material-ui/core';
 import Link from 'next/link';
-import React, { FC, useEffect } from 'react';
+import React, { FC, useState } from 'react';
 import { Context } from '../../Context';
+import { FilterCategories } from '../../domain/Mentorship';
 import { Playlist } from '../../domain/Playlist';
+import { SearchPlaylistsRequest } from '../../domain/SearchPlaylistsRequest';
+import {
+  StyledFilterItem,
+  StyledFiltersBar,
+} from '../MentoringPage/MentoringPageStyles';
 
 import {
   PlaylistsFeedDispatchProps,
@@ -10,11 +16,14 @@ import {
 } from './PlaylistsFeedPageContainer';
 import {
   StyledPlaylistCard,
+  StyledPlaylistCardContentDiv,
   StyledPlaylistCardDescription,
   StyledPlaylistCardThumbnail,
   StyledPlaylistCardTitle,
   StyledPlaylistCardUserDiv,
   StyledPlaylistsFeedPage,
+  StyledPlaylistThumbnailDiv,
+  StyledPlaylistVideosLength,
 } from './PlaylistsFeedPageStyles';
 
 const PlaylistsFeedPage: FC<
@@ -24,34 +33,77 @@ const PlaylistsFeedPage: FC<
 
   console.log(playlists);
 
+  const [chosenFilter, setChosenFilter] = useState<string>('All');
+
+  const predefinedFilters = [
+    'All',
+    FilterCategories.SCHOOL,
+    FilterCategories.FACULTY,
+    FilterCategories.OTHER,
+  ];
+
+  const handlePredefinedFilter = (filterItem: string) => {
+    setChosenFilter(filterItem);
+    if (filterItem !== 'All') {
+      const request: SearchPlaylistsRequest = {
+        category: filterItem,
+      };
+      getPlaylists(request);
+    } else {
+      getPlaylists({});
+    }
+  };
+
   return (
     <StyledPlaylistsFeedPage>
+      <StyledPlaylistCardTitle>
+        Learn more, discover more
+      </StyledPlaylistCardTitle>
+      <StyledFiltersBar>
+        {predefinedFilters.map((filterItem) => (
+          <StyledFilterItem
+            active={chosenFilter === filterItem}
+            onClick={() => handlePredefinedFilter(filterItem)}
+          >
+            {filterItem}
+          </StyledFilterItem>
+        ))}
+      </StyledFiltersBar>
       <Grid container spacing={3}>
         {playlists.map((playlist: Playlist) => (
           <Grid item xs={12} sm={6} md={4}>
-            <Link
-              href={`${Context.BASE_PATH}/playlists/[id]`}
-              as={`${Context.BASE_PATH}/playlists/${playlist.id}`}
-            >
-              <StyledPlaylistCard>
+            <StyledPlaylistCard>
+              <Link
+                href={`${Context.BASE_PATH}/profiles/[id]`}
+                as={`${Context.BASE_PATH}/profiles/${playlist.uid}`}
+              >
                 <StyledPlaylistCardUserDiv>
                   {playlist.uid}
                 </StyledPlaylistCardUserDiv>
-                <StyledPlaylistCardThumbnail
-                  imgSrc={playlist.thumbnailUrl || ''}
-                  role="img"
-                />
-                <StyledPlaylistCardTitle>
-                  {playlist.title}
-                </StyledPlaylistCardTitle>
-                <StyledPlaylistCardDescription>
-                  No of videos: {playlist.videoRefs.length}
-                </StyledPlaylistCardDescription>
-                <StyledPlaylistCardDescription>
-                  {playlist.description}
-                </StyledPlaylistCardDescription>
-              </StyledPlaylistCard>
-            </Link>
+              </Link>
+              <Link
+                href={`${Context.BASE_PATH}/playlists/[id]`}
+                as={`${Context.BASE_PATH}/playlists/${playlist.id}`}
+              >
+                <StyledPlaylistCardContentDiv>
+                  <StyledPlaylistThumbnailDiv>
+                    <StyledPlaylistCardThumbnail
+                      imgSrc={playlist.thumbnailUrl || ''}
+                      role="img"
+                    />
+                    <StyledPlaylistVideosLength>
+                      {playlist.videoRefs.length} videos
+                    </StyledPlaylistVideosLength>
+                  </StyledPlaylistThumbnailDiv>
+                  <StyledPlaylistCardTitle>
+                    {playlist.title}
+                  </StyledPlaylistCardTitle>
+                  <StyledPlaylistCardDescription>
+                    {playlist.description}
+                  </StyledPlaylistCardDescription>
+                </StyledPlaylistCardContentDiv>
+              </Link>
+            </StyledPlaylistCard>
           </Grid>
         ))}
       </Grid>

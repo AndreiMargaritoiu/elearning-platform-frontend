@@ -14,11 +14,6 @@ export enum FilterCategories {
   OTHER = 'Other',
 }
 
-export interface GetMentorshipsRequest {
-  uid?: string;
-  categories?: string[];
-}
-
 export interface AddMentorshipRequest {
   description: string;
   price: number;

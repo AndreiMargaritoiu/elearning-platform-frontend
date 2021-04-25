@@ -7,11 +7,12 @@ import {
   getMentorshipsErrorAction,
   getMentorshipsSuccessAction,
 } from './mentorshipActions';
-import { GetMentorshipsRequest, Mentorship } from '../../domain/Mentorship';
+import { Mentorship } from '../../domain/Mentorship';
+import { SearchMentorshipsRequest } from '../../domain/SearchMentorshipsRequest';
 
-export const getMentorshipsThunk = (request: GetMentorshipsRequest) => async (
-  dispatch: Dispatch,
-): Promise<Result<void, string>> => {
+export const getMentorshipsThunk = (
+  request: SearchMentorshipsRequest,
+) => async (dispatch: Dispatch): Promise<Result<void, string>> => {
   try {
     dispatch(getMentorshipsAction());
 

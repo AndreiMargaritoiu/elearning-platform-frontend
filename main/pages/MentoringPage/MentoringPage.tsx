@@ -4,11 +4,8 @@ import React, { FC, useState } from 'react';
 import { Context } from '../../Context';
 import { SendInquiryRequest } from '../../domain/Inquiry';
 
-import {
-  FilterCategories,
-  GetMentorshipsRequest,
-  Mentorship,
-} from '../../domain/Mentorship';
+import { FilterCategories, Mentorship } from '../../domain/Mentorship';
+import { SearchMentorshipsRequest } from '../../domain/SearchMentorshipsRequest';
 import { User } from '../../domain/User';
 import {
   MentoringDispatchProps,
@@ -21,7 +18,7 @@ import {
   StyledMentoringCardDescription,
   StyledMentoringCardPrice,
   StyledMentoringCardUserDiv,
-  StyledMentoringFilters,
+  StyledFiltersBar,
   StyledMentoringOffers,
   StyledMentoringOwnerTitle,
   StyledMentoringPage,
@@ -47,8 +44,8 @@ const MentoringPage: FC<MentoringPageProps & MentoringDispatchProps> = (
   const handlePredefinedFilter = (filterItem: string) => {
     setChosenFilter(filterItem);
     if (filterItem !== 'All') {
-      const request: GetMentorshipsRequest = {
-        categories: [filterItem],
+      const request: SearchMentorshipsRequest = {
+        category: [filterItem],
       };
       getMentorships(request);
     } else {
@@ -69,7 +66,7 @@ const MentoringPage: FC<MentoringPageProps & MentoringDispatchProps> = (
       (it: User) => it.uid === mentorId,
     );
 
-    return currentUser ? currentUser.profilePictureUrl : '';
+    return currentUser ? currentUser.photoUrl : '';
   };
 
   return (
@@ -77,7 +74,7 @@ const MentoringPage: FC<MentoringPageProps & MentoringDispatchProps> = (
       <StyledMentoringOwnerTitle>
         Inspire others, get inspired
       </StyledMentoringOwnerTitle>
-      <StyledMentoringFilters>
+      <StyledFiltersBar>
         {predefinedFilters.map((filterItem) => (
           <StyledFilterItem
             active={chosenFilter === filterItem}
@@ -86,7 +83,7 @@ const MentoringPage: FC<MentoringPageProps & MentoringDispatchProps> = (
             {filterItem}
           </StyledFilterItem>
         ))}
-      </StyledMentoringFilters>
+      </StyledFiltersBar>
       <StyledMentoringOffers>
         {mentorships
           .filter(

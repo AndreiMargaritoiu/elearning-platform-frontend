@@ -17,10 +17,7 @@ export const usersReducer = (
     case InitialStateActionType.SET_INITIAL_STATE:
       return initialState;
     case UsersActionType.GET_USERS_SUCCESS:
-      return {
-        ...store,
-        ...action.payload,
-      };
+      return action.payload.users;
     default:
       return store;
   }

@@ -4,35 +4,36 @@ import React from 'react';
 import { Store } from 'redux';
 
 import { SearchVideosRequest } from '../../main/domain/SearchVideosRequest';
-import { DashboardPageContainer } from '../../main/pages/Dashboard/DashboardPageContainer';
+import { DiscoverPageContainer } from '../../main/pages/Discover/DiscoverPageContainer';
 import { AppState } from '../../main/store/AppState';
 import { setInitialStateAction } from '../../main/store/setInitialStateAction';
-import { getUsersThunk } from '../../main/store/users/getUsersThunks';
 import { getVideosThunk } from '../../main/store/videos/getVideosThunk';
+import { getAllWorkshopsThunk } from '../../main/store/workshops/getAllWorkshopsThunk';
 
-const Dashboard: NextPage = () => {
-  const pageTitle = 'Dashboard';
+const DiscoverNextPage: NextPage = () => {
+  const pageTitle = 'Discover';
 
   return (
     <div>
       <Head>
         <title>{pageTitle}</title>
       </Head>
-      <DashboardPageContainer />
+      <DiscoverPageContainer />
     </div>
-  );
+  ); 
 };
 
-Dashboard.getInitialProps = async ({
+DiscoverNextPage.getInitialProps = async ({
   reduxStore,
-  query,
 }: NextPageContext & { reduxStore: Store<AppState> }) => {
   reduxStore.dispatch(setInitialStateAction());
 
-  const request = SearchVideosRequest.create(query);
-  const result = await getVideosThunk(request)(reduxStore.dispatch);
+  const result = await getAllWorkshopsThunk()(reduxStore.dispatch);
 
-  const result2 = await getUsersThunk()(reduxStore.dispatch);
+  const request2 = SearchVideosRequest.create({
+    trending: true,
+  });
+  const result2 = await getVideosThunk(request2)(reduxStore.dispatch);
 
   if (!result.isOk) {
     return { statusCode: result.error };
@@ -45,4 +46,4 @@ Dashboard.getInitialProps = async ({
   return { reduxStore: reduxStore.getState() };
 };
 
-export default Dashboard;
+export default DiscoverNextPage;

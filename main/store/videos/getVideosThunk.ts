@@ -7,9 +7,10 @@ import {
   getVideosErrorAction,
   getVideosSuccessAction,
 } from './videosActions';
-import { GetVideosRequest, Video } from '../../domain/Video';
+import { Video } from '../../domain/Video';
+import { SearchVideosRequest } from '../../domain/SearchVideosRequest';
 
-export const getVideosThunk = (request: GetVideosRequest) => async (
+export const getVideosThunk = (request: SearchVideosRequest) => async (
   dispatch: Dispatch,
 ): Promise<Result<void, string>> => {
   try {

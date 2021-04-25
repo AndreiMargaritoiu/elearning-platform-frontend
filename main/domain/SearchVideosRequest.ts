@@ -3,7 +3,7 @@ import queryString from 'query-string';
 interface Payload {
   readonly uid?: string;
   readonly playlistId?: string;
-  readonly trending?: string;
+  readonly trending?: boolean;
 }
 
 export interface SearchParams {
@@ -37,7 +37,7 @@ export class SearchVideosRequest {
 
   readonly uid?: string;
   readonly playlistId?: string;
-  readonly trending?: string;
+  readonly trending?: boolean;
 
   private constructor({ uid, playlistId, trending }: Payload) {
     if (uid) {

@@ -16,7 +16,7 @@ export const StyledMentoringPage = styled.div`
   }
 `;
 
-export const StyledMentoringFilters = styled.div`
+export const StyledFiltersBar = styled.div`
   display: flex;
   flex-direction: row;
   margin-bottom: 16px;

@@ -2,7 +2,8 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { SendInquiryRequest } from '../../domain/Inquiry';
 
-import { GetMentorshipsRequest, Mentorship } from '../../domain/Mentorship';
+import { Mentorship } from '../../domain/Mentorship';
+import { SearchMentorshipsRequest } from '../../domain/SearchMentorshipsRequest';
 import { User } from '../../domain/User';
 import { AppState } from '../../store/AppState';
 import { sendInquiryThunk } from '../../store/inquiries/SendInquiryThunk';
@@ -16,7 +17,7 @@ export interface MentoringPageProps {
 }
 
 export interface MentoringDispatchProps {
-  getMentorships(request: GetMentorshipsRequest): void;
+  getMentorships(request: SearchMentorshipsRequest): void;
   sendInquiry(request: SendInquiryRequest): void;
 }
 

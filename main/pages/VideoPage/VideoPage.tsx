@@ -14,6 +14,7 @@ import {
   StyledMainVideoCard,
   StyledSecondaryVideoCard,
   StyledSecondaryVideosContainer,
+  StyledVideoAuthor,
   StyledVideoPage,
 } from './VideoPageStyles';
 import { Context } from '../../Context';
@@ -54,7 +55,15 @@ const VideoPage: FC<VideoPageProps> = (props) => {
       <StyledMainVideoCard>
         <StyledVideoCardTitle>{video.title}</StyledVideoCardTitle>
         <ReactPlayer url={video.videoUrl} controls={true} />
-        <StyledVideoCardDescription>by {video.uid}</StyledVideoCardDescription>
+        <StyledVideoCardDescription>
+          by
+          <Link
+            href={`${Context.BASE_PATH}/profiles/[id]`}
+            as={`${Context.BASE_PATH}/profiles/${video.uid}`}
+          >
+            <StyledVideoAuthor>{video.uid}</StyledVideoAuthor>
+          </Link>
+        </StyledVideoCardDescription>
         <StyledVideoCardDescription>
           {video.description}
         </StyledVideoCardDescription>
@@ -108,9 +117,15 @@ const VideoPage: FC<VideoPageProps> = (props) => {
                     imgSrc={currentVideo.thumbnailUrl || ''}
                     role="img"
                   />
-                  <StyledVideoCardUserDiv>
-                    by {currentVideo.uid}
-                  </StyledVideoCardUserDiv>
+                  <StyledVideoCardDescription className="bottom-navigation">
+                    by
+                    <Link
+                      href={`${Context.BASE_PATH}/profiles/[id]`}
+                      as={`${Context.BASE_PATH}/profiles/${video.uid}`}
+                    >
+                      <StyledVideoAuthor>{video.uid}</StyledVideoAuthor>
+                    </Link>
+                  </StyledVideoCardDescription>
                 </StyledSecondaryVideoCard>
               </Link>
             );

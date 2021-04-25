@@ -2,18 +2,17 @@ import { ApiService } from '../domain/ApiService';
 import { Inquiry, SendInquiryRequest } from '../domain/Inquiry';
 import {
   AddMentorshipRequest,
-  GetMentorshipsRequest,
   Mentorship,
   UpdateMentorshipRequest,
 } from '../domain/Mentorship';
-import {
-  GetPlaylistsRequest,
-  Playlist,
-  UpdatePlaylistRequest,
-} from '../domain/Playlist';
+import { Playlist, UpdatePlaylistRequest } from '../domain/Playlist';
+import { SearchMentorshipsRequest } from '../domain/SearchMentorshipsRequest';
+import { SearchPlaylistsRequest } from '../domain/SearchPlaylistsRequest';
+import { SearchVideosRequest } from '../domain/SearchVideosRequest';
 import { TrackItemRequest } from '../domain/Tracking';
 import { User } from '../domain/User';
-import { GetVideosRequest, UpdateVideoRequest, Video } from '../domain/Video';
+import { UpdateVideoRequest, Video } from '../domain/Video';
+import { AddWorkshopRequest, Workshop } from '../domain/Workshop';
 import { AxiosService } from './AxiosService';
 
 export class HttpApiService implements ApiService {
@@ -26,8 +25,11 @@ export class HttpApiService implements ApiService {
   }
 
   // Videos
-  getVideos(request: GetVideosRequest): Promise<Video[]> {
-    return this.axiosInstance.get<GetVideosRequest, Video[]>('videos', request);
+  getVideos(request: SearchVideosRequest): Promise<Video[]> {
+    return this.axiosInstance.get<SearchVideosRequest, Video[]>(
+      'videos',
+      request,
+    );
   }
 
   getVideo(videoId: string): Promise<Video> {
@@ -46,8 +48,8 @@ export class HttpApiService implements ApiService {
   }
 
   // Playlists
-  getPlaylists(request: GetPlaylistsRequest): Promise<Playlist[]> {
-    return this.axiosInstance.get<GetPlaylistsRequest, Playlist[]>(
+  getPlaylists(request: SearchPlaylistsRequest): Promise<Playlist[]> {
+    return this.axiosInstance.get<SearchPlaylistsRequest, Playlist[]>(
       'playlists',
       request,
     );
@@ -72,18 +74,11 @@ export class HttpApiService implements ApiService {
   }
 
   // Mentoring
-  getMentorships(request: GetMentorshipsRequest): Promise<Mentorship[]> {
-    if (request.categories) {
-      return this.axiosInstance.get<any, Mentorship[]>(
-        `mentoring?category=${request.categories}`,
-      );
-    } else if (request.uid) {
-      return this.axiosInstance.get<any, Mentorship[]>(
-        `mentoring?uid=${request.uid}`,
-      );
-    } else {
-      return this.axiosInstance.get<any, Mentorship[]>('mentoring');
-    }
+  getMentorships(request: SearchMentorshipsRequest): Promise<Mentorship[]> {
+    const queryString = SearchMentorshipsRequest.queryString(request);
+    return this.axiosInstance.get<any, Mentorship[]>(
+      `mentoring?${queryString}`,
+    );
   }
 
   addMentorship(request: AddMentorshipRequest): Promise<Mentorship> {
@@ -129,6 +124,18 @@ export class HttpApiService implements ApiService {
   sendInquiry(request: SendInquiryRequest): Promise<Inquiry> {
     return this.axiosInstance.post<SendInquiryRequest, Inquiry>(
       'inquiries',
+      request,
+    );
+  }
+
+  // Workshops
+  getAllWorkshops(): Promise<Workshop[]> {
+    return this.axiosInstance.get<void, Workshop[]>('workshops');
+  }
+
+  addWorkshop(request: AddWorkshopRequest): Promise<Workshop> {
+    return this.axiosInstance.post<AddWorkshopRequest, Workshop>(
+      'workshops',
       request,
     );
   }
