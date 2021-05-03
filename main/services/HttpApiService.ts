@@ -5,13 +5,17 @@ import {
   Mentorship,
   UpdateMentorshipRequest,
 } from '../domain/Mentorship';
-import { Playlist, UpdatePlaylistRequest } from '../domain/Playlist';
+import {
+  AddPlaylistRequest,
+  Playlist,
+  UpdatePlaylistRequest,
+} from '../domain/Playlist';
 import { SearchMentorshipsRequest } from '../domain/SearchMentorshipsRequest';
 import { SearchPlaylistsRequest } from '../domain/SearchPlaylistsRequest';
 import { SearchVideosRequest } from '../domain/SearchVideosRequest';
 import { TrackItemRequest } from '../domain/Tracking';
 import { User } from '../domain/User';
-import { UpdateVideoRequest, Video } from '../domain/Video';
+import { AddVideoRequest, UpdateVideoRequest, Video } from '../domain/Video';
 import { AddWorkshopRequest, Workshop } from '../domain/Workshop';
 import { AxiosService } from './AxiosService';
 
@@ -36,6 +40,10 @@ export class HttpApiService implements ApiService {
     return this.axiosInstance.get<string, Video>(`videos/${videoId}`);
   }
 
+  addVideo(request: AddVideoRequest): Promise<Video> {
+    return this.axiosInstance.post<AddVideoRequest, Video>('videos', request);
+  }
+
   updateVideo(videoId: string, request: UpdateVideoRequest): Promise<Video> {
     return this.axiosInstance.patch<UpdateVideoRequest, Video>(
       `videos/${videoId}`,
@@ -57,6 +65,13 @@ export class HttpApiService implements ApiService {
 
   getPlaylist(playlistId: string): Promise<Playlist> {
     return this.axiosInstance.get<string, Playlist>(`playlists/${playlistId}`);
+  }
+
+  addPlaylist(request: AddPlaylistRequest): Promise<Playlist> {
+    return this.axiosInstance.post<AddPlaylistRequest, Playlist>(
+      'playlists',
+      request,
+    );
   }
 
   updatePlaylist(

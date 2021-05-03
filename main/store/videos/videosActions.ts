@@ -6,6 +6,9 @@ export enum VideosActionType {
   GET_VIDEOS = 'GET_VIDEOS',
   GET_VIDEOS_SUCCESS = 'GET_VIDEOS_SUCCESS',
   GET_VIDEOS_ERROR = 'GET_VIDEOS_ERROR',
+  ADD_VIDEO = 'ADD_VIDEO',
+  ADD_VIDEO_SUCCESS = 'ADD_VIDEO_SUCCESS',
+  ADD_VIDEO_ERROR = 'ADD_VIDEO_ERROR',
   UPDATE_VIDEO = 'UPDATE_VIDEO',
   UPDATE_VIDEO_SUCCESS = 'UPDATE_VIDEO_SUCCESS',
   UPDATE_VIDEO_ERROR = 'UPDATE_VIDEO_ERROR',
@@ -46,6 +49,39 @@ export const getVideosSuccessAction = (
 
 export const getVideosErrorAction = (error: Error): GetVideosErrorAction => ({
   type: VideosActionType.GET_VIDEOS_ERROR,
+  payload: { error },
+});
+
+// Add
+export interface AddVideoAction extends Action {
+  type: VideosActionType.ADD_VIDEO;
+}
+
+export interface AddVideoSuccessAction extends Action {
+  type: VideosActionType.ADD_VIDEO_SUCCESS;
+  payload: {
+    video: Video;
+  };
+}
+
+export interface AddVideoErrorAction extends Action {
+  type: VideosActionType.ADD_VIDEO_ERROR;
+  payload: {
+    error: Error;
+  };
+}
+
+export const addVideoAction = (): AddVideoAction => ({
+  type: VideosActionType.ADD_VIDEO,
+});
+
+export const addVideoSuccessAction = (video: Video): AddVideoSuccessAction => ({
+  type: VideosActionType.ADD_VIDEO_SUCCESS,
+  payload: { video },
+});
+
+export const addVideoErrorAction = (error: Error): AddVideoErrorAction => ({
+  type: VideosActionType.ADD_VIDEO_ERROR,
   payload: { error },
 });
 

@@ -4,6 +4,7 @@ import {
   SetInitialStateAction,
 } from '../setInitialStateAction';
 import {
+  AddPlaylistSuccessAction,
   DeletePlaylistSuccessAction,
   GetPlaylistsSuccessAction,
   PlaylistsActionType,
@@ -13,6 +14,7 @@ import {
 type ActionType =
   | SetInitialStateAction
   | GetPlaylistsSuccessAction
+  | AddPlaylistSuccessAction
   | UpdatePlaylistSuccessAction
   | DeletePlaylistSuccessAction;
 
@@ -27,6 +29,11 @@ export const playlistsReducer = (
       return initialState;
     case PlaylistsActionType.GET_PLAYLISTS_SUCCESS:
       return action.payload.playlists;
+    case PlaylistsActionType.ADD_PLAYLIST_SUCCESS:
+      return {
+        ...playlistsState,
+        ...action.payload.playlist,
+      };
     case PlaylistsActionType.UPDATE_PLAYLIST_SUCCESS:
       return playlistsState.map((playlist: Playlist) =>
         playlist.id === action.payload.playlist.id

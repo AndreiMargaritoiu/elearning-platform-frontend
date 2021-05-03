@@ -67,18 +67,18 @@ export interface AddWorkshopErrorAction extends Action {
   };
 }
 
-export const AddWorkshopAction = (): AddWorkshopAction => ({
+export const addWorkshopAction = (): AddWorkshopAction => ({
   type: WorkshopsActionType.ADD_WORKSHOP,
 });
 
-export const AddWorkshopSuccessAction = (
+export const addWorkshopSuccessAction = (
   workshop: Workshop,
 ): AddWorkshopSuccessAction => ({
   type: WorkshopsActionType.ADD_WORKSHOP_SUCCESS,
   payload: { workshop },
 });
 
-export const AddWorkshopErrorAction = (
+export const addWorkshopErrorAction = (
   error: Error,
 ): AddWorkshopErrorAction => ({
   type: WorkshopsActionType.ADD_WORKSHOP_ERROR,

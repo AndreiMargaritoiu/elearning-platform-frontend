@@ -6,6 +6,9 @@ export enum PlaylistsActionType {
   GET_PLAYLISTS = 'GET_PLAYLISTS',
   GET_PLAYLISTS_SUCCESS = 'GET_PLAYLISTS_SUCCESS',
   GET_PLAYLISTS_ERROR = 'GET_PLAYLISTS_ERROR',
+  ADD_PLAYLIST = 'ADD_PLAYLIST',
+  ADD_PLAYLIST_SUCCESS = 'ADD_PLAYLIST_SUCCESS',
+  ADD_PLAYLIST_ERROR = 'ADD_PLAYLIST_ERROR',
   UPDATE_PLAYLIST = 'UPDATE_PLAYLIST',
   UPDATE_PLAYLIST_SUCCESS = 'UPDATE_PLAYLIST_SUCCESS',
   UPDATE_PLAYLIST_ERROR = 'UPDATE_PLAYLIST_ERROR',
@@ -48,6 +51,43 @@ export const getPlaylistsErrorAction = (
   error: Error,
 ): GetPlaylistsErrorAction => ({
   type: PlaylistsActionType.GET_PLAYLISTS_ERROR,
+  payload: { error },
+});
+
+// Add
+export interface AddPlaylistAction extends Action {
+  type: PlaylistsActionType.ADD_PLAYLIST;
+}
+
+export interface AddPlaylistSuccessAction extends Action {
+  type: PlaylistsActionType.ADD_PLAYLIST_SUCCESS;
+  payload: {
+    playlist: Playlist;
+  };
+}
+
+export interface AddPlaylistErrorAction extends Action {
+  type: PlaylistsActionType.ADD_PLAYLIST_ERROR;
+  payload: {
+    error: Error;
+  };
+}
+
+export const addPlaylistAction = (): AddPlaylistAction => ({
+  type: PlaylistsActionType.ADD_PLAYLIST,
+});
+
+export const addPlaylistSuccessAction = (
+  playlist: Playlist,
+): AddPlaylistSuccessAction => ({
+  type: PlaylistsActionType.ADD_PLAYLIST_SUCCESS,
+  payload: { playlist },
+});
+
+export const addPlaylistErrorAction = (
+  error: Error,
+): AddPlaylistErrorAction => ({
+  type: PlaylistsActionType.ADD_PLAYLIST_ERROR,
   payload: { error },
 });
 

@@ -12,11 +12,13 @@ import { withStore } from '../main/components/withRedux';
 import { Context } from '../main/Context';
 import { HttpApiService } from '../main/services/HttpApiService';
 import { AppState } from '../main/store/AppState';
+import { MomentService } from '../main/services/MomentService';
 
 Context.initialize({
   alertService: swal,
   apiService: new HttpApiService(),
   routerService: Router,
+  dateService: new MomentService(),
 });
 
 const publicRoutes = ['', '/login', '/signup', '/forgot-password'];

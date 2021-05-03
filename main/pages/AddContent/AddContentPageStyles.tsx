@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { color, queries } from '../../components/theme';
 
-export const StyledDiscoverPageContainer = styled.div`
+export const StyledAddContentPageContainer = styled.div`
   display: flex;
   flex-direction: column;
   margin: 0 48px;

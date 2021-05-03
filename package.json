@@ -29,6 +29,7 @@
     "dotenv": "^8.2.0",
     "firebase": "^8.2.10",
     "moment": "^2.26.0",
+    "moment-timezone": "0.5.31",
     "next": "^9.4.4",
     "next-absolute-url": "^1.2.2",
     "query-string": "^6.13.1",

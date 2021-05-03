@@ -4,23 +4,29 @@ import {
   Mentorship,
   UpdateMentorshipRequest,
 } from './Mentorship';
-import { Playlist, UpdatePlaylistRequest } from './Playlist';
+import {
+  AddPlaylistRequest,
+  Playlist,
+  UpdatePlaylistRequest,
+} from './Playlist';
 import { SearchMentorshipsRequest } from './SearchMentorshipsRequest';
 import { SearchPlaylistsRequest } from './SearchPlaylistsRequest';
 import { SearchVideosRequest } from './SearchVideosRequest';
 import { TrackItemRequest } from './Tracking';
 import { User } from './User';
-import { UpdateVideoRequest, Video } from './Video';
+import { AddVideoRequest, UpdateVideoRequest, Video } from './Video';
 import { AddWorkshopRequest, Workshop } from './Workshop';
 
 export interface ApiService {
   getVideos(request: SearchVideosRequest): Promise<Video[]>;
   getVideo(videoId: string): Promise<Video>;
+  addVideo(request: AddVideoRequest): Promise<Video>;
   updateVideo(videoId: string, request: UpdateVideoRequest): Promise<Video>;
   deleteVideo(videoId: string): Promise<void>;
 
   getPlaylists(request: SearchPlaylistsRequest): Promise<Playlist[]>;
   getPlaylist(playlistId: string): Promise<Playlist>;
+  addPlaylist(request: AddPlaylistRequest): Promise<Playlist>;
   updatePlaylist(
     playlistId: string,
     request: UpdatePlaylistRequest,

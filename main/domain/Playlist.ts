@@ -10,6 +10,16 @@ export interface Playlist {
   thumbnailUrl: string;
 }
 
+export interface AddPlaylistRequest {
+  title: string;
+  description: string;
+  uid: string;
+  category: string;
+  videoRefs: string[];
+  searchIndex: string[];
+  thumbnailUrl: string;
+}
+
 export interface UpdatePlaylistRequest {
   title?: string;
   description?: string;

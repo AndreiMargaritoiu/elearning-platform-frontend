@@ -4,6 +4,7 @@ import {
   SetInitialStateAction,
 } from '../setInitialStateAction';
 import {
+  AddVideoSuccessAction,
   DeleteVideoSuccessAction,
   GetVideosSuccessAction,
   UpdateVideoSuccessAction,
@@ -13,6 +14,7 @@ import {
 type ActionType =
   | SetInitialStateAction
   | GetVideosSuccessAction
+  | AddVideoSuccessAction
   | UpdateVideoSuccessAction
   | DeleteVideoSuccessAction;
 
@@ -27,6 +29,11 @@ export const videosReducer = (
       return initialState;
     case VideosActionType.GET_VIDEOS_SUCCESS:
       return action.payload.videos;
+    case VideosActionType.ADD_VIDEO_SUCCESS:
+      return {
+        ...videosState,
+        ...action.payload.video,
+      };
     case VideosActionType.UPDATE_VIDEO_SUCCESS:
       return videosState.map((video: Video) =>
         video.id === action.payload.video.id

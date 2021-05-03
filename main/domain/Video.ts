@@ -9,6 +9,16 @@ export interface Video {
   searchIndex: string[];
 }
 
+export interface AddVideoRequest {
+  videoUrl: string;
+  uid: string;
+  thumbnailUrl: string;
+  description: string;
+  id: string;
+  title: string;
+  searchIndex: string[];
+}
+
 export interface UpdateVideoRequest {
   title?: string;
   description?: string;
