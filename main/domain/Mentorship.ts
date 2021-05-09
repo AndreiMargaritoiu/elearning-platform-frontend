@@ -17,6 +17,7 @@ export enum FilterCategories {
 export interface AddMentorshipRequest {
   description: string;
   price: number;
+  category: string;
   mentorId: string;
   mentorEmail: string;
 }

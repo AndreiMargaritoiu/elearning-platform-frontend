@@ -2,6 +2,7 @@ import {
   faAngleDown,
   faAngleUp,
   faBars,
+  faPlusCircle,
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React, { useEffect, useRef, useState } from 'react';
@@ -136,7 +137,7 @@ export const NavigationBar: React.FC<NavigationProps> = (props) => {
   };
 
   return (
-    <StyledNavigation ref={navNode} className="qa-automation-navigation">
+    <StyledNavigation ref={navNode}>
       <NavButton onClick={() => onSetMenuToggleClick()}>
         <FontAwesomeIcon icon={faBars} size="1x" />
       </NavButton>
@@ -238,6 +239,21 @@ export const NavigationBar: React.FC<NavigationProps> = (props) => {
       </NavList>
       <LogMenu>
         <>
+          <Link
+            href={`${Context.BASE_PATH}/create`}
+            as={`${Context.BASE_PATH}/create`}
+          >
+            <NavigationItem
+              className={
+                router.asPath.includes('create')
+                  ? 'active add-content'
+                  : 'add-content'
+              }
+            >
+              ADD CONTENT
+              <FontAwesomeIcon icon={faPlusCircle} size="1x" />
+            </NavigationItem>
+          </Link>
           <NavigationItem
             onMouseDown={(e) => {
               e.preventDefault();

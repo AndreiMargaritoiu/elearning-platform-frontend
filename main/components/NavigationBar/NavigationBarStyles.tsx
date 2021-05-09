@@ -111,6 +111,7 @@ export const LogMenu = styled.div`
   align-items: center;
   white-space: nowrap;
   justify-content: flex-end;
+
   ${NavigationItem} {
     margin: 0;
     @media ${queries.mobile} {
@@ -121,6 +122,10 @@ export const LogMenu = styled.div`
   @media ${queries.mobile} {
     margin-right: 16px;
     position: unset;
+  }
+
+  .add-content {
+    margin-right: 16px;
   }
 `;
 

@@ -8,8 +8,6 @@ import { AddContentPageContainer } from '../../main/pages/AddContent/AddContentP
 import { AppState } from '../../main/store/AppState';
 import { setInitialStateAction } from '../../main/store/setInitialStateAction';
 import { getVideosThunk } from '../../main/store/videos/getVideosThunk';
-import { getAllWorkshopsThunk } from '../../main/store/workshops/getAllWorkshopsThunk';
-
 const AddContentNextPage: NextPage = () => {
   const pageTitle = 'Add content';
 

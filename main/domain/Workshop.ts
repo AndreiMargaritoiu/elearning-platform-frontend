@@ -12,7 +12,7 @@ export interface Workshop {
 export interface AddWorkshopRequest {
   description: string;
   tag: string;
-  location: string;
+  location?: string;
   thumbnailUrl: string;
   date: number;
   onlineEvent: boolean;
