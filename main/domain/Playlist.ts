@@ -11,6 +11,7 @@ export interface Playlist {
 }
 
 export interface AddPlaylistRequest {
+  id: string;
   title: string;
   description: string;
   uid: string;

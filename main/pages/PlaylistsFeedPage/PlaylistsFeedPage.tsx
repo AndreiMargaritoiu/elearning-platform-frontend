@@ -2,7 +2,7 @@ import { Grid } from '@material-ui/core';
 import Link from 'next/link';
 import React, { FC, useState } from 'react';
 import { Context } from '../../Context';
-import { FilterCategories } from '../../domain/Mentorship';
+import { FilterCategories } from '../../domain/FilterCategories';
 import { Playlist } from '../../domain/Playlist';
 import { SearchPlaylistsRequest } from '../../domain/SearchPlaylistsRequest';
 import {

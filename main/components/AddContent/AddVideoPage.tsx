@@ -8,7 +8,9 @@ import {
   InputLabel,
   OutlinedInput,
 } from '@material-ui/core';
-import { database, storage } from '../../services/Firebase';
+import { database } from '../../services/Firebase';
+import { createSearchIndex } from '../../utils/createSearchIndex';
+import { uploadFileAndReturnURL } from '../../utils/uploadFileAndReturnURL';
 
 export interface AddVideoPageProps {
   appUser: User;
@@ -30,34 +32,6 @@ const AddVideoPage: FC<AddVideoPageProps> = (props) => {
   const [image, setImage] = useState<File | undefined>(undefined);
   const [video, setVideo] = useState<File | undefined>(undefined);
 
-  const uploadFileAndGetURL = async (
-    videoRef: string,
-    file: File,
-  ): Promise<any> => {
-    const fileRef = storage.ref(`/videos/${videoRef}/${file.name}`);
-    await fileRef.put(file);
-    const fileRefPath: string = await fileRef.getDownloadURL();
-    return fileRefPath;
-  };
-
-  const createSearchIndex = (text: string): string[] => {
-    const result: string[] = [];
-    const iter = (i: number, temp: string) => {
-      if (i >= text.length) {
-        result.push(temp);
-        return;
-      }
-      iter(i + 1, temp + text[i]);
-      iter(i + 1, temp);
-    };
-
-    iter(0, '');
-    const finalResult: string[] = result.filter(
-      (elem) => text.includes(elem) && elem.length > 0,
-    );
-    return finalResult;
-  };
-
   const handleAddVideo = async () => {
     const docRef = database.collection('videos').doc();
     let addVideoRequest: AddVideoRequest = {
@@ -67,14 +41,16 @@ const AddVideoPage: FC<AddVideoPageProps> = (props) => {
       searchIndex: createSearchIndex(newVideo.title),
     };
     if (image) {
-      const thumbnailUrl: string = await uploadFileAndGetURL(docRef.id, image);
+      const path: string = `/videos/${docRef.id}/${image.name}`;
+      const thumbnailUrl: string = await uploadFileAndReturnURL(path, image);
       addVideoRequest = {
         ...addVideoRequest,
         thumbnailUrl,
       };
     }
     if (video) {
-      const videoUrl: string = await uploadFileAndGetURL(docRef.id, video);
+      const path: string = `/videos/${docRef.id}/${video.name}`;
+      const videoUrl: string = await uploadFileAndReturnURL(path, video);
       addVideoRequest = {
         ...addVideoRequest,
         videoUrl,

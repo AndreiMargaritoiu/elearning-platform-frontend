@@ -28,6 +28,7 @@ import {
 import Media from 'react-media';
 import { User } from '../../domain/User';
 import { useRouter } from 'next/router';
+import { useOnClickOutside } from '../../utils/useOnClickOutside';
 
 interface NavigationProps {
   appUser: User;
@@ -73,27 +74,6 @@ export const navItems = [
 //   window.localStorage.setItem('logout', Date.now().toString());
 //   Context.routerService.push('/');
 // };
-
-export const useOnClickOutside = (ref: any, handler: any, exclude: any) => {
-  useEffect(() => {
-    const listener = (event: Event) => {
-      if (
-        !ref.current ||
-        ref.current.contains(event.target) ||
-        (exclude && exclude.current && exclude.current.contains(event.target))
-      ) {
-        return;
-      }
-      handler();
-    };
-    document.addEventListener('mousedown', listener);
-    document.addEventListener('touchend', listener);
-    return () => {
-      document.removeEventListener('mousedown', listener);
-      document.removeEventListener('touchend', listener);
-    };
-  }, [ref, handler]);
-};
 
 export const NavigationBar: React.FC<NavigationProps> = (props) => {
   const { appUser, logout } = props;

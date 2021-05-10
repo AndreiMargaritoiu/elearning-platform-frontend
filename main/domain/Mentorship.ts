@@ -8,12 +8,6 @@ export interface Mentorship {
   category: string;
 }
 
-export enum FilterCategories {
-  SCHOOL = 'School',
-  FACULTY = 'Faculty',
-  OTHER = 'Other',
-}
-
 export interface AddMentorshipRequest {
   description: string;
   price: number;

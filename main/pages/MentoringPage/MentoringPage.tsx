@@ -2,9 +2,10 @@ import { Button } from '@material-ui/core';
 import Link from 'next/link';
 import React, { FC, useState } from 'react';
 import { Context } from '../../Context';
+import { FilterCategories } from '../../domain/FilterCategories';
 import { SendInquiryRequest } from '../../domain/Inquiry';
 
-import { FilterCategories, Mentorship } from '../../domain/Mentorship';
+import { Mentorship } from '../../domain/Mentorship';
 import { SearchMentorshipsRequest } from '../../domain/SearchMentorshipsRequest';
 import { User } from '../../domain/User';
 import {
