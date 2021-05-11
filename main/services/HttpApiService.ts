@@ -143,6 +143,10 @@ export class HttpApiService implements ApiService {
     );
   }
 
+  readInquiries(inquiries: string[]): Promise<void> {
+    return this.axiosInstance.patch<string[], void>('inquiries', inquiries);
+  }
+
   // Workshops
   getAllWorkshops(): Promise<Workshop[]> {
     return this.axiosInstance.get<void, Workshop[]>('workshops');

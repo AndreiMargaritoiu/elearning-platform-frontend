@@ -18,6 +18,7 @@ import {
 } from '@material-ui/core';
 import EuroIcon from '@material-ui/icons/Euro';
 import { UpdateVideoRequest } from '../../../domain/Video';
+import { createSearchIndex } from '../../../utils/createSearchIndex';
 
 export interface VideoModalState {
   isOpen: boolean;
@@ -41,9 +42,10 @@ export const EditVideoModal: React.FC<VideoModalProps> = (
   const [modalTitle, setModalTitle] = useState<string>(title);
   const [modalDescription, setModalDescription] = useState<string>(description);
 
-  const handleSubmit = (event: any) => {
+  const handleSubmit = () => {
     updateVideoInfo(id, {
       title: modalTitle,
+      serachIndex: createSearchIndex(modalTitle),
       description: modalDescription,
     });
     setModalState({

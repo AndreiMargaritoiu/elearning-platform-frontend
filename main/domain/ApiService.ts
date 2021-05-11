@@ -48,6 +48,7 @@ export interface ApiService {
 
   sendInquiry(request: SendInquiryRequest): Promise<Inquiry>;
   getMyInquiries(userId: string): Promise<Inquiry[]>;
+  readInquiries(inquiries: string[]): Promise<void>;
 
   getAllWorkshops(): Promise<Workshop[]>;
   addWorkshop(request: AddWorkshopRequest): Promise<Workshop>;

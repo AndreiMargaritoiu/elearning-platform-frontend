@@ -3,6 +3,7 @@ import {
   faAngleUp,
   faBars,
   faPlusCircle,
+  faBell,
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React, { useEffect, useRef, useState } from 'react';
@@ -220,6 +221,20 @@ export const NavigationBar: React.FC<NavigationProps> = (props) => {
       <LogMenu>
         <>
           <Link
+            href={`${Context.BASE_PATH}/notifications`}
+            as={`${Context.BASE_PATH}/notifications`}
+          >
+            <NavigationItem
+              className={
+                router.asPath.includes('notifications')
+                  ? 'active add-content'
+                  : 'add-content'
+              }
+            >
+              <FontAwesomeIcon icon={faBell} size="1x" />
+            </NavigationItem>
+          </Link>
+          <Link
             href={`${Context.BASE_PATH}/create`}
             as={`${Context.BASE_PATH}/create`}
           >
@@ -230,7 +245,6 @@ export const NavigationBar: React.FC<NavigationProps> = (props) => {
                   : 'add-content'
               }
             >
-              ADD CONTENT
               <FontAwesomeIcon icon={faPlusCircle} size="1x" />
             </NavigationItem>
           </Link>

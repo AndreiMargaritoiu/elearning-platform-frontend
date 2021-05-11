@@ -9,6 +9,9 @@ export enum InquiriesActionType {
   SEND_INQUIRY = 'SEND_INQUIRY',
   SEND_INQUIRY_SUCCESS = 'SEND_INQUIRY_SUCCESS',
   SEND_INQUIRY_ERROR = 'SEND_INQUIRY_ERROR',
+  READ_INQUIRIES = 'READ_INQUIRIES',
+  READ_INQUIRIES_SUCCESS = 'READ_INQUIRIES_SUCCESS',
+  READ_INQUIRIES_ERROR = 'READ_INQUIRIES_ERROR',
 }
 
 export interface GetInquiriesAction extends Action {
@@ -24,6 +27,24 @@ export interface GetInquiriesSuccessAction extends Action {
 
 export interface GetInquiriesErrorAction extends Action {
   type: InquiriesActionType.GET_INQUIRIES_ERROR;
+  payload: {
+    error: Error;
+  };
+}
+
+export interface ReadInquiriesAction extends Action {
+  type: InquiriesActionType.READ_INQUIRIES;
+}
+
+export interface ReadInquiriesSuccessAction extends Action {
+  type: InquiriesActionType.READ_INQUIRIES_SUCCESS;
+  payload: {
+    inquiries: string[];
+  };
+}
+
+export interface ReadInquiriesErrorAction extends Action {
+  type: InquiriesActionType.READ_INQUIRIES_ERROR;
   payload: {
     error: Error;
   };
@@ -62,6 +83,24 @@ export const getInquiriesErrorAction = (
   error: Error,
 ): GetInquiriesErrorAction => ({
   type: InquiriesActionType.GET_INQUIRIES_ERROR,
+  payload: { error },
+});
+
+export const readInquiriesAction = (): ReadInquiriesAction => ({
+  type: InquiriesActionType.READ_INQUIRIES,
+});
+
+export const readInquiriesSuccessAction = (
+  inquiries: string[],
+): ReadInquiriesSuccessAction => ({
+  type: InquiriesActionType.READ_INQUIRIES_SUCCESS,
+  payload: { inquiries },
+});
+
+export const readInquiriesErrorAction = (
+  error: Error,
+): ReadInquiriesErrorAction => ({
+  type: InquiriesActionType.READ_INQUIRIES_ERROR,
   payload: { error },
 });
 

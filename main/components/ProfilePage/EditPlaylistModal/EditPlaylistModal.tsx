@@ -18,6 +18,7 @@ import {
 } from '@material-ui/core';
 import EuroIcon from '@material-ui/icons/Euro';
 import { UpdatePlaylistRequest } from '../../../domain/Playlist';
+import { createSearchIndex } from '../../../utils/createSearchIndex';
 
 export interface PlaylistModalState {
   isOpen: boolean;
@@ -42,9 +43,10 @@ export const EditPlaylistModal: React.FC<PlaylistModalProps> = (
   const [modalTitle, setModalTitle] = useState<string>(title);
   const [modalDescription, setModalDescription] = useState<string>(description);
 
-  const handleSubmit = (event: any) => {
+  const handleSubmit = () => {
     updatePlaylistInfo(id, {
       title: modalTitle,
+      serachIndex: createSearchIndex(modalTitle),
       description: modalDescription,
     });
     setModalState({

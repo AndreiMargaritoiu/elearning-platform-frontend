@@ -6,25 +6,35 @@ import {
 import {
   GetInquiriesSuccessAction,
   InquiriesActionType,
+  ReadInquiriesSuccessAction,
 } from './inquiriesActions';
 
-type ActionType = SetInitialStateAction | GetInquiriesSuccessAction;
+type ActionType =
+  | SetInitialStateAction
+  | GetInquiriesSuccessAction
+  | ReadInquiriesSuccessAction;
 
 export const initialState: Inquiry[] = [];
 
 export const inquiriesReducer = (
-  store = initialState,
+  inquiriesState = initialState,
   action: ActionType,
 ): Inquiry[] => {
   switch (action.type) {
     case InitialStateActionType.SET_INITIAL_STATE:
       return initialState;
     case InquiriesActionType.GET_INQUIRIES_SUCCESS:
-      return {
-        ...store,
-        ...action.payload,
-      };
+      return action.payload.inquiries;
+    case InquiriesActionType.READ_INQUIRIES_SUCCESS:
+      return inquiriesState.map((inquiry: Inquiry) =>
+        action.payload.inquiries.includes(inquiry.id)
+          ? {
+              ...inquiry,
+              read: true,
+            }
+          : inquiry,
+      );
     default:
-      return store;
+      return inquiriesState;
   }
 };
