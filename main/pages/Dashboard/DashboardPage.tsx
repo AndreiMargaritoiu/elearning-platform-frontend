@@ -14,15 +14,21 @@ import {
   StyledVideoCardDescription,
   StyledVideoCardThumbnail,
   StyledVideoCardTitle,
-  StyledVideoCardUserDiv,
 } from './DashboardPageStyles';
 import { Context } from '../../Context';
 import { User } from '../../domain/User';
+import {
+  StyledPlaylistCardDescription,
+  StyledPlaylistCardTitle,
+  StyledPlaylistCardUserDiv,
+  StyledPlaylistUsername,
+  StyledPlaylistUserProfilePic,
+} from '../PlaylistsFeedPage/PlaylistsFeedPageStyles';
 
 const DashboardPage: FC<DashboardPageProps & DashboardDispatchProps> = (
   props,
 ) => {
-  const { appUser, videos, users, getVideos } = props;
+  const { videos, users, getVideos } = props;
 
   // useEffect(() => {
   //   const getPlaylistsRequest: GetPlaylistsRequest = {};
@@ -33,16 +39,19 @@ const DashboardPage: FC<DashboardPageProps & DashboardDispatchProps> = (
 
   console.log(videos);
 
-  // const getUsername = (userId: string): string => {
-  //   if (users.length > 0) {
-  //     const foundUser: User | undefined = users.find(
-  //     (user: User) => user.uid === userId,
-  //   );
-  //   return foundUser ? foundUser.username : '';
-  //   }
+  const displayedUser = (userId: string): string => {
+    const foundUser: User | undefined = users.find(
+      (item) => item.uid === userId,
+    );
+    return foundUser ? foundUser.username : '';
+  };
 
-  //   return '';
-  // };
+  const getUserProfilePic = (userId: string): string => {
+    const foundUser: User | undefined = users.find(
+      (item) => item.uid === userId,
+    );
+    return foundUser ? foundUser.photoUrl : '';
+  };
 
   return (
     <StyledDashboard>
@@ -54,7 +63,15 @@ const DashboardPage: FC<DashboardPageProps & DashboardDispatchProps> = (
                 href={`${Context.BASE_PATH}/profiles/[id]`}
                 as={`${Context.BASE_PATH}/profiles/${video.uid}`}
               >
-                <StyledVideoCardUserDiv>{video.uid}</StyledVideoCardUserDiv>
+                <StyledPlaylistCardUserDiv>
+                  <StyledPlaylistUserProfilePic
+                    imgSrc={getUserProfilePic(video.uid)}
+                    role="img"
+                  />
+                  <StyledPlaylistUsername>
+                    {displayedUser(video.uid)}
+                  </StyledPlaylistUsername>
+                </StyledPlaylistCardUserDiv>
               </Link>
               <Link
                 href={`${Context.BASE_PATH}/videos/[id]`}
@@ -65,10 +82,12 @@ const DashboardPage: FC<DashboardPageProps & DashboardDispatchProps> = (
                     imgSrc={video.thumbnailUrl || ''}
                     role="img"
                   />
-                  <StyledVideoCardTitle>{video.title}</StyledVideoCardTitle>
-                  <StyledVideoCardDescription>
+                  <StyledPlaylistCardTitle>
+                    {video.title}
+                  </StyledPlaylistCardTitle>
+                  <StyledPlaylistCardDescription>
                     {video.description}
-                  </StyledVideoCardDescription>
+                  </StyledPlaylistCardDescription>
                 </StyledVideoCardContentDiv>
               </Link>
             </StyledVideoCard>

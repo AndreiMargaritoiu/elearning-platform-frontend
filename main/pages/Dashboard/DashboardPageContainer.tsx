@@ -10,7 +10,6 @@ import { DashboardPage } from './DashboardPage';
 
 export interface DashboardPageProps {
   videos: Video[];
-  appUser: User;
   users: User[];
 }
 
@@ -18,12 +17,7 @@ export interface DashboardDispatchProps {
   getVideos(request: SearchVideosRequest): void;
 }
 
-const mapStateToProps = ({
-  appUser,
-  videos,
-  users,
-}: AppState): DashboardPageProps => ({
-  appUser,
+const mapStateToProps = ({ videos, users }: AppState): DashboardPageProps => ({
   videos,
   users,
 });

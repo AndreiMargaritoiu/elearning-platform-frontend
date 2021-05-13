@@ -8,6 +8,7 @@ import { PlaylistsFeedPageContainer } from '../../main/pages/PlaylistsFeedPage/P
 import { AppState } from '../../main/store/AppState';
 import { getPlaylistsThunk } from '../../main/store/playlists/getPlaylistsThunk';
 import { setInitialStateAction } from '../../main/store/setInitialStateAction';
+import { getUsersThunk } from '../../main/store/users/getUsersThunks';
 
 const PlaylistsNextPage: NextPage = () => {
   const pageTitle = 'Playlists';
@@ -31,8 +32,14 @@ PlaylistsNextPage.getInitialProps = async ({
   const request = SearchPlaylistsRequest.create(query);
   const result = await getPlaylistsThunk(request)(reduxStore.dispatch);
 
+  const result2 = await getUsersThunk()(reduxStore.dispatch);
+
   if (!result.isOk) {
     return { statusCode: result.error };
+  }
+
+  if (!result2.isOk) {
+    return { statusCode: result2.error };
   }
 
   return { reduxStore: reduxStore.getState() };

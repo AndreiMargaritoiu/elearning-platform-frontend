@@ -1,10 +1,12 @@
 import { Grid } from '@material-ui/core';
 import Link from 'next/link';
 import React, { FC, useState } from 'react';
+
 import { Context } from '../../Context';
 import { FilterCategories } from '../../domain/FilterCategories';
 import { Playlist } from '../../domain/Playlist';
 import { SearchPlaylistsRequest } from '../../domain/SearchPlaylistsRequest';
+import { User } from '../../domain/User';
 import {
   StyledFilterItem,
   StyledFiltersBar,
@@ -21,17 +23,18 @@ import {
   StyledPlaylistCardThumbnail,
   StyledPlaylistCardTitle,
   StyledPlaylistCardUserDiv,
+  StyledPlaylistFeedTitle,
   StyledPlaylistsFeedPage,
   StyledPlaylistThumbnailDiv,
+  StyledPlaylistUsername,
+  StyledPlaylistUserProfilePic,
   StyledPlaylistVideosLength,
 } from './PlaylistsFeedPageStyles';
 
 const PlaylistsFeedPage: FC<
   PlaylistsFeedPageProps & PlaylistsFeedDispatchProps
 > = (props) => {
-  const { playlists, getPlaylists } = props;
-
-  console.log(playlists);
+  const { playlists, users, getPlaylists } = props;
 
   const [chosenFilter, setChosenFilter] = useState<string>('All');
 
@@ -54,11 +57,25 @@ const PlaylistsFeedPage: FC<
     }
   };
 
+  const displayedUser = (userId: string): string => {
+    const foundUser: User | undefined = users.find(
+      (item) => item.uid === userId,
+    );
+    return foundUser ? foundUser.username : '';
+  };
+
+  const getUserProfilePic = (userId: string): string => {
+    const foundUser: User | undefined = users.find(
+      (item) => item.uid === userId,
+    );
+    return foundUser ? foundUser.photoUrl : '';
+  };
+
   return (
     <StyledPlaylistsFeedPage>
-      <StyledPlaylistCardTitle>
+      <StyledPlaylistFeedTitle>
         Learn more, discover more
-      </StyledPlaylistCardTitle>
+      </StyledPlaylistFeedTitle>
       <StyledFiltersBar>
         {predefinedFilters.map((filterItem) => (
           <StyledFilterItem
@@ -78,7 +95,13 @@ const PlaylistsFeedPage: FC<
                 as={`${Context.BASE_PATH}/profiles/${playlist.uid}`}
               >
                 <StyledPlaylistCardUserDiv>
-                  {playlist.uid}
+                  <StyledPlaylistUserProfilePic
+                    imgSrc={getUserProfilePic(playlist.uid)}
+                    role="img"
+                  />
+                  <StyledPlaylistUsername>
+                    {displayedUser(playlist.uid)}
+                  </StyledPlaylistUsername>
                 </StyledPlaylistCardUserDiv>
               </Link>
               <Link

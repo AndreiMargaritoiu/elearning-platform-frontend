@@ -8,11 +8,12 @@ export const StyledMentoringPage = styled.div`
 
   @media ${queries.tablet} {
     margin: 0 24px;
-    width: auto;
+    padding: 0px;
   }
 
   @media ${queries.mobile} {
     margin: 0 16px;
+    padding: 0px;
   }
 `;
 
@@ -31,6 +32,11 @@ export const StyledFilterItem = styled.div<{ active: boolean }>`
   font-weight: 600;
   cursor: pointer;
 
+  @media ${queries.mobile} {
+    padding: 14px;
+    padding: 8px;
+  }
+
   &:hover {
     color: ${color.dark.primary};
   }
@@ -42,11 +48,6 @@ export const StyledFilterItem = styled.div<{ active: boolean }>`
         border: 1px solid ${color.light.tertiary};
         border-bottom: 0;
     `};
-`;
-
-export const StyledMentoringOffers = styled.div`
-  display: flex;
-  flex-direction: column;
 `;
 
 export const StyledMentoringOwnerTitle = styled.label`
@@ -74,8 +75,30 @@ export const StyledMentoringCard = styled.div`
 export const StyledMentoringCardUserDiv = styled.div`
   display: flex;
   flex-direction: row;
+  align-items: center;
+  padding-bottom: 12px;
+`;
+
+export const StyledMentoringUserProfilePic = styled.div<{
+  imgSrc: string;
+}>`
+  background: url(${(props) => props.imgSrc}) no-repeat center center;
+  background-size: cover;
+  height: 30px;
+  width: 30px;
+  border-radius: 50%;
+  margin-right: 8px;
   cursor: pointer;
-  margin-bottom: 8px;
+`;
+
+export const StyledMentoringUsername = styled.label`
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+
+  @media ${queries.mobile} {
+    font-size: 14px;
+  }
 `;
 
 export const StyledMentoringCardBodyDiv = styled.div`
@@ -84,11 +107,16 @@ export const StyledMentoringCardBodyDiv = styled.div`
   justify-content: space-between;
 `;
 
+export const StyledMentoringOffers = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+
 export const StyledMentoringCardDescription = styled.label`
-  font-size: 28px;
+  font-size: 24px;
 
   @media ${queries.tablet} {
-    font-size: 24px;
+    font-size: 22px;
   }
 
   @media ${queries.mobile} {
@@ -97,7 +125,7 @@ export const StyledMentoringCardDescription = styled.label`
 `;
 
 export const StyledMentoringCardPrice = styled.label`
-  font-size: 24px;
+  font-size: 22px;
 
   @media ${queries.tablet} {
     font-size: 20px;
@@ -105,13 +133,6 @@ export const StyledMentoringCardPrice = styled.label`
 
   @media ${queries.mobile} {
     font-size: 16px;
+    margin-bottom: 16px;
   }
-`;
-
-export const StyledMentorProfilePicture = styled.div<{
-  imgSrc: string;
-}>`
-  background: url(${(props) => props.imgSrc}) no-repeat center center;
-  background-size: cover;
-  height: 240px;
 `;

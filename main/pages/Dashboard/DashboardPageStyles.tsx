@@ -25,26 +25,10 @@ export const StyledVideoCard = styled.div`
   cursor: pointer;
 `;
 
-export const StyledVideoCardUserDiv = styled.div`
-  display: flex;
-  flex-direction: row;
-  padding: 12px 24px;
-  border-bottom: 1px solid ${color.dark.quaternary};
-  margin-bottom: 12px;
-
-  @media ${queries.mobile} {
-    padding: 8px 16px;
-  }
-`;
-
 export const StyledVideoCardContentDiv = styled.div`
   display: flex;
   flex-direction: column;
-  padding: 12px 24px;
-
-  @media ${queries.mobile} {
-    padding: 8px 16px;
-  }
+  padding-bottom: 12px;
 `;
 
 export const StyledVideoCardTitle = styled.label`

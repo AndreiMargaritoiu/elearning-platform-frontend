@@ -7,7 +7,6 @@ import {
   StyledVideoCardThumbnail,
   StyledVideoCardTitle,
   StyledVideoCardDescription,
-  StyledVideoCardUserDiv,
 } from '../Dashboard/DashboardPageStyles';
 import { VideoPageProps } from './VideoPageContainer';
 import {
@@ -121,9 +120,9 @@ const VideoPage: FC<VideoPageProps> = (props) => {
                     by
                     <Link
                       href={`${Context.BASE_PATH}/profiles/[id]`}
-                      as={`${Context.BASE_PATH}/profiles/${video.uid}`}
+                      as={`${Context.BASE_PATH}/profiles/${currentVideo.uid}`}
                     >
-                      <StyledVideoAuthor>{video.uid}</StyledVideoAuthor>
+                      <StyledVideoAuthor>{currentVideo.uid}</StyledVideoAuthor>
                     </Link>
                   </StyledVideoCardDescription>
                 </StyledSecondaryVideoCard>

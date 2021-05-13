@@ -3,20 +3,26 @@ import { connect } from 'react-redux';
 
 import { Playlist } from '../../domain/Playlist';
 import { SearchPlaylistsRequest } from '../../domain/SearchPlaylistsRequest';
+import { User } from '../../domain/User';
 import { AppState } from '../../store/AppState';
 import { getPlaylistsThunk } from '../../store/playlists/getPlaylistsThunk';
 import { PlaylistsFeedPage } from './PlaylistsFeedPage';
 
 export interface PlaylistsFeedPageProps {
   playlists: Playlist[];
+  users: User[];
 }
 
 export interface PlaylistsFeedDispatchProps {
   getPlaylists(request: SearchPlaylistsRequest): void;
 }
 
-const mapStateToProps = ({ playlists }: AppState): PlaylistsFeedPageProps => ({
+const mapStateToProps = ({
   playlists,
+  users,
+}: AppState): PlaylistsFeedPageProps => ({
+  playlists,
+  users,
 });
 
 const mapDispatch: PlaylistsFeedDispatchProps = {

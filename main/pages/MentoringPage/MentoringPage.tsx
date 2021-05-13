@@ -1,10 +1,11 @@
 import { Button } from '@material-ui/core';
 import Link from 'next/link';
 import React, { FC, useState } from 'react';
+import Media from 'react-media';
+
 import { Context } from '../../Context';
 import { FilterCategories } from '../../domain/FilterCategories';
 import { SendInquiryRequest } from '../../domain/Inquiry';
-
 import { Mentorship } from '../../domain/Mentorship';
 import { SearchMentorshipsRequest } from '../../domain/SearchMentorshipsRequest';
 import { User } from '../../domain/User';
@@ -23,7 +24,8 @@ import {
   StyledMentoringOffers,
   StyledMentoringOwnerTitle,
   StyledMentoringPage,
-  StyledMentorProfilePicture,
+  StyledMentoringUserProfilePic,
+  StyledMentoringUsername,
 } from './MentoringPageStyles';
 
 const MentoringPage: FC<MentoringPageProps & MentoringDispatchProps> = (
@@ -40,7 +42,7 @@ const MentoringPage: FC<MentoringPageProps & MentoringDispatchProps> = (
     FilterCategories.OTHER,
   ];
 
-  console.log(mentorships);
+  // console.log(mentorships);
 
   const handlePredefinedFilter = (filterItem: string) => {
     setChosenFilter(filterItem);
@@ -62,12 +64,11 @@ const MentoringPage: FC<MentoringPageProps & MentoringDispatchProps> = (
     sendInquiry(request);
   };
 
-  const getProfilePictureUrl = (mentorId: string): string => {
-    const currentUser: User | undefined = users.find(
-      (it: User) => it.uid === mentorId,
+  const getUserProfilePic = (userId: string): string => {
+    const foundUser: User | undefined = users.find(
+      (item) => item.uid === userId,
     );
-
-    return currentUser ? currentUser.photoUrl : '';
+    return foundUser ? foundUser.photoUrl : '';
   };
 
   return (
@@ -97,11 +98,13 @@ const MentoringPage: FC<MentoringPageProps & MentoringDispatchProps> = (
                 as={`${Context.BASE_PATH}/profiles/${mentorship.mentorId}`}
               >
                 <StyledMentoringCardUserDiv>
-                  {/* <StyledMentorProfilePicture
-                    imgSrc={getProfilePictureUrl(mentorship.mentorId)}
+                  <StyledMentoringUserProfilePic
+                    imgSrc={getUserProfilePic(mentorship.mentorId)}
                     role="img"
-                  /> */}
-                  {mentorship.mentorEmail}
+                  />
+                  <StyledMentoringUsername>
+                    {mentorship.mentorEmail}
+                  </StyledMentoringUsername>
                 </StyledMentoringCardUserDiv>
               </Link>
               <StyledMentoringCardBodyDiv>
@@ -113,15 +116,43 @@ const MentoringPage: FC<MentoringPageProps & MentoringDispatchProps> = (
                     Price: {mentorship.price} €/hour
                   </StyledMentoringCardPrice>
                 </StyledMentoringOffers>
-                <StyledMentoringOffers>
-                  <Button
-                    variant="contained"
-                    onClick={() => handleSendInquiry(mentorship.mentorId)}
-                  >
-                    ASK DETAILS
-                  </Button>
-                </StyledMentoringOffers>
+                <Media
+                  queries={{
+                    mobile: `(max-width: 767px)`,
+                    tablet: `(min-width: 768px)`,
+                  }}
+                >
+                  {(matches) =>
+                    !matches.mobile &&
+                    matches.tablet && (
+                      <Button
+                        variant="contained"
+                        onClick={() => handleSendInquiry(mentorship.mentorId)}
+                      >
+                        ASK DETAILS
+                      </Button>
+                    )
+                  }
+                </Media>
               </StyledMentoringCardBodyDiv>
+              <Media
+                queries={{
+                  mobile: `(max-width: 767px)`,
+                  tablet: `(min-width: 768px)`,
+                }}
+              >
+                {(matches) =>
+                  matches.mobile &&
+                  !matches.tablet && (
+                    <Button
+                      variant="contained"
+                      onClick={() => handleSendInquiry(mentorship.mentorId)}
+                    >
+                      ASK DETAILS
+                    </Button>
+                  )
+                }
+              </Media>
             </StyledMentoringCard>
           ))}
       </StyledMentoringOffers>
