@@ -2,21 +2,28 @@ import {
   Button,
   Checkbox,
   FormControl,
-  FormControlLabel,
   InputLabel,
   MenuItem,
   OutlinedInput,
   Select,
+  TextField,
 } from '@material-ui/core';
 import React, { FC, useState } from 'react';
+import { Autocomplete, AutocompleteRenderOptionState } from '@material-ui/lab';
+
 import { FilterCategories } from '../../domain/FilterCategories';
 import { AddPlaylistRequest } from '../../domain/Playlist';
 import { User } from '../../domain/User';
 import { Video } from '../../domain/Video';
+import {
+  StyledAddContentContainer,
+  StyledAddContentField,
+  StyledAddContentRowField,
+  StyledAddContentSectionTitle,
+} from './AddContentStyles';
 import { database } from '../../services/Firebase';
 import { createSearchIndex } from '../../utils/createSearchIndex';
 import { uploadFileAndReturnURL } from '../../utils/uploadFileAndReturnURL';
-import { StyledAddContentContainer } from './AddContentStyles';
 
 export interface AddPlaylistPageProps {
   appUser: User;
@@ -39,8 +46,6 @@ const AddPlaylistPage: FC<AddPlaylistPageProps> = (props) => {
   });
   const [image, setImage] = useState<File | undefined>(undefined);
 
-  console.log(videos);
-
   const handleAddPlaylist = async () => {
     const docRef = database.collection('playlists').doc();
     let addPlaylistRequest: AddPlaylistRequest = {
@@ -61,13 +66,33 @@ const AddPlaylistPage: FC<AddPlaylistPageProps> = (props) => {
     addPlaylist(addPlaylistRequest);
   };
 
+  const Pop = (popupProps: any) => {
+    const { className, anchorEl, style, ...rest } = popupProps;
+    const bound = anchorEl.getBoundingClientRect();
+    return (
+      <div
+        {...rest}
+        style={{
+          zIndex: 9999,
+          width: bound.width,
+        }}
+      />
+    );
+  };
+
+  const onSelectedChange = (event: any, values: Video[]) => {
+    const selectedVideoIds: string[] = [];
+    values.map((item) => selectedVideoIds.push(item.id));
+    setNewPlaylist({
+      ...newPlaylist,
+      videoRefs: selectedVideoIds,
+    });
+  };
+
   return (
-    <StyledAddContentContainer>
-      <label>Playlist</label>
-      <FormControl
-        variant="outlined"
-        className="text-field qa-automation-admin-panel-first-name"
-      >
+    <StyledAddContentContainer className="smaller">
+      <StyledAddContentSectionTitle>Playlist</StyledAddContentSectionTitle>
+      <FormControl variant="outlined" className="text-field">
         <InputLabel htmlFor="component-outlined">Title</InputLabel>
         <OutlinedInput
           id="component-outlined"
@@ -81,10 +106,7 @@ const AddPlaylistPage: FC<AddPlaylistPageProps> = (props) => {
           label="Title"
         />
       </FormControl>
-      <FormControl
-        variant="outlined"
-        className="text-field qa-automation-admin-panel-first-name"
-      >
+      <FormControl variant="outlined" className="text-field">
         <InputLabel htmlFor="component-outlined">Description</InputLabel>
         <OutlinedInput
           id="component-outlined"
@@ -98,11 +120,11 @@ const AddPlaylistPage: FC<AddPlaylistPageProps> = (props) => {
           label="Description"
         />
       </FormControl>
-      <FormControl variant="filled">
-        <InputLabel id="demo-simple-select-filled-label">Category</InputLabel>
+      <FormControl variant="outlined" className="text-field">
+        <InputLabel id="demo-simple-select-outlined-label">Category</InputLabel>
         <Select
-          labelId="demo-simple-select-filled-label"
-          id="demo-simple-select-filled"
+          labelId="demo-simple-select-outlined-label"
+          id="demo-simple-select-outlined"
           value={newPlaylist.category}
           onChange={(event: any) => {
             setNewPlaylist({
@@ -122,41 +144,49 @@ const AddPlaylistPage: FC<AddPlaylistPageProps> = (props) => {
           </MenuItem>
         </Select>
       </FormControl>
-      <label>Thumbnail</label>
-      <input
-        type="file"
-        onChange={(e: any) => {
-          setImage(e.target.files[0]);
-        }}
-      />
-      <label>Selected videos</label>
-      {videos.map((video) => (
-        <FormControlLabel
-          value={video.id}
-          control={
-            <Checkbox
-              color="primary"
-              checked={newPlaylist.videoRefs.includes(video.id)}
-              onChange={(e) => {
-                const updatedVideosArray: string[] = newPlaylist.videoRefs.includes(
-                  video.id,
-                )
-                  ? newPlaylist.videoRefs.filter(
-                      (videoId) => videoId !== video.id,
-                    )
-                  : [...newPlaylist.videoRefs, video.id];
-                setNewPlaylist({
-                  ...newPlaylist,
-                  videoRefs: updatedVideosArray,
-                });
-              }}
-            />
-          }
-          label={video.title}
-          labelPlacement="start"
+      <StyledAddContentRowField>
+        <StyledAddContentField className="margin-right">
+          Thumbnail:
+        </StyledAddContentField>
+        <input
+          type="file"
+          accept="image/*"
+          onChange={(e: any) => {
+            setImage(e.target.files[0]);
+          }}
         />
-      ))}
-      <Button onClick={handleAddPlaylist}>ADD PLAYLIST</Button>
+      </StyledAddContentRowField>
+      <Autocomplete
+        multiple
+        id="checkboxes-tags-demo"
+        options={videos}
+        disableCloseOnSelect
+        className="text-field"
+        getOptionLabel={(option: Video) => option.title}
+        PopperComponent={Pop}
+        onChange={onSelectedChange}
+        renderOption={(
+          option: Video,
+          { selected }: AutocompleteRenderOptionState,
+        ) => (
+          <React.Fragment>
+            <Checkbox checked={selected} />
+            {option.title}
+          </React.Fragment>
+        )}
+        style={{ width: 400 }}
+        renderInput={(params: any) => (
+          <TextField
+            {...params}
+            variant="outlined"
+            label="Selected videos"
+            placeholder="Options"
+          />
+        )}
+      />
+      <Button className="add-button" onClick={handleAddPlaylist}>
+        ADD
+      </Button>
     </StyledAddContentContainer>
   );
 };

@@ -8,9 +8,15 @@ import {
   TextField,
 } from '@material-ui/core';
 import React, { FC, useState } from 'react';
+
 import { AddWorkshopRequest } from '../../domain/Workshop';
 import { User } from '../../domain/User';
-import { StyledAddContentContainer } from './AddContentStyles';
+import {
+  StyledAddContentContainer,
+  StyledAddContentField,
+  StyledAddContentRowField,
+  StyledAddContentSectionTitle,
+} from './AddContentStyles';
 import LocationOnIcon from '@material-ui/icons/LocationOn';
 import { MomentService } from '../../services/MomentService';
 import { storage } from '../../services/Firebase';
@@ -55,12 +61,9 @@ const AddWorkshopPage: FC<AddWorkshopPageProps> = (props) => {
   };
 
   return (
-    <StyledAddContentContainer>
-      <label>Workshops</label>
-      <FormControl
-        variant="outlined"
-        className="text-field qa-automation-admin-panel-first-name"
-      >
+    <StyledAddContentContainer className="smaller">
+      <StyledAddContentSectionTitle>Workshop</StyledAddContentSectionTitle>
+      <FormControl variant="outlined" className="text-field">
         <InputLabel htmlFor="component-outlined">Description</InputLabel>
         <OutlinedInput
           id="component-outlined"
@@ -74,10 +77,7 @@ const AddWorkshopPage: FC<AddWorkshopPageProps> = (props) => {
           label="Description"
         />
       </FormControl>
-      <FormControl
-        variant="outlined"
-        className="text-field qa-automation-admin-panel-first-name"
-      >
+      <FormControl variant="outlined" className="text-field">
         <InputLabel htmlFor="component-outlined">Tag</InputLabel>
         <OutlinedInput
           id="component-outlined"
@@ -93,10 +93,7 @@ const AddWorkshopPage: FC<AddWorkshopPageProps> = (props) => {
           labelWidth={60}
         />
       </FormControl>
-      <FormControl
-        variant="outlined"
-        className="text-field qa-automation-admin-panel-first-name"
-      >
+      <FormControl variant="outlined" className="text-field">
         <InputLabel htmlFor="component-outlined">Location</InputLabel>
         <OutlinedInput
           id="component-outlined"
@@ -120,6 +117,7 @@ const AddWorkshopPage: FC<AddWorkshopPageProps> = (props) => {
         id="datetime-local"
         label="Date"
         type="datetime-local"
+        className="text-field"
         defaultValue={DateService.timestampToDatePicker(Date.now())}
         InputLabelProps={{
           shrink: true,
@@ -131,29 +129,36 @@ const AddWorkshopPage: FC<AddWorkshopPageProps> = (props) => {
           })
         }
       />
-      <FormControl
-        variant="outlined"
-        className="text-field qa-automation-admin-panel-first-name"
-      >
-        <Switch
-          checked={newWorkshop.onlineEvent}
-          onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
-            setNewWorkshop({
-              ...newWorkshop,
-              onlineEvent: event.target.checked,
-            })
-          }
-          name="checkedA"
+      <StyledAddContentRowField>
+        <StyledAddContentField>Online event:</StyledAddContentField>
+        <FormControl variant="outlined">
+          <Switch
+            checked={newWorkshop.onlineEvent}
+            onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
+              setNewWorkshop({
+                ...newWorkshop,
+                onlineEvent: event.target.checked,
+              })
+            }
+            name="checkedA"
+          />
+        </FormControl>
+      </StyledAddContentRowField>
+      <StyledAddContentRowField>
+        <StyledAddContentField className="margin-right">
+          Thumbnail:
+        </StyledAddContentField>
+        <input
+          type="file"
+          accept="image/*"
+          onChange={(e: any) => {
+            setImage(e.target.files[0]);
+          }}
         />
-        <label>Online event</label>
-      </FormControl>
-      <input
-        type="file"
-        onChange={(e: any) => {
-          setImage(e.target.files[0]);
-        }}
-      />
-      <Button onClick={handleAddWorkshop}>ADD WORKSHOP</Button>
+      </StyledAddContentRowField>
+      <Button className="add-button" onClick={handleAddWorkshop}>
+        ADD
+      </Button>
     </StyledAddContentContainer>
   );
 };

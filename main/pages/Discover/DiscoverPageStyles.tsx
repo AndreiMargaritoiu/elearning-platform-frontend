@@ -18,6 +18,7 @@ export const StyledDiscoverPageContainer = styled.div`
 export const StyledDiscoverTitle = styled.label`
   font-size: 28px;
   font-weight: 600;
+  margin-bottom: 16px;
 
   @media ${queries.tablet} {
     font-size: 24px;
@@ -28,7 +29,7 @@ export const StyledDiscoverTitle = styled.label`
   }
 
   &.trending-videos {
-    margin-top: 32px;
+    margin-top: 48px;
 
     @media ${queries.mobile} {
       margin-top: 24px;
@@ -36,7 +37,7 @@ export const StyledDiscoverTitle = styled.label`
   }
 `;
 
-export const StyledDiscoverVideoContainer = styled.div`
+export const StyledDiscoverContentContainer = styled.div`
   .other-modules-carousel {
     .react-multi-carousel-item {
       transform-style: unset;
@@ -65,5 +66,93 @@ export const StyledDiscoverVideoContainer = styled.div`
     .react-multiple-carousel__arrow--right {
       right: 0;
     }
+  }
+`;
+
+export const StyledDiscoverContentCard = styled.div`
+  display: flex;
+  flex-direction: column;
+  padding: 16px;
+  background-color: ${color.light.secondary};
+  border-radius: 5%;
+  margin-right: 8px;
+
+  @media ${queries.tablet} {
+    padding: 24px;
+  }
+
+  @media ${queries.mobile} {
+    padding: 16px;
+    margin: 0 0 0 8px;
+  }
+`;
+
+export const StyledDiscoverWorkshopDescription = styled.label`
+  font-size: 20px;
+
+  @media ${queries.tablet} {
+    font-size: 18px;
+  }
+
+  @media ${queries.mobile} {
+    font-size: 16px;
+  }
+`;
+
+export const StyledDiscoverWorkshopDetailsDiv = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+
+  :not(:last-child) {
+    margin: 4px 0;
+  }
+`;
+
+export const StyledDiscoverWorkshopDetails = styled.label`
+  font-size: 18px;
+
+  @media ${queries.tablet} {
+    font-size: 16px;
+  }
+
+  @media ${queries.mobile} {
+    font-size: 14px;
+  }
+`;
+
+export const StyledDiscoverVideoTitle = styled.label`
+  font-size: 24px;
+  cursor: pointer;
+
+  @media ${queries.tablet} {
+    font-size: 22px;
+  }
+
+  @media ${queries.mobile} {
+    font-size: 20px;
+  }
+`;
+
+export const StyledDiscoverVideoUserDiv = styled.div`
+  font-size: 16px;
+  display: flex;
+  flex-direction: row;
+
+  @media ${queries.mobile} {
+    font-size: 14px;
+  }
+`;
+
+export const StyledDiscoverCardThumbnail = styled.div<{
+  imgSrc: string;
+}>`
+  background: url(${(props) => props.imgSrc}) no-repeat center center;
+  background-size: cover;
+  height: 240px;
+  margin: 8px 0;
+
+  &.video-thumbnail {
+    cursor: pointer;
   }
 `;

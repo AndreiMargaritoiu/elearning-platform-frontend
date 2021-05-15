@@ -9,7 +9,6 @@ export const StyledAddContentPageContainer = styled.div`
 
   @media ${queries.tablet} {
     margin: 0 24px;
-    padding: 16px;
   }
 
   @media ${queries.mobile} {
@@ -17,11 +16,14 @@ export const StyledAddContentPageContainer = styled.div`
   }
 `;
 
-export const StyledAddContentPageMenu = styled.div`
+export const StyledAddContentPageSection = styled.div`
   display: flex;
   flex-direction: column;
   padding-right: 16px;
-  border-right: thin solid ${color.light.tertiary};
+
+  &.add-menu {
+    border-right: thin solid ${color.light.tertiary};
+  }
 `;
 
 export const StyledAddContentMenuItem = styled.label`
@@ -29,12 +31,12 @@ export const StyledAddContentMenuItem = styled.label`
   cursor: pointer;
   margin-bottom: 16px;
 
-  &:hover {
+  @media ${queries.tablet} {
+    font-size: 18px;
+  }
+
+  &:hover,
+  &.active {
     color: ${color.other.primary};
   }
-`;
-
-export const Separator = styled.div`
-  border-bottom: thin solid ${color.light.tertiary};
-  margin: 16px 0;
 `;

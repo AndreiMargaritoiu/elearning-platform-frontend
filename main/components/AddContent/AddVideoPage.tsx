@@ -1,7 +1,13 @@
 import React, { FC, useState } from 'react';
+
 import { AddVideoRequest } from '../../domain/Video';
 import { User } from '../../domain/User';
-import { StyledAddContentContainer } from './AddContentStyles';
+import {
+  StyledAddContentContainer,
+  StyledAddContentField,
+  StyledAddContentRowField,
+  StyledAddContentSectionTitle,
+} from './AddContentStyles';
 import {
   Button,
   FormControl,
@@ -61,12 +67,9 @@ const AddVideoPage: FC<AddVideoPageProps> = (props) => {
   };
 
   return (
-    <StyledAddContentContainer>
-      <label>Video</label>
-      <FormControl
-        variant="outlined"
-        className="text-field qa-automation-admin-panel-first-name"
-      >
+    <StyledAddContentContainer className="smaller">
+      <StyledAddContentSectionTitle>Workshop</StyledAddContentSectionTitle>
+      <FormControl variant="outlined" className="text-field">
         <InputLabel htmlFor="component-outlined">Title</InputLabel>
         <OutlinedInput
           id="component-outlined"
@@ -80,10 +83,7 @@ const AddVideoPage: FC<AddVideoPageProps> = (props) => {
           label="Title"
         />
       </FormControl>
-      <FormControl
-        variant="outlined"
-        className="text-field qa-automation-admin-panel-first-name"
-      >
+      <FormControl variant="outlined" className="text-field">
         <InputLabel htmlFor="component-outlined">Description</InputLabel>
         <OutlinedInput
           id="component-outlined"
@@ -97,21 +97,33 @@ const AddVideoPage: FC<AddVideoPageProps> = (props) => {
           label="Description"
         />
       </FormControl>
-      <label>Video</label>
-      <input
-        type="file"
-        onChange={(e: any) => {
-          setVideo(e.target.files[0]);
-        }}
-      />
-      <label>Thumbnail</label>
-      <input
-        type="file"
-        onChange={(e: any) => {
-          setImage(e.target.files[0]);
-        }}
-      />
-      <Button onClick={handleAddVideo}>ADD VIDEO</Button>
+      <StyledAddContentRowField>
+        <StyledAddContentField className="margin-right">
+          Video:
+        </StyledAddContentField>
+        <input
+          type="file"
+          accept="video/*"
+          onChange={(e: any) => {
+            setImage(e.target.files[0]);
+          }}
+        />
+      </StyledAddContentRowField>
+      <StyledAddContentRowField>
+        <StyledAddContentField className="margin-right">
+          Thumbnail:
+        </StyledAddContentField>
+        <input
+          type="file"
+          accept="image/*"
+          onChange={(e: any) => {
+            setImage(e.target.files[0]);
+          }}
+        />
+      </StyledAddContentRowField>
+      <Button className="add-button" onClick={handleAddVideo}>
+        ADD
+      </Button>
     </StyledAddContentContainer>
   );
 };

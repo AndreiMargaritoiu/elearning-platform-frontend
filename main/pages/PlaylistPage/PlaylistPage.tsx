@@ -5,7 +5,6 @@ import Carousel from 'react-multi-carousel';
 import {
   StyledVideoCardThumbnail,
   StyledVideoCardTitle,
-  StyledVideoCardUserDiv,
 } from '../Dashboard/DashboardPageStyles';
 import {
   StyledPlaylistCardDescription,
@@ -20,15 +19,12 @@ import {
 import {
   StyledMainPlaylistCard,
   StyledPlaylistPage,
-  StyledSecondaryPlaylistCard,
   StyledSecondaryPlaylistsContainer,
 } from './PlaylistPageStyles';
 import { Video } from '../../domain/Video';
 
 const PlaylistPage: FC<PlaylistPageProps & PlaylistDispatchProps> = (props) => {
   const { playlist, videos } = props;
-
-  console.log(videos);
 
   const responsive = {
     desktop: {
@@ -123,9 +119,7 @@ const PlaylistPage: FC<PlaylistPageProps & PlaylistDispatchProps> = (props) => {
                     imgSrc={video.thumbnailUrl || ''}
                     role="img"
                   />
-                  <StyledVideoCardUserDiv>
-                    by {video.uid}
-                  </StyledVideoCardUserDiv>
+                  <label>by {video.uid}</label>
                 </StyledSecondaryVideoCard>
               );
             })}

@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { AddMentorshipRequest } from '../../domain/Mentorship';
 import { AddPlaylistRequest } from '../../domain/Playlist';
+import { SearchVideosRequest } from '../../domain/SearchVideosRequest';
 import { User } from '../../domain/User';
 
 import { AddVideoRequest, Video } from '../../domain/Video';
@@ -10,6 +11,7 @@ import { AppState } from '../../store/AppState';
 import { addMentorshipThunk } from '../../store/mentoring/addMentorshipThunk';
 import { addPlaylistThunk } from '../../store/playlists/addPlaylistThunk';
 import { addVideoThunk } from '../../store/videos/addVideoThunk';
+import { getVideosThunk } from '../../store/videos/getVideosThunk';
 import { addWorkshopThunk } from '../../store/workshops/addWorkshopThunk';
 import { AddContentPage } from './AddContentPage';
 
@@ -23,6 +25,7 @@ export interface AddContentPageDispatchProps {
   addMentorship(request: AddMentorshipRequest): void;
   addVideo(request: AddVideoRequest): void;
   addPlaylist(request: AddPlaylistRequest): void;
+  getVideos(request: SearchVideosRequest): void;
 }
 
 const mapStateToProps = ({
@@ -38,6 +41,7 @@ const mapDispatch: AddContentPageDispatchProps = {
   addMentorship: addMentorshipThunk,
   addVideo: addVideoThunk,
   addPlaylist: addPlaylistThunk,
+  getVideos: getVideosThunk,
 };
 
 export const AddContentPageContainer = connect<

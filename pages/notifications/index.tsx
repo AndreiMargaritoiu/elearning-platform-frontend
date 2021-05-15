@@ -9,7 +9,7 @@ import { getMyInquiriesThunk } from '../../main/store/inquiries/getMyInquiriesTh
 import { setInitialStateAction } from '../../main/store/setInitialStateAction';
 
 const NotificationsNextPage: NextPage = () => {
-  const pageTitle = 'Profile';
+  const pageTitle = 'Notifications';
 
   return (
     <div>

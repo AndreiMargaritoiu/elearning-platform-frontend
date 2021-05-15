@@ -1,20 +1,13 @@
 import Link from 'next/link';
 import React, { FC } from 'react';
 import Carousel from 'react-multi-carousel';
+import LocationOnIcon from '@material-ui/icons/LocationOn';
+import ScheduleIcon from '@material-ui/icons/Schedule';
 
 import { Context } from '../../Context';
+import { User } from '../../domain/User';
 import { MomentService } from '../../services/MomentService';
-import {
-  StyledVideoCardDescription,
-  StyledVideoCardThumbnail,
-  StyledVideoCardTitle,
-} from '../Dashboard/DashboardPageStyles';
-import {
-  StyledSecondaryVideoCard,
-  StyledSecondaryVideosContainer,
-  StyledVideoAuthor,
-} from '../VideoPage/VideoPageStyles';
-
+import { StyledVideoAuthor } from '../VideoPage/VideoPageStyles';
 import {
   DiscoverPageProps,
   DiscoverPageDispatchProps,
@@ -22,16 +15,31 @@ import {
 import {
   StyledDiscoverPageContainer,
   StyledDiscoverTitle,
+  StyledDiscoverContentCard,
+  StyledDiscoverContentContainer,
+  StyledDiscoverVideoTitle,
+  StyledDiscoverVideoUserDiv,
+  StyledDiscoverCardThumbnail,
+  StyledDiscoverWorkshopDescription,
+  StyledDiscoverWorkshopDetails,
+  StyledDiscoverWorkshopDetailsDiv,
 } from './DiscoverPageStyles';
 
 const DiscoverPage: FC<DiscoverPageProps & DiscoverPageDispatchProps> = (
   props,
 ) => {
-  const { videos, workshops, getTrendingVideos, getWorkshops } = props;
+  const { videos, workshops, users, getTrendingVideos, getWorkshops } = props;
 
   console.log(videos);
 
   const DateService = new MomentService();
+
+  const displayedUser = (userId: string): string => {
+    const foundUser: User | undefined = users.find(
+      (item) => item.uid === userId,
+    );
+    return foundUser ? foundUser.username : '';
+  };
 
   const responsive = {
     desktop: {
@@ -60,7 +68,7 @@ const DiscoverPage: FC<DiscoverPageProps & DiscoverPageDispatchProps> = (
   return (
     <StyledDiscoverPageContainer>
       <StyledDiscoverTitle>Workshops</StyledDiscoverTitle>
-      <StyledSecondaryVideosContainer>
+      <StyledDiscoverContentContainer>
         <Carousel
           infinite
           containerClass="other-modules-carousel"
@@ -75,50 +83,38 @@ const DiscoverPage: FC<DiscoverPageProps & DiscoverPageDispatchProps> = (
         >
           {workshops.map((workshop, index) => {
             return (
-              <StyledSecondaryVideoCard key={index}>
-                <StyledVideoCardTitle>
+              <StyledDiscoverContentCard key={index}>
+                <StyledDiscoverWorkshopDescription>
                   {workshop.description}
-                </StyledVideoCardTitle>
-                <StyledVideoCardThumbnail
+                </StyledDiscoverWorkshopDescription>
+                <StyledDiscoverCardThumbnail
                   imgSrc={workshop.thumbnailUrl || ''}
                   role="img"
                 />
-                <div>{workshop.tag}</div>
-                <div>
-                  {workshop.location ? workshop.location : 'Google Meet'}
-                </div>
-                <div>{DateService.timestampToDate(workshop.date)}</div>
-              </StyledSecondaryVideoCard>
+                <StyledDiscoverWorkshopDetails>
+                  #{workshop.tag}
+                </StyledDiscoverWorkshopDetails>
+                <StyledDiscoverWorkshopDetailsDiv>
+                  <LocationOnIcon />
+                  <StyledDiscoverWorkshopDetails>
+                    {workshop.location ? workshop.location : 'Google Meet'}
+                  </StyledDiscoverWorkshopDetails>
+                </StyledDiscoverWorkshopDetailsDiv>
+                <StyledDiscoverWorkshopDetailsDiv>
+                  <ScheduleIcon />
+                  <StyledDiscoverWorkshopDetails>
+                    {DateService.timestampToDate(workshop.date)}
+                  </StyledDiscoverWorkshopDetails>
+                </StyledDiscoverWorkshopDetailsDiv>
+              </StyledDiscoverContentCard>
             );
           })}
         </Carousel>
-      </StyledSecondaryVideosContainer>
+      </StyledDiscoverContentContainer>
       <StyledDiscoverTitle className="trending-videos">
         Trending videos
       </StyledDiscoverTitle>
-      <StyledSecondaryVideosContainer>
-        {/* {videos
-          .filter((position: Video) => position.id !== video.id)
-          .slice(0, 5)
-          .map((currentVideo: Video) => (
-            <Link
-              href={`${Context.BASE_PATH}/videos/[id]`}
-              as={`${Context.BASE_PATH}/videos/${currentVideo.id}`}
-            >
-              <StyledSecondaryVideoCard>
-                <StyledVideoCardTitle>
-                  {currentVideo.title}
-                </StyledVideoCardTitle>
-                <StyledVideoCardThumbnail
-                  imgSrc={currentVideo.thumbnailUrl || ''}
-                  role="img"
-                />
-                <StyledVideoCardUserDiv>
-                  by {currentVideo.uid}
-                </StyledVideoCardUserDiv>
-              </StyledSecondaryVideoCard>
-            </Link>
-          ))} */}
+      <StyledDiscoverContentContainer>
         <Carousel
           infinite
           containerClass="other-modules-carousel"
@@ -137,29 +133,32 @@ const DiscoverPage: FC<DiscoverPageProps & DiscoverPageDispatchProps> = (
                 href={`${Context.BASE_PATH}/videos/[id]`}
                 as={`${Context.BASE_PATH}/videos/${currentVideo.id}`}
               >
-                <StyledSecondaryVideoCard key={index}>
-                  <StyledVideoCardTitle>
+                <StyledDiscoverContentCard key={index}>
+                  <StyledDiscoverVideoTitle>
                     {currentVideo.title}
-                  </StyledVideoCardTitle>
-                  <StyledVideoCardThumbnail
+                  </StyledDiscoverVideoTitle>
+                  <StyledDiscoverCardThumbnail
+                    className="video-thumbnail"
                     imgSrc={currentVideo.thumbnailUrl || ''}
                     role="img"
                   />
-                  <StyledVideoCardDescription className="bottom-navigation">
+                  <StyledDiscoverVideoUserDiv>
                     by
                     <Link
                       href={`${Context.BASE_PATH}/profiles/[id]`}
                       as={`${Context.BASE_PATH}/profiles/${currentVideo.uid}`}
                     >
-                      <StyledVideoAuthor>{currentVideo.uid}</StyledVideoAuthor>
+                      <StyledVideoAuthor>
+                        {displayedUser(currentVideo.uid)}
+                      </StyledVideoAuthor>
                     </Link>
-                  </StyledVideoCardDescription>
-                </StyledSecondaryVideoCard>
+                  </StyledDiscoverVideoUserDiv>
+                </StyledDiscoverContentCard>
               </Link>
             );
           })}
         </Carousel>
-      </StyledSecondaryVideosContainer>
+      </StyledDiscoverContentContainer>
     </StyledDiscoverPageContainer>
   );
 };

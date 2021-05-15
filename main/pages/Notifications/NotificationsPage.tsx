@@ -1,10 +1,13 @@
 import React, { FC, useEffect, useState } from 'react';
 
-import { StyledMentoringPage } from '../MentoringPage/MentoringPageStyles';
 import {
   NotificationsPageProps,
   NotificationsDispatchProps,
 } from './NotificationsPageContainer';
+import {
+  StyledNotificationsPage,
+  StyledNotificationText,
+} from './NotificationsPageStyles';
 
 const NotificationsPage: FC<
   NotificationsPageProps & NotificationsDispatchProps
@@ -24,14 +27,14 @@ const NotificationsPage: FC<
   }, [inquiries]);
 
   return (
-    <StyledMentoringPage>
+    <StyledNotificationsPage>
       {inquiries.map((item) => (
-        <label>
-          {item.inquirerEmail} wants to know more details about ypur mentorship
+        <StyledNotificationText>
+          {item.inquirerEmail} wants to know more details about your mentorship
           offer(s)
-        </label>
+        </StyledNotificationText>
       ))}
-    </StyledMentoringPage>
+    </StyledNotificationsPage>
   );
 };
 

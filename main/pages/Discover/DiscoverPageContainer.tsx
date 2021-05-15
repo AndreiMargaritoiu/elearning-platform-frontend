@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 import { SearchVideosRequest } from '../../domain/SearchVideosRequest';
+import { User } from '../../domain/User';
 import { Video } from '../../domain/Video';
 import { Workshop } from '../../domain/Workshop';
 import { AppState } from '../../store/AppState';
@@ -12,6 +13,7 @@ import { DiscoverPage } from './DiscoverPage';
 export interface DiscoverPageProps {
   videos: Video[];
   workshops: Workshop[];
+  users: User[];
 }
 
 export interface DiscoverPageDispatchProps {
@@ -22,9 +24,11 @@ export interface DiscoverPageDispatchProps {
 const mapStateToProps = ({
   videos,
   workshops,
+  users,
 }: AppState): DiscoverPageProps => ({
   videos,
   workshops,
+  users,
 });
 
 const mapDispatch: DiscoverPageDispatchProps = {

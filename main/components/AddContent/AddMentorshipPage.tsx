@@ -8,10 +8,14 @@ import {
   Select,
 } from '@material-ui/core';
 import React, { FC, useState } from 'react';
+
 import { FilterCategories } from '../../domain/FilterCategories';
 import { AddMentorshipRequest } from '../../domain/Mentorship';
 import { User } from '../../domain/User';
-import { StyledAddContentContainer } from './AddContentStyles';
+import {
+  StyledAddContentContainer,
+  StyledAddContentSectionTitle,
+} from './AddContentStyles';
 
 export interface AddMentorshipPageProps {
   appUser: User;
@@ -40,11 +44,8 @@ const AddMentorshipPage: FC<AddMentorshipPageProps> = (props) => {
 
   return (
     <StyledAddContentContainer>
-      <label>Mentorship</label>
-      <FormControl
-        variant="outlined"
-        className="text-field qa-automation-admin-panel-first-name"
-      >
+      <StyledAddContentSectionTitle>Mentorship</StyledAddContentSectionTitle>
+      <FormControl variant="outlined" className="text-field">
         <InputLabel htmlFor="component-outlined">Description</InputLabel>
         <OutlinedInput
           id="component-outlined"
@@ -58,10 +59,7 @@ const AddMentorshipPage: FC<AddMentorshipPageProps> = (props) => {
           label="Description"
         />
       </FormControl>
-      <FormControl
-        variant="outlined"
-        className="text-field qa-automation-admin-panel-first-name"
-      >
+      <FormControl variant="outlined" className="text-field">
         <InputLabel htmlFor="component-outlined">Price</InputLabel>
         <OutlinedInput
           id="component-outlined"
@@ -77,11 +75,11 @@ const AddMentorshipPage: FC<AddMentorshipPageProps> = (props) => {
           labelWidth={60}
         />
       </FormControl>
-      <FormControl variant="filled">
-        <InputLabel id="demo-simple-select-filled-label">Category</InputLabel>
+      <FormControl variant="outlined" className="text-field">
+        <InputLabel id="demo-simple-select-outlined-label">Category</InputLabel>
         <Select
-          labelId="demo-simple-select-filled-label"
-          id="demo-simple-select-filled"
+          labelId="demo-simple-select-outlined-label"
+          id="demo-simple-select-outlined"
           value={newMentorship.category}
           onChange={(event: any) => {
             setNewMentorship({
@@ -101,7 +99,9 @@ const AddMentorshipPage: FC<AddMentorshipPageProps> = (props) => {
           </MenuItem>
         </Select>
       </FormControl>
-      <Button onClick={handleAddMentorship}>ADD MENTORSHIP</Button>
+      <Button className="add-button" onClick={handleAddMentorship}>
+        ADD
+      </Button>
     </StyledAddContentContainer>
   );
 };

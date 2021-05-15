@@ -1,9 +1,11 @@
-import React, { FC, useState } from 'react';
+import React, { FC, useEffect, useState } from 'react';
+
 import { AddMentorshipPage } from '../../components/AddContent/AddMentorshipPage';
 import { AddPlaylistPage } from '../../components/AddContent/AddPlaylistPage';
 import { AddVideoPage } from '../../components/AddContent/AddVideoPage';
 import { AddWorkshopPage } from '../../components/AddContent/AddWorkshopPage';
-
+import { SearchVideosRequest } from '../../domain/SearchVideosRequest';
+import { getVideosThunk } from '../../store/videos/getVideosThunk';
 import {
   AddContentPageProps,
   AddContentPageDispatchProps,
@@ -11,7 +13,7 @@ import {
 import {
   StyledAddContentMenuItem,
   StyledAddContentPageContainer,
-  StyledAddContentPageMenu,
+  StyledAddContentPageSection,
 } from './AddContentPageStyles';
 
 export enum PageOptions {
@@ -31,7 +33,15 @@ const AddContentPage: FC<AddContentPageProps & AddContentPageDispatchProps> = (
     addVideo,
     addPlaylist,
     addWorkshop,
+    getVideos,
   } = props;
+
+  // useEffect(() => {
+  //   const request = SearchVideosRequest.create({
+  //     uid: appUser.uid,
+  //   });
+  //   getVideos(request);
+  // });
 
   const [currentPage, setCurrentPage] = useState<string>(
     PageOptions.MENTORSHIP,
@@ -39,29 +49,35 @@ const AddContentPage: FC<AddContentPageProps & AddContentPageDispatchProps> = (
 
   return (
     <StyledAddContentPageContainer>
-      <StyledAddContentPageMenu>
+      <StyledAddContentPageSection className="add-menu">
         <StyledAddContentMenuItem
+          className={`${
+            currentPage === PageOptions.MENTORSHIP ? 'active' : ''
+          }`}
           onClick={() => setCurrentPage(PageOptions.MENTORSHIP)}
         >
           ADD MENTORSHIP
         </StyledAddContentMenuItem>
         <StyledAddContentMenuItem
+          className={`${currentPage === PageOptions.VIDEO ? 'active' : ''}`}
           onClick={() => setCurrentPage(PageOptions.VIDEO)}
         >
           ADD VIDEO
         </StyledAddContentMenuItem>
         <StyledAddContentMenuItem
+          className={`${currentPage === PageOptions.PLAYLIST ? 'active' : ''}`}
           onClick={() => setCurrentPage(PageOptions.PLAYLIST)}
         >
           ADD PLAYLIST
         </StyledAddContentMenuItem>
         <StyledAddContentMenuItem
+          className={`${currentPage === PageOptions.WORKSHOP ? 'active' : ''}`}
           onClick={() => setCurrentPage(PageOptions.WORKSHOP)}
         >
           ADD WORKSHOP
         </StyledAddContentMenuItem>
-      </StyledAddContentPageMenu>
-      <StyledAddContentPageMenu>
+      </StyledAddContentPageSection>
+      <StyledAddContentPageSection>
         {currentPage === PageOptions.MENTORSHIP && (
           <AddMentorshipPage appUser={appUser} addMentorship={addMentorship} />
         )}
@@ -78,7 +94,7 @@ const AddContentPage: FC<AddContentPageProps & AddContentPageDispatchProps> = (
         {currentPage === PageOptions.WORKSHOP && (
           <AddWorkshopPage appUser={appUser} addWorkshop={addWorkshop} />
         )}
-      </StyledAddContentPageMenu>
+      </StyledAddContentPageSection>
     </StyledAddContentPageContainer>
   );
 };
