@@ -126,10 +126,10 @@ const VideoPage: FC<VideoPageProps & VideoPageDispatchProps> = (props) => {
                       by
                       <Link
                         href={`${Context.BASE_PATH}/profiles/[id]`}
-                        as={`${Context.BASE_PATH}/profiles/${video.uid}`}
+                        as={`${Context.BASE_PATH}/profiles/${item.uid}`}
                       >
                         <StyledVideoAuthor>
-                          {displayedUser(video.uid)}
+                          {displayedUser(item.uid)}
                         </StyledVideoAuthor>
                       </Link>
                     </StyledVideoUserDiv>

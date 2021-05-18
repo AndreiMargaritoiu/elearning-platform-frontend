@@ -6,6 +6,15 @@ export const StyledOthersProfilePage = styled.div`
   flex-direction: column;
   width: 80%;
   margin: 16px auto;
+
+  @media ${queries.tablet} {
+    width: auto;
+    margin: 16px 24px;
+  }
+
+  @media ${queries.mobile} {
+    margin: 8px 16px;
+  }
 `;
 
 export const StyledOthersProfileDetails = styled.div`
@@ -13,13 +22,42 @@ export const StyledOthersProfileDetails = styled.div`
   flex-direction: row;
   padding-bottom: 24px;
   border-bottom: 2px solid ${color.light.tertiary};
-  align-items: center;
+
+  @media ${queries.mobile} {
+    padding-bottom: 12px;
+  }
+
+  .follow-button {
+    align-self: flex-start;
+    margin-right: 0;
+    margin-left: auto;
+    background: ${color.dark.secondary};
+    color: ${color.light.primary};
+    font-size: 14px;
+
+    &:hover {
+      color: ${color.dark.primary};
+    }
+
+    @media ${queries.tablet} {
+      font-size: 12px;
+    }
+
+    @media ${queries.mobile} {
+      margin-top: 8px;
+      font-size: 10px;
+    }
+  }
 `;
 
 export const StyledOthersProfileStats = styled.div`
   display: flex;
   flex-direction: column;
   margin-left: 60px;
+
+  @media ${queries.mobile} {
+    margin-left: 16px;
+  }
 `;
 
 export const StyledOthersProfileUsername = styled.label`
@@ -39,65 +77,20 @@ export const StyledOthersProfileNumericalStats = styled.div`
   flex-direction: row;
   justify-content: space-between;
   margin-top: 24px;
-`;
 
-export const StyledOthersProfileNumericalElement = styled.div`
-  display: flex;
-  flex-direction: column;
-  text-align: center;
-  margin-right: 40px;
+  @media ${queries.mobile} {
+    margin-top: 12px;
+  }
 `;
 
 export const StyledOthersProfileNumericalStatsText = styled.label`
-  font-size: 24px;
+  font-size: 20px;
 
   @media ${queries.tablet} {
-    font-size: 20px;
+    font-size: 18px;
   }
 
   @media ${queries.mobile} {
     font-size: 16px;
   }
-`;
-
-export const StyledOthersProfileContentPicker = styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-content: space-around;
-  margin: 24px 0;
-`;
-
-export const StyledOthersProfilePickerElement = styled.div`
-  display: flex;
-  flex-direction: row;
-  margin-right: 40px;
-  cursor: pointer;
-
-  &.is-selected {
-    border-bottom: 4px solid ${color.light.tertiary};
-  }
-`;
-
-export const StyledOthersProfilePickerLabel = styled.label`
-  font-size: 24px;
-  cursor: pointer;
-  margin-left: 4px;
-
-  @media ${queries.tablet} {
-    font-size: 20px;
-  }
-
-  @media ${queries.mobile} {
-    font-size: 16px;
-  }
-`;
-
-export const StyledOthersProfileImage = styled.div<{
-  imgSrc: string;
-}>`
-  background: url(${(props) => props.imgSrc}) no-repeat center center;
-  background-size: cover;
-  height: 120px;
-  width: 120px;
-  border-radius: 50%;
 `;

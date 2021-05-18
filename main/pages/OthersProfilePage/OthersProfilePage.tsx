@@ -2,28 +2,31 @@ import React, { FC, useEffect, useState } from 'react';
 import PlaylistPlayIcon from '@material-ui/icons/PlaylistPlay';
 import VideoLibraryIcon from '@material-ui/icons/VideoLibrary';
 import PeopleOutlineIcon from '@material-ui/icons/PeopleOutline';
+import { Button } from '@material-ui/core';
 
 import {
   OthersProfileDispatchProps,
   OthersProfilePageProps,
 } from './OthersProfilePageContainer';
 import {
-  StyledOthersProfileContentPicker,
   StyledOthersProfileDetails,
-  StyledOthersProfileImage,
-  StyledOthersProfileNumericalElement,
   StyledOthersProfileNumericalStats,
   StyledOthersProfileNumericalStatsText,
   StyledOthersProfilePage,
-  StyledOthersProfilePickerElement,
-  StyledOthersProfilePickerLabel,
   StyledOthersProfileStats,
   StyledOthersProfileUsername,
 } from './OthersProfilePageStyles';
 import { UsersPlaylistsFeed } from '../../components/ProfilePage/Feeds/UsersPlaylistsFeed';
 import { UsersVideosFeed } from '../../components/ProfilePage/Feeds/UsersVideoFeed';
 import { UsersMentorshipsFeed } from '../../components/ProfilePage/Feeds/UsersMentorshipsFeed';
-import { Button } from '@material-ui/core';
+import {
+  StyledProfileContentPicker,
+  StyledProfileImage,
+  StyledProfileNumericalElement,
+  StyledProfilePickerElement,
+  StyledProfilePickerLabel,
+} from '../ProfilePage/ProfilePageStyles';
+import Media from 'react-media';
 
 const OthersProfilePage: FC<
   OthersProfilePageProps & OthersProfileDispatchProps
@@ -76,76 +79,98 @@ const OthersProfilePage: FC<
   return (
     <StyledOthersProfilePage>
       <StyledOthersProfileDetails>
-        <StyledOthersProfileImage
-          imgSrc={
-            'https://firebasestorage.googleapis.com/v0/b/elearning-platform-e75ed.appspot.com/o/users%2F2HL2DsCxtUTnDhAYAftKSEDg6ah2%2F2HL2DsCxtUTnDhAYAftKSEDg6ah2?alt=media&token=ba5c0082-c6d2-4492-807e-98a2283f44ce'
-          }
-          role="img"
-        />
+        <StyledProfileImage imgSrc={user.photoUrl} role="img" />
         <StyledOthersProfileStats>
           <StyledOthersProfileUsername>
             {user.username}
           </StyledOthersProfileUsername>
           <StyledOthersProfileNumericalStats>
-            <StyledOthersProfileNumericalElement>
+            <StyledProfileNumericalElement>
               <StyledOthersProfileUsername>
                 {user.following.length}
               </StyledOthersProfileUsername>
               <StyledOthersProfileNumericalStatsText>
                 Following
               </StyledOthersProfileNumericalStatsText>
-            </StyledOthersProfileNumericalElement>
-            <StyledOthersProfileNumericalElement>
+            </StyledProfileNumericalElement>
+            <StyledProfileNumericalElement>
               <StyledOthersProfileUsername>
                 {playlists.length}
               </StyledOthersProfileUsername>
               <StyledOthersProfileNumericalStatsText>
                 Playlists
               </StyledOthersProfileNumericalStatsText>
-            </StyledOthersProfileNumericalElement>
-            <StyledOthersProfileNumericalElement>
+            </StyledProfileNumericalElement>
+            <StyledProfileNumericalElement>
               <StyledOthersProfileUsername>
                 {videos.length}
               </StyledOthersProfileUsername>
               <StyledOthersProfileNumericalStatsText>
                 Videos
               </StyledOthersProfileNumericalStatsText>
-            </StyledOthersProfileNumericalElement>
+            </StyledProfileNumericalElement>
           </StyledOthersProfileNumericalStats>
+          <Media
+            queries={{
+              mobile: `(max-width: 767px)`,
+              tablet: `(min-width: 768px)`,
+            }}
+          >
+            {(matches) =>
+              matches.mobile &&
+              !matches.tablet && (
+                <Button
+                  className="follow-button"
+                  onClick={() => console.log('hello')}
+                >
+                  {appUser.following.includes(user.uid) ? 'UNFOLLOW' : 'FOLLOW'}
+                </Button>
+              )
+            }
+          </Media>
         </StyledOthersProfileStats>
-        <Button className="secondary" onClick={() => console.log('hello')}>
-          {appUser.following.includes(user.uid) ? 'UNFOLLOW' : 'FOLLOW'}
-        </Button>
+        <Media
+          queries={{
+            mobile: `(max-width: 767px)`,
+            tablet: `(min-width: 768px)`,
+          }}
+        >
+          {(matches) =>
+            !matches.mobile &&
+            matches.tablet && (
+              <Button
+                className="follow-button"
+                onClick={() => console.log('hello')}
+              >
+                {appUser.following.includes(user.uid) ? 'UNFOLLOW' : 'FOLLOW'}
+              </Button>
+            )
+          }
+        </Media>
       </StyledOthersProfileDetails>
-      <StyledOthersProfileContentPicker>
-        <StyledOthersProfilePickerElement
+      <StyledProfileContentPicker>
+        <StyledProfilePickerElement
           className={isPlaylistPage ? 'is-selected' : ''}
           onClick={() => setPage('Playlists')}
         >
           <PlaylistPlayIcon />
-          <StyledOthersProfilePickerLabel>
-            Playlists
-          </StyledOthersProfilePickerLabel>
-        </StyledOthersProfilePickerElement>
-        <StyledOthersProfilePickerElement
+          <StyledProfilePickerLabel>Playlists</StyledProfilePickerLabel>
+        </StyledProfilePickerElement>
+        <StyledProfilePickerElement
           className={isVideoPage ? 'is-selected' : ''}
           onClick={() => setPage('Videos')}
         >
           <VideoLibraryIcon />
-          <StyledOthersProfilePickerLabel>
-            Videos
-          </StyledOthersProfilePickerLabel>
-        </StyledOthersProfilePickerElement>
-        <StyledOthersProfilePickerElement
+          <StyledProfilePickerLabel>Videos</StyledProfilePickerLabel>
+        </StyledProfilePickerElement>
+        <StyledProfilePickerElement
           className={isMentoringPage ? 'is-selected' : ''}
           onClick={() => setPage('Mentorships')}
         >
           <PeopleOutlineIcon />
-          <StyledOthersProfilePickerLabel>
-            Mentorships
-          </StyledOthersProfilePickerLabel>
-        </StyledOthersProfilePickerElement>
-      </StyledOthersProfileContentPicker>
+          <StyledProfilePickerLabel>Mentorships</StyledProfilePickerLabel>
+        </StyledProfilePickerElement>
+      </StyledProfileContentPicker>
       {isPlaylistPage && <UsersPlaylistsFeed playlists={playlists} />}
       {isVideoPage && <UsersVideosFeed videos={videos} />}
       {isMentoringPage && <UsersMentorshipsFeed mentorships={mentorships} />}

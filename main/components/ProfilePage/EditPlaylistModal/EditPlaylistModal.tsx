@@ -1,5 +1,12 @@
 import Modal from 'react-modal';
 import React, { useState } from 'react';
+import {
+  Button,
+  FormControl,
+  FormHelperText,
+  InputLabel,
+  OutlinedInput,
+} from '@material-ui/core';
 
 import {
   PlaylistModalBodyContainer,
@@ -8,15 +15,6 @@ import {
   PlaylistModalHeaderContainer,
   modalStyles,
 } from './EditPlaylistModalStyles';
-import {
-  Button,
-  FormControl,
-  FormHelperText,
-  InputAdornment,
-  InputLabel,
-  OutlinedInput,
-} from '@material-ui/core';
-import EuroIcon from '@material-ui/icons/Euro';
 import { UpdatePlaylistRequest } from '../../../domain/Playlist';
 import { createSearchIndex } from '../../../utils/createSearchIndex';
 
@@ -46,7 +44,7 @@ export const EditPlaylistModal: React.FC<PlaylistModalProps> = (
   const handleSubmit = () => {
     updatePlaylistInfo(id, {
       title: modalTitle,
-      serachIndex: createSearchIndex(modalTitle),
+      searchIndex: createSearchIndex(modalTitle),
       description: modalDescription,
     });
     setModalState({
@@ -82,15 +80,10 @@ export const EditPlaylistModal: React.FC<PlaylistModalProps> = (
                 onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
                   setModalTitle(event.target.value)
                 }
-                startAdornment={
-                  <InputAdornment position="start">
-                    <EuroIcon />
-                  </InputAdornment>
-                }
               />
               <FormHelperText>Required</FormHelperText>
             </FormControl>
-            <FormControl variant="outlined" className="text-field">
+            <FormControl variant="outlined" className="text-field-two">
               <InputLabel htmlFor="component-outlined">Description</InputLabel>
               <OutlinedInput
                 id="component-outlined"
@@ -106,7 +99,7 @@ export const EditPlaylistModal: React.FC<PlaylistModalProps> = (
         </form>
         <PlaylistModalFooterContainer>
           <Button
-            className="secondary"
+            className="close-button"
             onClick={() =>
               setModalState({
                 ...modalState,
@@ -116,7 +109,9 @@ export const EditPlaylistModal: React.FC<PlaylistModalProps> = (
           >
             CLOSE
           </Button>
-          <Button onClick={handleSubmit}>SAVE</Button>
+          <Button className="save-button" onClick={handleSubmit}>
+            SAVE
+          </Button>
         </PlaylistModalFooterContainer>
       </PlaylistModalContainer>
     </Modal>

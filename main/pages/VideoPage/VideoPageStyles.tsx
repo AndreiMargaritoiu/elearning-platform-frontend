@@ -81,7 +81,7 @@ export const StyledNextVideosContainer = styled.div<{ height: number }>`
   display: flex;
   flex-direction: column;
   margin-left: 48px;
-  overflow: scroll;
+  overflow-y: scroll;
   height: ${({ height }) => height}px;
 
   @media ${queries.tablet} {

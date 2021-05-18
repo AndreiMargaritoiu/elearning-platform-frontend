@@ -1,5 +1,12 @@
 import Modal from 'react-modal';
 import React, { useState } from 'react';
+import {
+  Button,
+  FormControl,
+  FormHelperText,
+  InputLabel,
+  OutlinedInput,
+} from '@material-ui/core';
 
 import {
   VideoModalBodyContainer,
@@ -8,15 +15,6 @@ import {
   VideoModalHeaderContainer,
   modalStyles,
 } from './EditVideoModalStyles';
-import {
-  Button,
-  FormControl,
-  FormHelperText,
-  InputAdornment,
-  InputLabel,
-  OutlinedInput,
-} from '@material-ui/core';
-import EuroIcon from '@material-ui/icons/Euro';
 import { UpdateVideoRequest } from '../../../domain/Video';
 import { createSearchIndex } from '../../../utils/createSearchIndex';
 
@@ -43,11 +41,12 @@ export const EditVideoModal: React.FC<VideoModalProps> = (
   const [modalDescription, setModalDescription] = useState<string>(description);
 
   const handleSubmit = () => {
-    updateVideoInfo(id, {
+    const updateVideoReqest: UpdateVideoRequest = {
       title: modalTitle,
-      serachIndex: createSearchIndex(modalTitle),
+      searchIndex: createSearchIndex(modalTitle),
       description: modalDescription,
-    });
+    };
+    updateVideoInfo(id, updateVideoReqest);
     setModalState({
       ...modalState,
       isOpen: false,
@@ -81,15 +80,10 @@ export const EditVideoModal: React.FC<VideoModalProps> = (
                 onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
                   setModalTitle(event.target.value)
                 }
-                startAdornment={
-                  <InputAdornment position="start">
-                    <EuroIcon />
-                  </InputAdornment>
-                }
               />
               <FormHelperText>Required</FormHelperText>
             </FormControl>
-            <FormControl variant="outlined" className="text-field">
+            <FormControl variant="outlined" className="text-field-two">
               <InputLabel htmlFor="component-outlined">Description</InputLabel>
               <OutlinedInput
                 id="component-outlined"
@@ -105,7 +99,7 @@ export const EditVideoModal: React.FC<VideoModalProps> = (
         </form>
         <VideoModalFooterContainer>
           <Button
-            className="secondary"
+            className="close-button"
             onClick={() =>
               setModalState({
                 ...modalState,
@@ -115,7 +109,9 @@ export const EditVideoModal: React.FC<VideoModalProps> = (
           >
             CLOSE
           </Button>
-          <Button onClick={handleSubmit}>SAVE</Button>
+          <Button className="save-button" onClick={handleSubmit}>
+            SAVE
+          </Button>
         </VideoModalFooterContainer>
       </VideoModalContainer>
     </Modal>

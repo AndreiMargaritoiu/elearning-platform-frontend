@@ -1,13 +1,5 @@
 import Modal from 'react-modal';
 import React, { useState } from 'react';
-
-import {
-  MentoringModalBodyContainer,
-  MentoringModalContainer,
-  MentoringModalFooterContainer,
-  MentoringModalHeaderContainer,
-  modalStyles,
-} from './AddEditMentorshipModalStyles';
 import {
   Button,
   FormControl,
@@ -17,6 +9,14 @@ import {
   OutlinedInput,
 } from '@material-ui/core';
 import EuroIcon from '@material-ui/icons/Euro';
+
+import {
+  MentoringModalBodyContainer,
+  MentoringModalContainer,
+  MentoringModalFooterContainer,
+  MentoringModalHeaderContainer,
+  modalStyles,
+} from './AddEditMentorshipModalStyles';
 import { UpdateMentorshipRequest } from '../../domain/Mentorship';
 
 export interface MentoringModalState {
@@ -46,10 +46,11 @@ export const MentoringModal: React.FC<MentoringModalProps> = (
   const [modalPrice, setModalPrice] = useState<number>(price);
 
   const handleSubmit = (event: any) => {
-    updateMentoringInfo(id, {
+    const updateMentorshiprequest: UpdateMentorshipRequest = {
       description: modalDescription,
       price: modalPrice,
-    });
+    };
+    updateMentoringInfo(id, updateMentorshiprequest);
     setModalState({
       ...modalState,
       isOpen: false,
@@ -86,11 +87,11 @@ export const MentoringModal: React.FC<MentoringModalProps> = (
               />
               <FormHelperText>Required</FormHelperText>
             </FormControl>
-            <FormControl variant="outlined" className="text-field">
+            <FormControl variant="outlined" className="text-field-two">
               <InputLabel htmlFor="component-outlined">Price</InputLabel>
               <OutlinedInput
                 id="component-outlined"
-                value={modalPrice}
+                value={modalPrice || 0}
                 label="Price"
                 onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
                   setModalPrice(parseInt(event.target.value, 10))
@@ -107,7 +108,7 @@ export const MentoringModal: React.FC<MentoringModalProps> = (
         </form>
         <MentoringModalFooterContainer>
           <Button
-            className="secondary"
+            className="close-button"
             onClick={() =>
               setModalState({
                 ...modalState,
@@ -117,7 +118,9 @@ export const MentoringModal: React.FC<MentoringModalProps> = (
           >
             CLOSE
           </Button>
-          <Button onClick={handleSubmit}>SAVE</Button>
+          <Button className="save-button" onClick={handleSubmit}>
+            SAVE
+          </Button>
         </MentoringModalFooterContainer>
       </MentoringModalContainer>
     </Modal>

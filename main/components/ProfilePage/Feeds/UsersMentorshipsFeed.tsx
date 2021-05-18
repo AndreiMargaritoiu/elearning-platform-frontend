@@ -1,5 +1,8 @@
 import { Button } from '@material-ui/core';
 import React, { useState } from 'react';
+import Media from 'react-media';
+import EditIcon from '@material-ui/icons/Edit';
+import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline';
 
 import {
   Mentorship,
@@ -61,30 +64,52 @@ export const UsersMentorshipsFeed: React.FC<UsersMentorshipsFeedProps> = (
         )}
       </>
       {mentorships.map((mentorship: Mentorship) => (
-        <StyledProfileContentCard>
+        <StyledProfileContentCard className="mentorship-card">
           <StyledProfileContentCardDetails>
             <StyledProfileContentTitle>
               {mentorship.description}
             </StyledProfileContentTitle>
             <StyledProfileContentDescription>
-              Price: {mentorship.price}€
+              Price: {mentorship.price} €/hour
             </StyledProfileContentDescription>
           </StyledProfileContentCardDetails>
           {deleteMentorship && (
-            <StyledProfileContentCardDetails className="actions">
-              <Button
-                variant="contained"
-                onClick={() => handleEditMentorship(mentorship)}
-              >
-                EDIT
-              </Button>
-              <Button
-                variant="contained"
-                onClick={() => deleteMentorship(mentorship.id)}
-              >
-                DELETE
-              </Button>
-            </StyledProfileContentCardDetails>
+            <Media
+              queries={{
+                mobile: `(max-width: 767px)`,
+                tablet: `(min-width: 768px)`,
+              }}
+            >
+              {(matches) =>
+                !matches.mobile && matches.tablet ? (
+                  <StyledProfileContentCardDetails className="actions">
+                    <Button
+                      variant="contained"
+                      className="first-button"
+                      onClick={() => handleEditMentorship(mentorship)}
+                    >
+                      EDIT
+                    </Button>
+                    <Button
+                      variant="contained"
+                      onClick={() => deleteMentorship(mentorship.id)}
+                    >
+                      DELETE
+                    </Button>
+                  </StyledProfileContentCardDetails>
+                ) : (
+                  <StyledProfileContentCardDetails className="actions">
+                    <EditIcon
+                      className="first-button"
+                      onClick={() => handleEditMentorship(mentorship)}
+                    />
+                    <DeleteOutlineIcon
+                      onClick={() => deleteMentorship(mentorship.id)}
+                    />
+                  </StyledProfileContentCardDetails>
+                )
+              }
+            </Media>
           )}
         </StyledProfileContentCard>
       ))}

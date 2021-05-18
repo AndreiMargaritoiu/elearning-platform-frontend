@@ -6,6 +6,15 @@ export const StyledProfilePage = styled.div`
   flex-direction: column;
   width: 80%;
   margin: 16px auto;
+
+  @media ${queries.tablet} {
+    width: auto;
+    margin: 16px 24px;
+  }
+
+  @media ${queries.mobile} {
+    margin: 8px 16px;
+  }
 `;
 
 export const StyledProfileDetails = styled.div`
@@ -14,12 +23,20 @@ export const StyledProfileDetails = styled.div`
   padding-bottom: 24px;
   border-bottom: 2px solid ${color.light.tertiary};
   align-items: center;
+
+  @media ${queries.mobile} {
+    padding-bottom: 12px;
+  }
 `;
 
 export const StyledProfileStats = styled.div`
   display: flex;
   flex-direction: column;
   margin-left: 60px;
+
+  @media ${queries.mobile} {
+    margin-left: 16px;
+  }
 `;
 
 export const StyledProfileUsername = styled.label`
@@ -39,6 +56,10 @@ export const StyledProfileNumericalStats = styled.div`
   flex-direction: row;
   justify-content: space-between;
   margin-top: 24px;
+
+  @media ${queries.mobile} {
+    margin-top: 12px;
+  }
 `;
 
 export const StyledProfileNumericalElement = styled.div`
@@ -46,13 +67,17 @@ export const StyledProfileNumericalElement = styled.div`
   flex-direction: column;
   text-align: center;
   margin-right: 40px;
+
+  @media ${queries.mobile} {
+    margin-right: 12px;
+  }
 `;
 
 export const StyledProfileNumericalStatsText = styled.label`
-  font-size: 24px;
+  font-size: 20px;
 
   @media ${queries.tablet} {
-    font-size: 20px;
+    font-size: 18px;
   }
 
   @media ${queries.mobile} {
@@ -64,31 +89,43 @@ export const StyledProfileContentPicker = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-around;
-  margin: 24px 0;
+  margin: 20px 0;
+
+  @media ${queries.tablet} {
+    margin: 16px 0;
+  }
+
+  @media ${queries.mobile} {
+    margin: 8px 0;
+  }
 `;
 
 export const StyledProfilePickerElement = styled.div`
   display: flex;
   flex-direction: row;
-  margin-right: 40px;
+  align-items: center;
   cursor: pointer;
 
   &.is-selected {
     border-bottom: 4px solid ${color.light.tertiary};
+
+    @media ${queries.mobile} {
+      border-bottom: 2px solid ${color.light.tertiary};
+    }
   }
 `;
 
 export const StyledProfilePickerLabel = styled.label`
-  font-size: 24px;
+  font-size: 22px;
   cursor: pointer;
   margin-left: 4px;
 
   @media ${queries.tablet} {
-    font-size: 20px;
+    font-size: 18px;
   }
 
   @media ${queries.mobile} {
-    font-size: 16px;
+    display: none;
   }
 `;
 
@@ -100,4 +137,14 @@ export const StyledProfileImage = styled.div<{
   height: 120px;
   width: 120px;
   border-radius: 50%;
+
+  @media ${queries.tablet} {
+    height: 100px;
+    width: 100px;
+  }
+
+  @media ${queries.mobile} {
+    height: 60px;
+    width: 60px;
+  }
 `;

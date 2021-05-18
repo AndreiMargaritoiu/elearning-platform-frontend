@@ -22,5 +22,5 @@ export interface AddVideoRequest {
 export interface UpdateVideoRequest {
   title?: string;
   description?: string;
-  serachIndex?: string[];
+  searchIndex?: string[];
 }

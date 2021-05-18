@@ -25,5 +25,5 @@ export interface UpdatePlaylistRequest {
   title?: string;
   description?: string;
   videoRefs?: string[];
-  serachIndex?: string[];
+  searchIndex?: string[];
 }

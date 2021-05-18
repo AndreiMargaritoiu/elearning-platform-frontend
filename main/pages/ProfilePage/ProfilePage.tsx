@@ -17,9 +17,9 @@ import {
   StyledProfileStats,
   StyledProfileUsername,
 } from './ProfilePageStyles';
-import { UsersPlaylistsFeed } from '../../components/ProfilePage/Feeds/UsersPlaylistsFeed';
-import { UsersVideosFeed } from '../../components/ProfilePage/Feeds/UsersVideoFeed';
 import { UsersMentorshipsFeed } from '../../components/ProfilePage/Feeds/UsersMentorshipsFeed';
+import { PersonalVideosFeed } from '../../components/ProfilePage/Feeds/PersonalVideosFeed';
+import { PersonalPlaylistsFeed } from '../../components/ProfilePage/Feeds/PersonalPlaylistsFeed';
 
 const ProfilePage: FC<ProfilePageProps & ProfileDispatchProps> = (props) => {
   const {
@@ -49,9 +49,6 @@ const ProfilePage: FC<ProfilePageProps & ProfileDispatchProps> = (props) => {
   //   getVideos(getVideosRequest);
   // });
 
-  console.log(playlists);
-  console.log(videos);
-
   const setPage = (page?: string) => {
     switch (page) {
       case 'Playlists':
@@ -75,12 +72,7 @@ const ProfilePage: FC<ProfilePageProps & ProfileDispatchProps> = (props) => {
   return (
     <StyledProfilePage>
       <StyledProfileDetails>
-        <StyledProfileImage
-          imgSrc={
-            'https://firebasestorage.googleapis.com/v0/b/elearning-platform-e75ed.appspot.com/o/users%2F2HL2DsCxtUTnDhAYAftKSEDg6ah2%2F2HL2DsCxtUTnDhAYAftKSEDg6ah2?alt=media&token=ba5c0082-c6d2-4492-807e-98a2283f44ce'
-          }
-          role="img"
-        />
+        <StyledProfileImage imgSrc={appUser.photoUrl} role="img" />
         <StyledProfileStats>
           <StyledProfileUsername>{appUser.username}</StyledProfileUsername>
           <StyledProfileNumericalStats>
@@ -131,14 +123,14 @@ const ProfilePage: FC<ProfilePageProps & ProfileDispatchProps> = (props) => {
         </StyledProfilePickerElement>
       </StyledProfileContentPicker>
       {isPlaylistPage && (
-        <UsersPlaylistsFeed
+        <PersonalPlaylistsFeed
           playlists={playlists}
           deletePlaylist={deletePlaylist}
           updatePlaylist={updatePlaylist}
         />
       )}
       {isVideoPage && (
-        <UsersVideosFeed
+        <PersonalVideosFeed
           videos={videos}
           deleteVideo={deleteVideo}
           updateVideo={updateVideo}
