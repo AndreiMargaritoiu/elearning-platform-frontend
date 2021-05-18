@@ -4,12 +4,10 @@ import { color, queries } from '../../components/theme';
 export const StyledVideoPage = styled.div`
   display: flex;
   flex-direction: column;
-  margin: 0 10%;
-  padding: 24px;
+  margin: 0 48px;
 
   @media ${queries.tablet} {
     margin: 0 24px;
-    padding: 16px;
   }
 
   @media ${queries.mobile} {
@@ -20,65 +18,37 @@ export const StyledVideoPage = styled.div`
 export const StyledMainVideoCard = styled.div`
   display: flex;
   flex-direction: column;
-  padding: 36px;
   background-color: ${color.light.primary};
 
   @media ${queries.tablet} {
-    padding: 24px;
+    margin-bottom: 24px;
   }
 
-  @media ${queries.mobile} {
-    padding: 16px;
+  .player-wrapper {
+    position: relative;
+    padding-top: 56.25%;
   }
-`;
 
-export const StyledSecondaryVideosContainer = styled.div`
-  .other-modules-carousel {
-    .react-multi-carousel-item {
-      transform-style: unset;
-    }
-
-    .react-multiple-carousel__arrow {
-      width: 28px;
-      height: 28px;
-      min-width: 28px;
-      min-height: 28px;
-      border: 2px solid ${color.light.primary};
-      background-color: ${color.dark.primary};
-      position: absolute;
-      border-radius: 100%;
-
-      &:before {
-        font-size: 12px;
-        font-weight: bold;
-      }
-    }
-
-    .react-multiple-carousel__arrow--left {
-      left: 0;
-    }
-
-    .react-multiple-carousel__arrow--right {
-      right: 0;
-    }
+  .react-player {
+    position: absolute;
+    top: 0;
+    left: 0;
   }
 `;
 
-export const StyledSecondaryVideoCard = styled.div`
+export const StyledVideoUserDiv = styled.div`
+  font-size: 20px;
   display: flex;
-  flex-direction: column;
-  padding: 16px;
-  background-color: ${color.light.primary};
-  cursor: pointer;
-  width: 300px;
+  flex-direction: row;
+  margin-top: 8px;
 
-  @media ${queries.tablet} {
-    padding: 24px;
-    margin-bottom: 8px;
+  @media ${queries.mobile} {
+    font-size: 18px;
   }
 
   @media ${queries.mobile} {
-    padding: 16px;
+    font-size: 16px;
+    margin-top: 4px;
   }
 `;
 
@@ -89,5 +59,95 @@ export const StyledVideoAuthor = styled.label`
 
   &:hover {
     color: ${color.other.primary};
+  }
+`;
+
+export const StyledWatchNextLabel = styled.label`
+  font-size: 22px;
+  line-height: 32px;
+  margin-left: 48px;
+
+  @media ${queries.tablet} {
+    font-size: 20px;
+    margin: 0;
+  }
+
+  @media ${queries.mobile} {
+    font-size: 18px;
+  }
+`;
+
+export const StyledNextVideosContainer = styled.div<{ height: number }>`
+  display: flex;
+  flex-direction: column;
+  margin-left: 48px;
+  overflow: scroll;
+  height: ${({ height }) => height}px;
+
+  @media ${queries.tablet} {
+    margin-left: 0;
+    height: auto;
+  }
+`;
+
+export const StyledNextVideoCard = styled.div`
+  display: flex;
+  flex-direction: row;
+  background-color: ${color.light.secondary};
+  cursor: pointer;
+
+  :not(:last-child) {
+    margin-bottom: 16px;
+  }
+
+  @media ${queries.tablet} {
+    margin-bottom: 16px;
+  }
+`;
+
+export const StyledNextImageContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  flex-basis: 204px;
+
+  @media ${queries.tablet} {
+    flex-basis: 306px;
+  }
+
+  @media ${queries.mobile} {
+    flex-basis: 133px;
+  }
+`;
+
+export const StyledNextEpisodeImageWrapper = styled.div<{ imgSrc: string }>`
+  background-image: url(${(props) => props.imgSrc});
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center center;
+  padding-top: 56.25%;
+  width: 100%;
+  position: relative;
+`;
+
+export const StyledNextEpisodeImage = styled.img`
+  width: 100%;
+  height: auto;
+`;
+
+export const StyledNextEpisodeDetails = styled.div`
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 0;
+  margin-left: 8px;
+`;
+
+export const StyledNextEpisodeTitle = styled.label`
+  font-weight: 600;
+  font-size: 18px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+
+  @media ${queries.mobile} {
+    font-size: 16px;
   }
 `;

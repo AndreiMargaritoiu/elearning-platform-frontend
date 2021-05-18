@@ -13,7 +13,7 @@ import {
 import { SearchMentorshipsRequest } from '../domain/SearchMentorshipsRequest';
 import { SearchPlaylistsRequest } from '../domain/SearchPlaylistsRequest';
 import { SearchVideosRequest } from '../domain/SearchVideosRequest';
-import { TrackItemRequest } from '../domain/Tracking';
+import { Tracking, TrackItemRequest } from '../domain/Tracking';
 import { User } from '../domain/User';
 import { AddVideoRequest, UpdateVideoRequest, Video } from '../domain/Video';
 import { AddWorkshopRequest, Workshop } from '../domain/Workshop';
@@ -127,8 +127,15 @@ export class HttpApiService implements ApiService {
   }
 
   // Activity
-  saveTrackedItem(request: TrackItemRequest): Promise<void> {
-    return this.axiosInstance.post<TrackItemRequest, void>('tracking', request);
+  saveTrackedItem(request: TrackItemRequest): Promise<Tracking> {
+    return this.axiosInstance.post<TrackItemRequest, Tracking>(
+      'tracking',
+      request,
+    );
+  }
+
+  getTrackedItems(userId: string): Promise<Tracking[]> {
+    return this.axiosInstance.get<string, Tracking[]>(`tracking/${userId}`);
   }
 
   // Inquiries

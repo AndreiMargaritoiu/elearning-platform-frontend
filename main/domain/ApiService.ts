@@ -12,7 +12,7 @@ import {
 import { SearchMentorshipsRequest } from './SearchMentorshipsRequest';
 import { SearchPlaylistsRequest } from './SearchPlaylistsRequest';
 import { SearchVideosRequest } from './SearchVideosRequest';
-import { TrackItemRequest } from './Tracking';
+import { Tracking, TrackItemRequest } from './Tracking';
 import { User } from './User';
 import { AddVideoRequest, UpdateVideoRequest, Video } from './Video';
 import { AddWorkshopRequest, Workshop } from './Workshop';
@@ -44,7 +44,8 @@ export interface ApiService {
   getUsers(): Promise<User[]>;
   getUser(userId: string): Promise<User>;
 
-  saveTrackedItem(request: TrackItemRequest): Promise<void>;
+  saveTrackedItem(request: TrackItemRequest): Promise<Tracking>;
+  getTrackedItems(userId: string): Promise<Tracking[]>;
 
   sendInquiry(request: SendInquiryRequest): Promise<Inquiry>;
   getMyInquiries(userId: string): Promise<Inquiry[]>;

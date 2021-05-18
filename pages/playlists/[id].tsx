@@ -9,6 +9,7 @@ import { setInitialStateAction } from '../../main/store/setInitialStateAction';
 import { getPlaylistThunk } from '../../main/store/playlist/getPlaylistThunk';
 import { SearchVideosRequest } from '../../main/domain/SearchVideosRequest';
 import { getVideosThunk } from '../../main/store/videos/getVideosThunk';
+import { getTrackedItemsThunk } from '../../main/store/tracking/getTrackedItemsThunk';
 
 const PlaylistNextPage: NextPage = () => {
   const pageTitle = 'Playlist';
@@ -43,6 +44,14 @@ PlaylistNextPage.getInitialProps = async ({
 
   if (!result2.isOk) {
     return { statusCode: result2.error };
+  }
+
+  const result3 = await getTrackedItemsThunk(reduxStore.getState().appUser.uid)(
+    reduxStore.dispatch,
+  );
+
+  if (!result3.isOk) {
+    return { statusCode: result3.error };
   }
 
   return { reduxStore: reduxStore.getState() };

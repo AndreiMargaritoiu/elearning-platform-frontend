@@ -7,7 +7,7 @@ import {
   saveTrackedItemErrorAction,
   saveTrackedItemSuccessAction,
 } from './trackingActions';
-import { TrackItemRequest } from '../../domain/Tracking';
+import { Tracking, TrackItemRequest } from '../../domain/Tracking';
 
 export const saveTrackedItemThunk = (request: TrackItemRequest) => async (
   dispatch: Dispatch,
@@ -15,11 +15,13 @@ export const saveTrackedItemThunk = (request: TrackItemRequest) => async (
   try {
     dispatch(saveTrackedItemAction());
 
-    Context.apiService.saveTrackedItem(request);
+    const tracketItem: Tracking = await Context.apiService.saveTrackedItem(
+      request,
+    );
 
     console.log(request);
 
-    dispatch(saveTrackedItemSuccessAction(request));
+    dispatch(saveTrackedItemSuccessAction(tracketItem));
 
     return resultFormatter.ok<void, string>();
   } catch (e) {

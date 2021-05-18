@@ -34,6 +34,7 @@
     "next": "^9.4.4",
     "next-absolute-url": "^1.2.2",
     "query-string": "^6.13.1",
+    "rc-resize-observer": "^1.0.0",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-is": "^16.13.1",

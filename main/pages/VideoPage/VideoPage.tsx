@@ -1,136 +1,145 @@
 import Link from 'next/link';
-import React, { FC } from 'react';
+import React, { FC, useEffect, useState } from 'react';
 import ReactPlayer from 'react-player';
-import Carousel from 'react-multi-carousel';
+import Grid from '@material-ui/core/Grid';
+import ResizeObserver from 'rc-resize-observer';
 
 import {
-  StyledVideoCardThumbnail,
   StyledVideoCardTitle,
   StyledVideoCardDescription,
 } from '../Dashboard/DashboardPageStyles';
-import { VideoPageProps } from './VideoPageContainer';
+import { VideoPageDispatchProps, VideoPageProps } from './VideoPageContainer';
 import {
   StyledMainVideoCard,
-  StyledSecondaryVideoCard,
-  StyledSecondaryVideosContainer,
+  StyledNextEpisodeDetails,
+  StyledNextEpisodeImageWrapper,
+  StyledNextEpisodeTitle,
+  StyledNextImageContainer,
+  StyledNextVideoCard,
+  StyledNextVideosContainer,
   StyledVideoAuthor,
   StyledVideoPage,
+  StyledVideoUserDiv,
+  StyledWatchNextLabel,
 } from './VideoPageStyles';
 import { Context } from '../../Context';
-import { Video } from '../../domain/Video';
+import { User } from '../../domain/User';
+import { TrackItemRequest } from '../../domain/Tracking';
 
-const VideoPage: FC<VideoPageProps> = (props) => {
-  const { video, videos } = props;
+const VideoPage: FC<VideoPageProps & VideoPageDispatchProps> = (props) => {
+  const {
+    appUser,
+    video,
+    videos,
+    users,
+    trackings,
+    saveTrackedItem,
+    getTrackedItems,
+  } = props;
 
-  console.log(video);
-  console.log(videos);
+  const [videoPlayerHeight, setVideoPlayerHeight] = useState<number>(0);
+  const videoPlayerRef = React.createRef<HTMLDivElement>();
 
-  const responsive = {
-    desktop: {
-      breakpoint: {
-        max: 3000,
-        min: 1024,
-      },
-      items: 3,
-    },
-    tablet: {
-      breakpoint: {
-        max: 1023,
-        min: 570,
-      },
-      items: 2,
-    },
-    mobile: {
-      breakpoint: {
-        max: 569,
-        min: 100,
-      },
-      items: 1,
-    },
+  useEffect(() => {
+    setVideoPlayerHeight(videoPlayerRef.current?.clientHeight || 0);
+    // getTrackedItems(appUser.uid);
+  }, []);
+
+  const displayedUser = (userId: string): string => {
+    const foundUser: User | undefined = users.find(
+      (item) => item.uid === userId,
+    );
+    return foundUser ? foundUser.username : '';
+  };
+
+  const handleTrackPlayVideo = () => {
+    if (
+      trackings.find(
+        (item) => item.vid === video.id || item.uid === appUser.uid,
+      )
+    ) {
+      return;
+    }
+    const trackItemRequest: TrackItemRequest = {
+      uid: appUser.uid,
+      vid: video.id,
+    };
+    saveTrackedItem(trackItemRequest);
   };
 
   return (
     <StyledVideoPage>
-      <StyledMainVideoCard>
-        <StyledVideoCardTitle>{video.title}</StyledVideoCardTitle>
-        <ReactPlayer url={video.videoUrl} controls={true} />
-        <StyledVideoCardDescription>
-          by
-          <Link
-            href={`${Context.BASE_PATH}/profiles/[id]`}
-            as={`${Context.BASE_PATH}/profiles/${video.uid}`}
-          >
-            <StyledVideoAuthor>{video.uid}</StyledVideoAuthor>
-          </Link>
-        </StyledVideoCardDescription>
-        <StyledVideoCardDescription>
-          {video.description}
-        </StyledVideoCardDescription>
-      </StyledMainVideoCard>
-      <StyledSecondaryVideosContainer>
-        {/* {videos
-          .filter((position: Video) => position.id !== video.id)
-          .slice(0, 5)
-          .map((currentVideo: Video) => (
-            <Link
-              href={`${Context.BASE_PATH}/videos/[id]`}
-              as={`${Context.BASE_PATH}/videos/${currentVideo.id}`}
+      <Grid container>
+        <Grid item xs={12} sm={12} md={8}>
+          <StyledMainVideoCard>
+            <StyledVideoCardTitle>{video.title}</StyledVideoCardTitle>
+            <ResizeObserver
+              onResize={() => {
+                setVideoPlayerHeight(videoPlayerRef.current?.clientHeight || 0);
+              }}
             >
-              <StyledSecondaryVideoCard>
-                <StyledVideoCardTitle>
-                  {currentVideo.title}
-                </StyledVideoCardTitle>
-                <StyledVideoCardThumbnail
-                  imgSrc={currentVideo.thumbnailUrl || ''}
-                  role="img"
+              <div className="player-wrapper" ref={videoPlayerRef}>
+                <ReactPlayer
+                  url={video.videoUrl}
+                  controls={true}
+                  width="100%"
+                  height="100%"
+                  className="react-player"
+                  onPlay={handleTrackPlayVideo}
                 />
-                <StyledVideoCardUserDiv>
-                  by {currentVideo.uid}
-                </StyledVideoCardUserDiv>
-              </StyledSecondaryVideoCard>
-            </Link>
-          ))} */}
-        <Carousel
-          infinite
-          containerClass="other-modules-carousel"
-          draggable
-          focusOnSelect={false}
-          renderButtonGroupOutside={true}
-          renderDotsOutside={true}
-          responsive={responsive}
-          showDots={false}
-          slidesToSlide={1}
-          swipeable
-        >
-          {videos.map((currentVideo, index) => {
-            return (
+              </div>
+            </ResizeObserver>
+            <StyledVideoUserDiv>
+              by
+              <Link
+                href={`${Context.BASE_PATH}/profiles/[id]`}
+                as={`${Context.BASE_PATH}/profiles/${video.uid}`}
+              >
+                <StyledVideoAuthor>
+                  {displayedUser(video.uid)}
+                </StyledVideoAuthor>
+              </Link>
+            </StyledVideoUserDiv>
+            <StyledVideoCardDescription>
+              {video.description}
+            </StyledVideoCardDescription>
+          </StyledMainVideoCard>
+        </Grid>
+        <Grid item xs={12} sm={12} md={4}>
+          <StyledWatchNextLabel>Watch Next</StyledWatchNextLabel>
+          <StyledNextVideosContainer height={videoPlayerHeight}>
+            {videos.map((item) => (
               <Link
                 href={`${Context.BASE_PATH}/videos/[id]`}
-                as={`${Context.BASE_PATH}/videos/${currentVideo.id}`}
+                as={`${Context.BASE_PATH}/videos/${item.id}`}
+                passHref
               >
-                <StyledSecondaryVideoCard key={index}>
-                  <StyledVideoCardTitle>
-                    {currentVideo.title}
-                  </StyledVideoCardTitle>
-                  <StyledVideoCardThumbnail
-                    imgSrc={currentVideo.thumbnailUrl || ''}
-                    role="img"
-                  />
-                  <StyledVideoCardDescription className="bottom-navigation">
-                    by
-                    <Link
-                      href={`${Context.BASE_PATH}/profiles/[id]`}
-                      as={`${Context.BASE_PATH}/profiles/${currentVideo.uid}`}
-                    >
-                      <StyledVideoAuthor>{currentVideo.uid}</StyledVideoAuthor>
-                    </Link>
-                  </StyledVideoCardDescription>
-                </StyledSecondaryVideoCard>
+                <StyledNextVideoCard>
+                  <StyledNextImageContainer>
+                    <StyledNextEpisodeImageWrapper imgSrc={item.thumbnailUrl} />
+                  </StyledNextImageContainer>
+                  <StyledNextEpisodeDetails>
+                    <StyledNextEpisodeTitle>
+                      {item.title}
+                    </StyledNextEpisodeTitle>
+                    <StyledVideoUserDiv>
+                      by
+                      <Link
+                        href={`${Context.BASE_PATH}/profiles/[id]`}
+                        as={`${Context.BASE_PATH}/profiles/${video.uid}`}
+                      >
+                        <StyledVideoAuthor>
+                          {displayedUser(video.uid)}
+                        </StyledVideoAuthor>
+                      </Link>
+                    </StyledVideoUserDiv>
+                  </StyledNextEpisodeDetails>
+                </StyledNextVideoCard>
               </Link>
-            );
-          })}
-        </Carousel>
-      </StyledSecondaryVideosContainer>
+            ))}
+          </StyledNextVideosContainer>
+        </Grid>
+      </Grid>
     </StyledVideoPage>
   );
 };
