@@ -5,12 +5,14 @@ import { Store } from 'redux';
 import { SearchMentorshipsRequest } from '../../main/domain/SearchMentorshipsRequest';
 
 import { SearchPlaylistsRequest } from '../../main/domain/SearchPlaylistsRequest';
+import { SearchUsersRequest } from '../../main/domain/SearchUsersRequest';
 import { SearchVideosRequest } from '../../main/domain/SearchVideosRequest';
 import { ProfilePageContainer } from '../../main/pages/ProfilePage/ProfilePageContainer';
 import { AppState } from '../../main/store/AppState';
 import { getMentorshipsThunk } from '../../main/store/mentoring/getMentorshipsThunk';
 import { getPlaylistsThunk } from '../../main/store/playlists/getPlaylistsThunk';
 import { setInitialStateAction } from '../../main/store/setInitialStateAction';
+import { getUsersThunk } from '../../main/store/users/getUsersThunks';
 import { getVideosThunk } from '../../main/store/videos/getVideosThunk';
 
 const ProfileNextPage: NextPage = () => {
@@ -46,6 +48,11 @@ ProfileNextPage.getInitialProps = async ({
   });
   const result3 = await getMentorshipsThunk(request3)(reduxStore.dispatch);
 
+  const request4 = SearchUsersRequest.create({
+    followedBy: reduxStore.getState().appUser.uid,
+  });
+  const result4 = await getUsersThunk(request4)(reduxStore.dispatch);
+
   if (!result.isOk) {
     return { statusCode: result.error };
   }
@@ -56,6 +63,10 @@ ProfileNextPage.getInitialProps = async ({
 
   if (!result3.isOk) {
     return { statusCode: result3.error };
+  }
+
+  if (!result4.isOk) {
+    return { statusCode: result4.error };
   }
 
   return { reduxStore: reduxStore.getState() };

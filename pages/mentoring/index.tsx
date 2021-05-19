@@ -3,6 +3,7 @@ import Head from 'next/head';
 import React from 'react';
 import { Store } from 'redux';
 import { SearchMentorshipsRequest } from '../../main/domain/SearchMentorshipsRequest';
+import { SearchUsersRequest } from '../../main/domain/SearchUsersRequest';
 
 import { MentoringPageContainer } from '../../main/pages/MentoringPage/MentoringPageContainer';
 import { AppState } from '../../main/store/AppState';
@@ -32,7 +33,8 @@ MentoringNextPage.getInitialProps = async ({
   const request = SearchMentorshipsRequest.create(query);
   const result = await getMentorshipsThunk(request)(reduxStore.dispatch);
 
-  const result2 = await getUsersThunk()(reduxStore.dispatch);
+  const request2 = SearchUsersRequest.create();
+  const result2 = await getUsersThunk(request2)(reduxStore.dispatch);
 
   if (!result.isOk) {
     return { statusCode: result.error };

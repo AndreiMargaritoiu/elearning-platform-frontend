@@ -2,6 +2,7 @@ import { NextPage, NextPageContext } from 'next';
 import Head from 'next/head';
 import React from 'react';
 import { Store } from 'redux';
+import { SearchUsersRequest } from '../../main/domain/SearchUsersRequest';
 
 import { SearchVideosRequest } from '../../main/domain/SearchVideosRequest';
 import { DashboardPageContainer } from '../../main/pages/Dashboard/DashboardPageContainer';
@@ -32,7 +33,8 @@ Dashboard.getInitialProps = async ({
   const request = SearchVideosRequest.create(query);
   const result = await getVideosThunk(request)(reduxStore.dispatch);
 
-  const result2 = await getUsersThunk()(reduxStore.dispatch);
+  const request2 = SearchUsersRequest.create();
+  const result2 = await getUsersThunk(request2)(reduxStore.dispatch);
 
   if (!result.isOk) {
     return { statusCode: result.error };

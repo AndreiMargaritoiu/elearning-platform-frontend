@@ -11,9 +11,10 @@ import {
 } from './Playlist';
 import { SearchMentorshipsRequest } from './SearchMentorshipsRequest';
 import { SearchPlaylistsRequest } from './SearchPlaylistsRequest';
+import { SearchUsersRequest } from './SearchUsersRequest';
 import { SearchVideosRequest } from './SearchVideosRequest';
 import { Tracking, TrackItemRequest } from './Tracking';
-import { User } from './User';
+import { UpdateUserRequest, User } from './User';
 import { AddVideoRequest, UpdateVideoRequest, Video } from './Video';
 import { AddWorkshopRequest, Workshop } from './Workshop';
 
@@ -41,8 +42,9 @@ export interface ApiService {
   ): Promise<Mentorship>;
   deleteMentorship(mentroshipId: string): Promise<void>;
 
-  getUsers(): Promise<User[]>;
+  getUsers(request: SearchUsersRequest): Promise<User[]>;
   getUser(userId: string): Promise<User>;
+  updateUser(userId: string, request: UpdateUserRequest): Promise<User>;
 
   saveTrackedItem(request: TrackItemRequest): Promise<Tracking>;
   getTrackedItems(userId: string): Promise<Tracking[]>;

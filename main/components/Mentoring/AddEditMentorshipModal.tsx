@@ -85,7 +85,6 @@ export const MentoringModal: React.FC<MentoringModalProps> = (
                   setModalDescription(event.target.value)
                 }
               />
-              <FormHelperText>Required</FormHelperText>
             </FormControl>
             <FormControl variant="outlined" className="text-field-two">
               <InputLabel htmlFor="component-outlined">Price</InputLabel>
@@ -102,7 +101,6 @@ export const MentoringModal: React.FC<MentoringModalProps> = (
                   </InputAdornment>
                 }
               />
-              <FormHelperText>Required</FormHelperText>
             </FormControl>
           </MentoringModalBodyContainer>
         </form>

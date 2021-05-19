@@ -13,7 +13,7 @@ export const initialState: User = {
   uid: '',
   following: [],
   searchIndex: [],
-  profilePictureUrl: '',
+  photoUrl: '',
 };
 
 export const userReducer = (

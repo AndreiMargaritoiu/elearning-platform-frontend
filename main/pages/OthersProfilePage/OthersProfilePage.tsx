@@ -27,6 +27,11 @@ import {
   StyledProfilePickerLabel,
 } from '../ProfilePage/ProfilePageStyles';
 import Media from 'react-media';
+import { UpdateUserRequest } from '../../domain/User';
+import {
+  FollowingListModal,
+  FollowingListModalState,
+} from '../../components/ProfilePage/FollowingList/FollowingListModal';
 
 const OthersProfilePage: FC<
   OthersProfilePageProps & OthersProfileDispatchProps
@@ -34,17 +39,22 @@ const OthersProfilePage: FC<
   const {
     appUser,
     user,
+    users,
     playlists,
     videos,
     mentorships,
     getPlaylists,
     getVideos,
     getMentorships,
+    updateAppUser,
   } = props;
 
   const [isPlaylistPage, setPlaylistPage] = useState<boolean>(true);
   const [isVideoPage, setVideoPage] = useState<boolean>(false);
   const [isMentoringPage, setMentoringPage] = useState<boolean>(false);
+  const [modalState, setModalState] = useState<FollowingListModalState>({
+    isOpen: false,
+  });
 
   // useEffect(() => {
   //   const getPlaylistsRequest: GetPlaylistsRequest = {};
@@ -53,8 +63,7 @@ const OthersProfilePage: FC<
   //   getVideos(getVideosRequest);
   // });
 
-  console.log(playlists);
-  console.log(videos);
+  console.log('>>>>>', users);
 
   const setPage = (page?: string) => {
     switch (page) {
@@ -76,8 +85,29 @@ const OthersProfilePage: FC<
     }
   };
 
+  const handleFollowButton = () => {
+    const followedIds: string[] = appUser.following.includes(user.uid)
+      ? appUser.following.filter((item) => item !== user.uid)
+      : [...appUser.following, user.uid];
+    const updateAppUserReqest: UpdateUserRequest = {
+      following: followedIds,
+    };
+    updateAppUser(appUser.uid, updateAppUserReqest);
+  };
+
   return (
     <StyledOthersProfilePage>
+      <>
+        {modalState.isOpen && updateAppUser && (
+          <FollowingListModal
+            modalState={modalState}
+            appUser={appUser}
+            followingList={users}
+            setModalState={setModalState}
+            updateAppUser={updateAppUser}
+          />
+        )}
+      </>
       <StyledOthersProfileDetails>
         <StyledProfileImage imgSrc={user.photoUrl} role="img" />
         <StyledOthersProfileStats>
@@ -85,7 +115,10 @@ const OthersProfilePage: FC<
             {user.username}
           </StyledOthersProfileUsername>
           <StyledOthersProfileNumericalStats>
-            <StyledProfileNumericalElement>
+            <StyledProfileNumericalElement
+              className="following-list"
+              onClick={() => setModalState({ isOpen: true })}
+            >
               <StyledOthersProfileUsername>
                 {user.following.length}
               </StyledOthersProfileUsername>
@@ -118,11 +151,9 @@ const OthersProfilePage: FC<
           >
             {(matches) =>
               matches.mobile &&
-              !matches.tablet && (
-                <Button
-                  className="follow-button"
-                  onClick={() => console.log('hello')}
-                >
+              !matches.tablet &&
+              appUser.uid !== user.uid && (
+                <Button className="follow-button" onClick={handleFollowButton}>
                   {appUser.following.includes(user.uid) ? 'UNFOLLOW' : 'FOLLOW'}
                 </Button>
               )
@@ -137,11 +168,9 @@ const OthersProfilePage: FC<
         >
           {(matches) =>
             !matches.mobile &&
-            matches.tablet && (
-              <Button
-                className="follow-button"
-                onClick={() => console.log('hello')}
-              >
+            matches.tablet &&
+            appUser.uid !== user.uid && (
+              <Button className="follow-button" onClick={handleFollowButton}>
                 {appUser.following.includes(user.uid) ? 'UNFOLLOW' : 'FOLLOW'}
               </Button>
             )

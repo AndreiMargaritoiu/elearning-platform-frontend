@@ -81,7 +81,6 @@ export const EditVideoModal: React.FC<VideoModalProps> = (
                   setModalTitle(event.target.value)
                 }
               />
-              <FormHelperText>Required</FormHelperText>
             </FormControl>
             <FormControl variant="outlined" className="text-field-two">
               <InputLabel htmlFor="component-outlined">Description</InputLabel>
@@ -93,7 +92,6 @@ export const EditVideoModal: React.FC<VideoModalProps> = (
                   setModalDescription(event.target.value)
                 }
               />
-              <FormHelperText>Required</FormHelperText>
             </FormControl>
           </VideoModalBodyContainer>
         </form>

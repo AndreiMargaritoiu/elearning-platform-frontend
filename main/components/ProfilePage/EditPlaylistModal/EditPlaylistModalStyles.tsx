@@ -4,6 +4,7 @@ import { color, font, queries } from '../../theme';
 export const PlaylistModalContainer = styled.div`
   display: flex;
   flex-direction: column;
+  overflow: hidden;
 `;
 
 export const PlaylistModalHeaderContainer = styled.div`
@@ -18,6 +19,7 @@ export const PlaylistModalHeaderContainer = styled.div`
   @media ${queries.tablet} {
     padding: 16px 0 24px 0;
     margin: 0 16px;
+    font-size: 24px;
   }
 `;
 
@@ -124,9 +126,8 @@ export const modalStyles = {
     borderRadius: 0,
     borderColor: 'black',
     boxShadow: '4px 4px 0 0 #000000',
-    minHeight: '50%',
     minWidth: '50%',
-    maxHeight: '80%',
+    maxHeight: '70%',
     maxWidth: '85%',
   },
 };

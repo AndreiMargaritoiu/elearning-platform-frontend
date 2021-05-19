@@ -4,6 +4,7 @@ import { color, font, queries } from '../theme';
 export const MentoringModalContainer = styled.div`
   display: flex;
   flex-direction: column;
+  overflow: hidden;
 `;
 
 export const MentoringModalHeaderContainer = styled.div`
@@ -125,7 +126,6 @@ export const modalStyles = {
     borderRadius: 0,
     borderColor: 'black',
     boxShadow: '4px 4px 0 0 #000000',
-    minHeight: '50%',
     minWidth: '50%',
     maxHeight: '80%',
     maxWidth: '85%',

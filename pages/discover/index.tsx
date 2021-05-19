@@ -2,6 +2,7 @@ import { NextPage, NextPageContext } from 'next';
 import Head from 'next/head';
 import React from 'react';
 import { Store } from 'redux';
+import { SearchUsersRequest } from '../../main/domain/SearchUsersRequest';
 
 import { SearchVideosRequest } from '../../main/domain/SearchVideosRequest';
 import { DiscoverPageContainer } from '../../main/pages/Discover/DiscoverPageContainer';
@@ -37,7 +38,8 @@ DiscoverNextPage.getInitialProps = async ({
 
   const result2 = await getVideosThunk(request2)(reduxStore.dispatch);
 
-  const result3 = await getUsersThunk()(reduxStore.dispatch);
+  const request3 = SearchUsersRequest.create();
+  const result3 = await getUsersThunk(request3)(reduxStore.dispatch);
 
   if (!result.isOk) {
     return { statusCode: result.error };

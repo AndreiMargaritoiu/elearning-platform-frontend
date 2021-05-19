@@ -1,14 +1,6 @@
-import { Button } from '@material-ui/core';
 import React, { useState } from 'react';
-import EditIcon from '@material-ui/icons/Edit';
-import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline';
-import Media from 'react-media';
 
-import { Video, UpdateVideoRequest } from '../../../domain/Video';
-import {
-  EditVideoModal,
-  VideoModalState,
-} from '../EditVideoModal/EditVideoModal';
+import { Video } from '../../../domain/Video';
 import {
   StyledProfileContentCard,
   StyledProfileContentThumbnail,

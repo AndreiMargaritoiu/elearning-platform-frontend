@@ -12,9 +12,10 @@ import {
 } from '../domain/Playlist';
 import { SearchMentorshipsRequest } from '../domain/SearchMentorshipsRequest';
 import { SearchPlaylistsRequest } from '../domain/SearchPlaylistsRequest';
+import { SearchUsersRequest } from '../domain/SearchUsersRequest';
 import { SearchVideosRequest } from '../domain/SearchVideosRequest';
 import { Tracking, TrackItemRequest } from '../domain/Tracking';
-import { User } from '../domain/User';
+import { UpdateUserRequest, User } from '../domain/User';
 import { AddVideoRequest, UpdateVideoRequest, Video } from '../domain/Video';
 import { AddWorkshopRequest, Workshop } from '../domain/Workshop';
 import { AxiosService } from './AxiosService';
@@ -118,12 +119,20 @@ export class HttpApiService implements ApiService {
   }
 
   // Users
-  getUsers(): Promise<User[]> {
-    return this.axiosInstance.get<any, User[]>('users');
+  getUsers(request: SearchUsersRequest): Promise<User[]> {
+    const queryString = SearchUsersRequest.queryString(request);
+    return this.axiosInstance.get<any, User[]>(`users?${queryString}`);
   }
 
   getUser(userId: string): Promise<User> {
     return this.axiosInstance.get<string, User>(`users/${userId}`);
+  }
+
+  updateUser(userId: string, request: UpdateUserRequest): Promise<User> {
+    return this.axiosInstance.patch<UpdateUserRequest, User>(
+      `users/${userId}`,
+      request,
+    );
   }
 
   // Activity

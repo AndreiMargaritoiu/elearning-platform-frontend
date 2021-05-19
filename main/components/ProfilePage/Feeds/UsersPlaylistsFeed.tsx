@@ -1,14 +1,6 @@
-import { Button } from '@material-ui/core';
 import React, { useState } from 'react';
-import Media from 'react-media';
-import EditIcon from '@material-ui/icons/Edit';
-import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline';
 
-import { Playlist, UpdatePlaylistRequest } from '../../../domain/Playlist';
-import {
-  EditPlaylistModal,
-  PlaylistModalState,
-} from '../EditPlaylistModal/EditPlaylistModal';
+import { Playlist } from '../../../domain/Playlist';
 import {
   StyledProfileContentCard,
   StyledProfileContentThumbnail,

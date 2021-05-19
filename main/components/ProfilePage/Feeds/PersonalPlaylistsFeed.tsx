@@ -19,9 +19,11 @@ import {
   StyledProfilePlaylistThumbnailDiv,
   StyledProfilePlaylistVideosLength,
 } from './UsersContentFeedStyles';
+import { Video } from '../../../domain/Video';
 
 export interface PersonalPlaylistsFeedProps {
   playlists: Playlist[];
+  videos: Video[];
   deletePlaylist(playlistId: string): void;
   updatePlaylist(playlistId: string, request: UpdatePlaylistRequest): void;
 }
@@ -29,7 +31,7 @@ export interface PersonalPlaylistsFeedProps {
 export const PersonalPlaylistsFeed: React.FC<PersonalPlaylistsFeedProps> = (
   props: PersonalPlaylistsFeedProps,
 ) => {
-  const { playlists, deletePlaylist, updatePlaylist } = props;
+  const { playlists, videos, deletePlaylist, updatePlaylist } = props;
 
   const [modalState, setModalState] = useState<PlaylistModalState>({
     isOpen: false,
@@ -37,6 +39,7 @@ export const PersonalPlaylistsFeed: React.FC<PersonalPlaylistsFeedProps> = (
     title: '',
     description: '',
     videoRefs: [],
+    videos: [],
   });
 
   const handleEditPlaylist = (playlist: Playlist) => {
@@ -46,6 +49,7 @@ export const PersonalPlaylistsFeed: React.FC<PersonalPlaylistsFeedProps> = (
       title: playlist.title,
       description: playlist.description,
       videoRefs: playlist.videoRefs,
+      videos,
     });
   };
 

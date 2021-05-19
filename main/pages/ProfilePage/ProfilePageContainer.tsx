@@ -6,9 +6,10 @@ import { Playlist, UpdatePlaylistRequest } from '../../domain/Playlist';
 import { SearchMentorshipsRequest } from '../../domain/SearchMentorshipsRequest';
 import { SearchPlaylistsRequest } from '../../domain/SearchPlaylistsRequest';
 import { SearchVideosRequest } from '../../domain/SearchVideosRequest';
-import { User } from '../../domain/User';
+import { UpdateUserRequest, User } from '../../domain/User';
 import { UpdateVideoRequest, Video } from '../../domain/Video';
 import { AppState } from '../../store/AppState';
+import { updateAppUserThunk } from '../../store/appUser/updateAppUserThunk';
 import { deleteMentorshipThunk } from '../../store/mentoring/deleteMentorshipThunk';
 import { getMentorshipsThunk } from '../../store/mentoring/getMentorshipsThunk';
 import { updateMentorshipThunk } from '../../store/mentoring/updateMentorshipThunk';
@@ -22,6 +23,7 @@ import { ProfilePage } from './ProfilePage';
 
 export interface ProfilePageProps {
   appUser: User;
+  users: User[];
   playlists: Playlist[];
   videos: Video[];
   mentorships: Mentorship[];
@@ -40,15 +42,18 @@ export interface ProfileDispatchProps {
     mentorshipId: string,
     request: UpdateMentorshipRequest,
   ): void;
+  updateAppUser(userId: string, request: UpdateUserRequest): void;
 }
 
 const mapStateToProps = ({
   appUser,
+  users,
   playlists,
   videos,
   mentorships,
 }: AppState): ProfilePageProps => ({
   appUser,
+  users,
   playlists,
   videos,
   mentorships,
@@ -64,6 +69,7 @@ const mapDispatch: ProfileDispatchProps = {
   getMentorships: getMentorshipsThunk,
   deleteMentorship: deleteMentorshipThunk,
   updateMentorship: updateMentorshipThunk,
+  updateAppUser: updateAppUserThunk,
 };
 
 export const ProfilePageContainer = connect<

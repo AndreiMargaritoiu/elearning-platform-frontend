@@ -8,14 +8,15 @@ import {
   getUsersSuccessAction,
 } from './usersActions';
 import { User } from '../../domain/User';
+import { SearchUsersRequest } from '../../domain/SearchUsersRequest';
 
-export const getUsersThunk = () => async (
+export const getUsersThunk = (request: SearchUsersRequest) => async (
   dispatch: Dispatch,
 ): Promise<Result<void, string>> => {
   try {
     dispatch(getUsersAction());
 
-    const usersResponse: User[] = await Context.apiService.getUsers();
+    const usersResponse: User[] = await Context.apiService.getUsers(request);
 
     console.log(usersResponse);
 

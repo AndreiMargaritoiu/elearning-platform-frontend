@@ -7,6 +7,11 @@ export interface CreateUserPayload {
   photoUrl: string;
 }
 
+export interface UpdateUserRequest {
+  following?: string[];
+  photoUrl?: string;
+}
+
 export class User {
   static create(payload: CreateUserPayload): User {
     return new User(payload);

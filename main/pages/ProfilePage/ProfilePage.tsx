@@ -20,10 +20,15 @@ import {
 import { UsersMentorshipsFeed } from '../../components/ProfilePage/Feeds/UsersMentorshipsFeed';
 import { PersonalVideosFeed } from '../../components/ProfilePage/Feeds/PersonalVideosFeed';
 import { PersonalPlaylistsFeed } from '../../components/ProfilePage/Feeds/PersonalPlaylistsFeed';
+import {
+  FollowingListModal,
+  FollowingListModalState,
+} from '../../components/ProfilePage/FollowingList/FollowingListModal';
 
 const ProfilePage: FC<ProfilePageProps & ProfileDispatchProps> = (props) => {
   const {
     appUser,
+    users,
     playlists,
     videos,
     mentorships,
@@ -36,11 +41,17 @@ const ProfilePage: FC<ProfilePageProps & ProfileDispatchProps> = (props) => {
     getMentorships,
     deleteMentorship,
     updateMentorship,
+    updateAppUser,
   } = props;
 
   const [isPlaylistPage, setPlaylistPage] = useState<boolean>(true);
   const [isVideoPage, setVideoPage] = useState<boolean>(false);
   const [isMentoringPage, setMentoringPage] = useState<boolean>(false);
+  const [modalState, setModalState] = useState<FollowingListModalState>({
+    isOpen: false,
+  });
+
+  console.log('>>', users);
 
   // useEffect(() => {
   //   const getPlaylistsRequest: GetPlaylistsRequest = {};
@@ -71,12 +82,26 @@ const ProfilePage: FC<ProfilePageProps & ProfileDispatchProps> = (props) => {
 
   return (
     <StyledProfilePage>
+      <>
+        {modalState.isOpen && updateAppUser && (
+          <FollowingListModal
+            modalState={modalState}
+            appUser={appUser}
+            followingList={users}
+            setModalState={setModalState}
+            updateAppUser={updateAppUser}
+          />
+        )}
+      </>
       <StyledProfileDetails>
         <StyledProfileImage imgSrc={appUser.photoUrl} role="img" />
         <StyledProfileStats>
           <StyledProfileUsername>{appUser.username}</StyledProfileUsername>
           <StyledProfileNumericalStats>
-            <StyledProfileNumericalElement>
+            <StyledProfileNumericalElement
+              className="following-list"
+              onClick={() => setModalState({ isOpen: true })}
+            >
               <StyledProfileUsername>
                 {appUser.following.length}
               </StyledProfileUsername>
@@ -125,6 +150,7 @@ const ProfilePage: FC<ProfilePageProps & ProfileDispatchProps> = (props) => {
       {isPlaylistPage && (
         <PersonalPlaylistsFeed
           playlists={playlists}
+          videos={videos}
           deletePlaylist={deletePlaylist}
           updatePlaylist={updatePlaylist}
         />
