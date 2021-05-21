@@ -8,16 +8,19 @@ export const StyledAddContentContainer = styled.div`
   padding: 24px 72px;
   border: 1px solid ${color.dark.primary};
   position: relative;
-  width: 100%;
+  width: 600px;
+  min-width: 600px;
 
   @media ${queries.tablet} {
-    width: 76%;
+    width: initial;
+    min-width: 380px;
   }
 
-  &.smaller {
-    @media ${queries.tablet} {
-      width: 66%;
-    }
+  @media ${queries.mobile} {
+    margin: 0;
+    padding: 24px 16px;
+    width: inherit;
+    min-width: 0;
   }
 
   .add-button {

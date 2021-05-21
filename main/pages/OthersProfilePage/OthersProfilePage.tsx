@@ -109,7 +109,7 @@ const OthersProfilePage: FC<
         )}
       </>
       <StyledOthersProfileDetails>
-        <StyledProfileImage imgSrc={user.photoUrl} role="img" />
+        <StyledProfileImage imgSrc={user.photoUrl || ''} role="img" />
         <StyledOthersProfileStats>
           <StyledOthersProfileUsername>
             {user.username}

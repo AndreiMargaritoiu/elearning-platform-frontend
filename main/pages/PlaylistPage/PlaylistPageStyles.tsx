@@ -12,7 +12,7 @@ export const StyledPlaylistPage = styled.div`
   }
 
   @media ${queries.mobile} {
-    margin: 0 16px;
+    margin: 0;
   }
 `;
 
@@ -26,6 +26,7 @@ export const StyledPlaylistName = styled.label`
 
   @media ${queries.mobile} {
     font-size: 18px;
+    margin: 0 16px;
   }
 `;
 
@@ -42,5 +43,31 @@ export const StyledMainPlaylistCard = styled.div`
 
   @media ${queries.mobile} {
     padding: 16px;
+  }
+`;
+
+export const StyledMainVideoCardTitle = styled.label`
+  font-size: 28px;
+
+  @media ${queries.tablet} {
+    font-size: 24px;
+  }
+
+  @media ${queries.mobile} {
+    font-size: 20px;
+    margin: 0 16px;
+  }
+`;
+
+export const StyledMainVideoCardDescription = styled.label`
+  font-size: 24px;
+
+  @media ${queries.tablet} {
+    font-size: 20px;
+  }
+
+  @media ${queries.mobile} {
+    font-size: 16px;
+    margin: 0 16px;
   }
 `;

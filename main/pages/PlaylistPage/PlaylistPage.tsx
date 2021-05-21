@@ -2,6 +2,7 @@ import React, { FC, useState } from 'react';
 import ReactPlayer from 'react-player';
 import Grid from '@material-ui/core/Grid';
 import ResizeObserver from 'rc-resize-observer';
+import Link from 'next/link';
 
 import {
   PlaylistDispatchProps,
@@ -20,13 +21,10 @@ import {
   StyledVideoAuthor,
   StyledVideoUserDiv,
   StyledWatchNextLabel,
+  StyledMainVideoCardTitle,
+  StyledMainVideoCardDescription,
 } from '../VideoPage/VideoPageStyles';
-import {
-  StyledVideoCardDescription,
-  StyledVideoCardTitle,
-} from '../Dashboard/DashboardPageStyles';
 import { TrackItemRequest } from '../../domain/Tracking';
-import Link from 'next/link';
 import { Context } from '../../Context';
 
 const PlaylistPage: FC<PlaylistPageProps & PlaylistDispatchProps> = (props) => {
@@ -74,7 +72,9 @@ const PlaylistPage: FC<PlaylistPageProps & PlaylistDispatchProps> = (props) => {
         <Grid container>
           <Grid item xs={12} sm={12} md={8}>
             <StyledMainVideoCard>
-              <StyledVideoCardTitle>{currentVideo.title}</StyledVideoCardTitle>
+              <StyledMainVideoCardTitle>
+                {currentVideo.title}
+              </StyledMainVideoCardTitle>
               <ResizeObserver
                 onResize={() => {
                   setVideoPlayerHeight(
@@ -102,9 +102,9 @@ const PlaylistPage: FC<PlaylistPageProps & PlaylistDispatchProps> = (props) => {
                   <StyledVideoAuthor>caca</StyledVideoAuthor>
                 </Link>
               </StyledVideoUserDiv>
-              <StyledVideoCardDescription>
+              <StyledMainVideoCardDescription>
                 {currentVideo.description}
-              </StyledVideoCardDescription>
+              </StyledMainVideoCardDescription>
             </StyledMainVideoCard>
           </Grid>
           <Grid item xs={12} sm={12} md={4}>

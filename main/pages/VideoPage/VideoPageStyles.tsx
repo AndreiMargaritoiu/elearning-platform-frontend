@@ -11,7 +11,7 @@ export const StyledVideoPage = styled.div`
   }
 
   @media ${queries.mobile} {
-    margin: 0 16px;
+    margin: 0;
   }
 `;
 
@@ -36,6 +36,19 @@ export const StyledMainVideoCard = styled.div`
   }
 `;
 
+export const StyledMainVideoCardTitle = styled.label`
+  font-size: 28px;
+
+  @media ${queries.tablet} {
+    font-size: 24px;
+  }
+
+  @media ${queries.mobile} {
+    font-size: 20px;
+    margin: 0 16px;
+  }
+`;
+
 export const StyledVideoUserDiv = styled.div`
   font-size: 20px;
   display: flex;
@@ -48,7 +61,7 @@ export const StyledVideoUserDiv = styled.div`
 
   @media ${queries.mobile} {
     font-size: 16px;
-    margin-top: 4px;
+    margin: 4px 16px 0 16px;
   }
 `;
 
@@ -59,6 +72,19 @@ export const StyledVideoAuthor = styled.label`
 
   &:hover {
     color: ${color.other.primary};
+  }
+`;
+
+export const StyledMainVideoCardDescription = styled.label`
+  font-size: 24px;
+
+  @media ${queries.tablet} {
+    font-size: 20px;
+  }
+
+  @media ${queries.mobile} {
+    font-size: 16px;
+    margin: 0 16px;
   }
 `;
 
@@ -74,6 +100,7 @@ export const StyledWatchNextLabel = styled.label`
 
   @media ${queries.mobile} {
     font-size: 18px;
+    margin-left: 16px;
   }
 `;
 
@@ -87,6 +114,10 @@ export const StyledNextVideosContainer = styled.div<{ height: number }>`
   @media ${queries.tablet} {
     margin-left: 0;
     height: auto;
+  }
+
+  @media ${queries.mobile} {
+    margin: 0 16px;
   }
 `;
 

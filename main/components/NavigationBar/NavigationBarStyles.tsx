@@ -283,3 +283,29 @@ export const NavListContent = styled.span`
     }
   }
 `;
+
+export const NotificationsBell = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  cursor: pointer;
+  transition: max-height 0.3s ease-out;
+`;
+
+export const NotificationInfo = styled.span`
+  position: absolute;
+  border-radius: 100%;
+  width: 8px;
+  height: 8px;
+  background-color: ${color.accent.primary};
+  right: -4px;
+  top: -4px;
+
+  @media ${queries.laptop} {
+    width: 4px;
+    height: 4px;
+    right: -2px;
+    top: -2px;
+  }
+`;

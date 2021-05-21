@@ -67,7 +67,7 @@ const AddVideoPage: FC<AddVideoPageProps> = (props) => {
   };
 
   return (
-    <StyledAddContentContainer className="smaller">
+    <StyledAddContentContainer>
       <StyledAddContentSectionTitle>Video</StyledAddContentSectionTitle>
       <FormControl variant="outlined" className="text-field">
         <InputLabel htmlFor="component-outlined">Title</InputLabel>

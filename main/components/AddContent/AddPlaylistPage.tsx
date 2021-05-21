@@ -90,7 +90,7 @@ const AddPlaylistPage: FC<AddPlaylistPageProps> = (props) => {
   };
 
   return (
-    <StyledAddContentContainer className="smaller">
+    <StyledAddContentContainer>
       <StyledAddContentSectionTitle>Playlist</StyledAddContentSectionTitle>
       <FormControl variant="outlined" className="text-field">
         <InputLabel htmlFor="component-outlined">Title</InputLabel>
@@ -174,7 +174,7 @@ const AddPlaylistPage: FC<AddPlaylistPageProps> = (props) => {
             {option.title}
           </React.Fragment>
         )}
-        style={{ width: 400 }}
+        style={{ width: '100%' }}
         renderInput={(params: any) => (
           <TextField
             {...params}

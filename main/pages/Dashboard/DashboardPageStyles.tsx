@@ -14,7 +14,9 @@ export const StyledDashboard = styled.div`
   }
 
   @media ${queries.mobile} {
-    margin: 0 16px;
+    margin: 0;
+    padding: 0;
+    background-color: ${color.light.primary};
   }
 `;
 
@@ -23,6 +25,11 @@ export const StyledVideoCard = styled.div`
   flex-direction: column;
   background-color: ${color.light.primary};
   cursor: pointer;
+
+  @media ${queries.mobile} {
+    background-color: ${color.light.secondary};
+    border-radius: 10px;
+  }
 `;
 
 export const StyledVideoCardContentDiv = styled.div`

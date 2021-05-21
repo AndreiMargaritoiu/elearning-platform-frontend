@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { queries, color } from '../../components/theme';
 
-export const StyledLoginPage = styled.div`
+export const StyledSignupPage = styled.div`
   display: flex;
   flex-direction: column;
   top: 50%;
@@ -26,7 +26,7 @@ export const StyledLoginPage = styled.div`
     }
   }
 
-  .login-button {
+  .signup-button {
     width: 400px;
     margin-bottom: 72px;
 
@@ -36,7 +36,7 @@ export const StyledLoginPage = styled.div`
   }
 `;
 
-export const StyledDontHaveAnAccount = styled.label`
+export const StyledHaveAnAccount = styled.label`
   font-size: 20px;
   align-self: center;
 
@@ -48,7 +48,7 @@ export const StyledDontHaveAnAccount = styled.label`
     font-size: 16px;
   }
 
-  .sign-up {
+  .log-in {
     cursor: pointer;
     font-weight: 600;
   }

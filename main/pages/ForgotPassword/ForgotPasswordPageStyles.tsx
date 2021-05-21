@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { queries, color } from '../../components/theme';
 
-export const StyledLoginPage = styled.div`
+export const StyledForgotPasswordPage = styled.div`
   display: flex;
   flex-direction: column;
   top: 50%;
@@ -26,7 +26,7 @@ export const StyledLoginPage = styled.div`
     }
   }
 
-  .login-button {
+  .reset-pass-button {
     width: 400px;
     margin-bottom: 72px;
 

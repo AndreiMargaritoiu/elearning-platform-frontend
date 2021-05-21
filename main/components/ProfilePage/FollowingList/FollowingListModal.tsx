@@ -63,7 +63,10 @@ export const FollowingListModal: React.FC<FollowingListModalProps> = (
         <FollowingModalBodyContainer>
           {followingList.map((item) => (
             <FollowingCard>
-              <StyledFollowingProfileImage imgSrc={item.photoUrl} role="img" />
+              <StyledFollowingProfileImage
+                imgSrc={item.photoUrl || ''}
+                role="img"
+              />
               <label>{item.username}</label>
               {appUser.uid !== item.uid && (
                 <Button

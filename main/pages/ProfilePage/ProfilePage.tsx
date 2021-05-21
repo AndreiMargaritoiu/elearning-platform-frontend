@@ -94,7 +94,7 @@ const ProfilePage: FC<ProfilePageProps & ProfileDispatchProps> = (props) => {
         )}
       </>
       <StyledProfileDetails>
-        <StyledProfileImage imgSrc={appUser.photoUrl} role="img" />
+        <StyledProfileImage imgSrc={appUser.photoUrl || ''} role="img" />
         <StyledProfileStats>
           <StyledProfileUsername>{appUser.username}</StyledProfileUsername>
           <StyledProfileNumericalStats>

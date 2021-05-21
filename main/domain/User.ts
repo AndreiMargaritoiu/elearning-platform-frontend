@@ -4,7 +4,7 @@ export interface CreateUserPayload {
   uid: string;
   following: string[];
   searchIndex: string[];
-  photoUrl: string;
+  photoUrl?: string;
 }
 
 export interface UpdateUserRequest {
@@ -22,7 +22,7 @@ export class User {
   readonly username: string;
   readonly following: string[];
   readonly searchIndex: string[];
-  readonly photoUrl: string;
+  readonly photoUrl?: string;
 
   constructor(payload: CreateUserPayload) {
     const { uid, email, username, following, searchIndex, photoUrl } = payload;

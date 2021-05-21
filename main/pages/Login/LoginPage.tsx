@@ -6,8 +6,7 @@ import {
   OutlinedInput,
 } from '@material-ui/core';
 
-import { StyledLoginPage } from './LoginPageStyles';
-
+import { StyledDontHaveAnAccount, StyledLoginPage } from './LoginPageStyles';
 import { Context } from '../../Context';
 import { auth } from '../../services/Firebase';
 
@@ -19,7 +18,6 @@ export interface LoginFormValues {
 const LoginPage = () => {
   const [currentEmail, setEmail] = useState<string>('');
   const [currentPassword, setPassword] = useState<string>('');
-  const [isLoginPressed, updateLoginPressed] = useState<boolean>(false);
 
   const router = Context.routerService;
 
@@ -33,7 +31,7 @@ const LoginPage = () => {
   };
 
   const isSubmitButtonDisabled: boolean =
-    currentEmail.length === 0 || currentPassword.length === 0;
+    currentEmail.trim().length === 0 || currentPassword.trim().length === 0;
 
   const signIn = ({ email, password }: LoginFormValues) =>
     auth
@@ -48,39 +46,60 @@ const LoginPage = () => {
 
   return (
     <StyledLoginPage>
-      <form onSubmit={handleLogin} className="vertical-form">
-        <FormControl variant="outlined" className="text-field">
-          <InputLabel htmlFor="component-outlined">Email</InputLabel>
-          <OutlinedInput
-            id="component-outlined"
-            value={currentEmail}
-            onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
-              setEmail(event.target.value)
-            }
-            label="Email"
-          />
-        </FormControl>
-        <FormControl variant="outlined" className="text-field">
-          <InputLabel htmlFor="component-outlined">Password</InputLabel>
-          <OutlinedInput
-            id="component-outlined"
-            value={currentPassword}
-            onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
-              setPassword(event.target.value)
-            }
-            label="Password"
-          />
-        </FormControl>
-        <Button
-          type="submit"
-          variant="contained"
-          disabled={isSubmitButtonDisabled}
-          className="add-user-button"
-          onClick={() => updateLoginPressed(true)}
+      <FormControl variant="outlined" className="text-field">
+        <InputLabel htmlFor="component-outlined">Email</InputLabel>
+        <OutlinedInput
+          id="component-outlined"
+          value={currentEmail}
+          onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
+            setEmail(event.target.value)
+          }
+          label="Email"
+        />
+      </FormControl>
+      <FormControl variant="outlined" className="text-field">
+        <InputLabel htmlFor="component-outlined">Password</InputLabel>
+        <OutlinedInput
+          id="component-outlined"
+          value={currentPassword}
+          type="password"
+          onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
+            setPassword(event.target.value)
+          }
+          label="Password"
+        />
+      </FormControl>
+      <Button
+        type="submit"
+        variant="contained"
+        disabled={isSubmitButtonDisabled}
+        className="login-button"
+        onClick={handleLogin}
+      >
+        Login
+      </Button>
+      <StyledDontHaveAnAccount>
+        Forgot your password?{' '}
+        <StyledDontHaveAnAccount
+          className="sign-up"
+          onClick={() => {
+            router.push('reset-password');
+          }}
         >
-          Login
-        </Button>
-      </form>
+          Reset it!
+        </StyledDontHaveAnAccount>
+      </StyledDontHaveAnAccount>
+      <StyledDontHaveAnAccount>
+        Don't have an account?{' '}
+        <StyledDontHaveAnAccount
+          className="sign-up"
+          onClick={() => {
+            router.push('signup');
+          }}
+        >
+          Sign Up!
+        </StyledDontHaveAnAccount>
+      </StyledDontHaveAnAccount>
     </StyledLoginPage>
   );
 };

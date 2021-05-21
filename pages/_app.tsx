@@ -21,7 +21,7 @@ Context.initialize({
   dateService: new MomentService(),
 });
 
-const publicRoutes = ['', '/login', '/signup', '/forgot-password'];
+const publicRoutes = ['', '/login', '/signup', '/reset-password'];
 
 class ElearningPlatform extends App<
   AppProps & { reduxStore: Store<AppState> }

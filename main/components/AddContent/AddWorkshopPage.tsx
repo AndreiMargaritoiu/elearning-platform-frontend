@@ -61,7 +61,7 @@ const AddWorkshopPage: FC<AddWorkshopPageProps> = (props) => {
   };
 
   return (
-    <StyledAddContentContainer className="smaller">
+    <StyledAddContentContainer>
       <StyledAddContentSectionTitle>Workshop</StyledAddContentSectionTitle>
       <FormControl variant="outlined" className="text-field">
         <InputLabel htmlFor="component-outlined">Description</InputLabel>

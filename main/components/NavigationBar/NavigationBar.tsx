@@ -8,6 +8,8 @@ import {
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React, { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
+import Media from 'react-media';
+import { useRouter } from 'next/router';
 
 import { Context } from '../../Context';
 import {
@@ -24,16 +26,18 @@ import {
   NavListContent,
   NavigationItemSpan,
   NavItemContainer,
+  NotificationsBell,
+  NotificationInfo,
 } from './NavigationBarStyles';
-
-import Media from 'react-media';
 import { User } from '../../domain/User';
-import { useRouter } from 'next/router';
 import { useOnClickOutside } from '../../utils/useOnClickOutside';
+import { auth } from '../../services/Firebase';
+import { Inquiry } from '../../domain/Inquiry';
 
-interface NavigationProps {
+export interface NavigationProps {
   appUser: User;
-  logout(user: User): void;
+  notifications: Inquiry[];
+  getMyNotifications(userId: string): void;
 }
 
 export const navItems = [
@@ -64,20 +68,8 @@ export const navItems = [
   },
 ];
 
-// export const logout = (
-//   setUserPianoInfo: (user: PianoUserAuthorization) => void,
-// ) => {
-//   Context.cookieService.removeCookie('uatr');
-//   Context.cookieService.removeCookie('uat');
-//   setUserPianoInfo({});
-
-//   // to support logging out from all windows
-//   window.localStorage.setItem('logout', Date.now().toString());
-//   Context.routerService.push('/');
-// };
-
 export const NavigationBar: React.FC<NavigationProps> = (props) => {
-  const { appUser, logout } = props;
+  const { appUser, notifications, getMyNotifications } = props;
 
   const navNode = useRef<HTMLDivElement>(null);
 
@@ -91,6 +83,7 @@ export const NavigationBar: React.FC<NavigationProps> = (props) => {
 
   useEffect(() => {
     isMobile = window.innerWidth < 768;
+    getMyNotifications(appUser.uid);
   });
 
   useOnClickOutside(
@@ -115,6 +108,17 @@ export const NavigationBar: React.FC<NavigationProps> = (props) => {
       setMenuToggle(false);
     }
     setLoginToggle(!loginToggle);
+  };
+
+  const handleLogout = () => {
+    auth
+      .signOut()
+      .then(() => {
+        Context.routerService.push('/login');
+      })
+      .catch((error) => {
+        return { error };
+      });
   };
 
   return (
@@ -231,7 +235,12 @@ export const NavigationBar: React.FC<NavigationProps> = (props) => {
                   : 'add-content'
               }
             >
-              <FontAwesomeIcon icon={faBell} size="1x" />
+              <NotificationsBell>
+                {notifications.some((item) => item.read === false) && (
+                  <NotificationInfo />
+                )}
+                <FontAwesomeIcon icon={faBell} size="1x" />
+              </NotificationsBell>
             </NavigationItem>
           </Link>
           <Link
@@ -270,13 +279,7 @@ export const NavigationBar: React.FC<NavigationProps> = (props) => {
                 <MenuButton className="logout">VIEW PROFILE</MenuButton>
               </Link>
               <Separator></Separator>
-              <MenuButton
-                className="logout"
-                onClick={() => {
-                  // logout(setUserPianoInfo);
-                  console.log('hello');
-                }}
-              >
+              <MenuButton className="logout" onClick={handleLogout}>
                 LOGOUT
               </MenuButton>
             </DropdownWrapper>

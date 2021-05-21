@@ -1,11 +1,13 @@
 import React, { FC, useEffect, useState } from 'react';
+import PlaylistPlayIcon from '@material-ui/icons/PlaylistPlay';
+import VideoLibraryIcon from '@material-ui/icons/VideoLibrary';
+import PeopleOutlineIcon from '@material-ui/icons/PeopleOutline';
+import EventIcon from '@material-ui/icons/Event';
 
 import { AddMentorshipPage } from '../../components/AddContent/AddMentorshipPage';
 import { AddPlaylistPage } from '../../components/AddContent/AddPlaylistPage';
 import { AddVideoPage } from '../../components/AddContent/AddVideoPage';
 import { AddWorkshopPage } from '../../components/AddContent/AddWorkshopPage';
-import { SearchVideosRequest } from '../../domain/SearchVideosRequest';
-import { getVideosThunk } from '../../store/videos/getVideosThunk';
 import {
   AddContentPageProps,
   AddContentPageDispatchProps,
@@ -13,7 +15,10 @@ import {
 import {
   StyledAddContentMenuItem,
   StyledAddContentPageContainer,
+  StyledAddContentPageDiv,
   StyledAddContentPageSection,
+  StyledAddContentPicker,
+  StyledAddContentPickerElement,
 } from './AddContentPageStyles';
 
 export enum PageOptions {
@@ -49,7 +54,7 @@ const AddContentPage: FC<AddContentPageProps & AddContentPageDispatchProps> = (
 
   return (
     <StyledAddContentPageContainer>
-      <StyledAddContentPageSection className="add-menu">
+      <StyledAddContentPageSection>
         <StyledAddContentMenuItem
           className={`${
             currentPage === PageOptions.MENTORSHIP ? 'active' : ''
@@ -77,7 +82,35 @@ const AddContentPage: FC<AddContentPageProps & AddContentPageDispatchProps> = (
           ADD WORKSHOP
         </StyledAddContentMenuItem>
       </StyledAddContentPageSection>
-      <StyledAddContentPageSection>
+      <StyledAddContentPicker>
+        <StyledAddContentPickerElement
+          className={currentPage === PageOptions.PLAYLIST ? 'is-selected' : ''}
+          onClick={() => setCurrentPage(PageOptions.PLAYLIST)}
+        >
+          <PlaylistPlayIcon />
+        </StyledAddContentPickerElement>
+        <StyledAddContentPickerElement
+          className={currentPage === PageOptions.VIDEO ? 'is-selected' : ''}
+          onClick={() => setCurrentPage(PageOptions.VIDEO)}
+        >
+          <VideoLibraryIcon />
+        </StyledAddContentPickerElement>
+        <StyledAddContentPickerElement
+          className={
+            currentPage === PageOptions.MENTORSHIP ? 'is-selected' : ''
+          }
+          onClick={() => setCurrentPage(PageOptions.MENTORSHIP)}
+        >
+          <PeopleOutlineIcon />
+        </StyledAddContentPickerElement>
+        <StyledAddContentPickerElement
+          className={currentPage === PageOptions.WORKSHOP ? 'is-selected' : ''}
+          onClick={() => setCurrentPage(PageOptions.WORKSHOP)}
+        >
+          <EventIcon />
+        </StyledAddContentPickerElement>
+      </StyledAddContentPicker>
+      <StyledAddContentPageDiv>
         {currentPage === PageOptions.MENTORSHIP && (
           <AddMentorshipPage appUser={appUser} addMentorship={addMentorship} />
         )}
@@ -94,7 +127,7 @@ const AddContentPage: FC<AddContentPageProps & AddContentPageDispatchProps> = (
         {currentPage === PageOptions.WORKSHOP && (
           <AddWorkshopPage appUser={appUser} addWorkshop={addWorkshop} />
         )}
-      </StyledAddContentPageSection>
+      </StyledAddContentPageDiv>
     </StyledAddContentPageContainer>
   );
 };

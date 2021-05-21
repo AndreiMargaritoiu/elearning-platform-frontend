@@ -50,7 +50,7 @@ const DashboardPage: FC<DashboardPageProps & DashboardDispatchProps> = (
     const foundUser: User | undefined = users.find(
       (item) => item.uid === userId,
     );
-    return foundUser ? foundUser.photoUrl : '';
+    return foundUser && foundUser.photoUrl ? foundUser.photoUrl : '';
   };
 
   return (

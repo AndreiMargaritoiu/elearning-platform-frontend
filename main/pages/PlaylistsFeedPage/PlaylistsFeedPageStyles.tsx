@@ -36,6 +36,15 @@ export const StyledPlaylistCard = styled.div`
   flex-direction: column;
   background-color: ${color.light.secondary};
   cursor: pointer;
+  border-radius: 20px;
+
+  @media ${queries.tablet} {
+    border-radius: 15px;
+  }
+
+  @media ${queries.mobile} {
+    border-radius: 10px;
+  }
 `;
 
 export const StyledPlaylistCardUserDiv = styled.div`
