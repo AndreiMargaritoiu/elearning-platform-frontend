@@ -83,7 +83,7 @@ export const NavigationBar: React.FC<NavigationProps> = (props) => {
 
   useEffect(() => {
     isMobile = window.innerWidth < 768;
-    getMyNotifications(appUser.uid);
+    // setInterval(() => getMyNotifications(appUser.uid), 60000*10);
   });
 
   useOnClickOutside(

@@ -29,6 +29,10 @@ export class HttpApiService implements ApiService {
     });
   }
 
+  setAuthToken(authToken: string) {
+    this.axiosInstance.setAuthToken(authToken);
+  }
+
   // Videos
   getVideos(request: SearchVideosRequest): Promise<Video[]> {
     return this.axiosInstance.get<SearchVideosRequest, Video[]>(

@@ -8,6 +8,7 @@ import axios, {
 export class AxiosService {
   private _apiConfig: AxiosRequestConfig;
   private _AXIOS: AxiosInstance;
+
   constructor(apiConfig: AxiosRequestConfig) {
     this._apiConfig = apiConfig;
     this._AXIOS = createAxiosInstance(this._apiConfig);
@@ -81,6 +82,10 @@ export class AxiosService {
       handleErrors(error);
       throw error;
     }
+  }
+
+  setAuthToken(authToken: string) {
+    this._AXIOS.defaults.headers.common.Authorization = authToken;
   }
 }
 

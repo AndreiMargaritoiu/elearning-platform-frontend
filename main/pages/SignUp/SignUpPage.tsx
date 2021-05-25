@@ -41,7 +41,7 @@ const SignUpPage = () => {
   const signUp = ({ email, username, password }: SignupFormValues) =>
     auth
       .createUserWithEmailAndPassword(email, password)
-      .then((response) => {
+      .then(async (response) => {
         if (response.user) {
           const following: string[] = [];
           const newUser: User = {
@@ -52,6 +52,8 @@ const SignUpPage = () => {
             following,
           };
           database.doc(`users/${response.user.uid}`).set(newUser);
+          const authToken: string = await response.user.getIdToken();
+          Context.apiService.setAuthToken(authToken);
         }
       })
       .then(() => {

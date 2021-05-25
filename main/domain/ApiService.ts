@@ -19,6 +19,8 @@ import { AddVideoRequest, UpdateVideoRequest, Video } from './Video';
 import { AddWorkshopRequest, Workshop } from './Workshop';
 
 export interface ApiService {
+  setAuthToken(authToken: string): void;
+
   getVideos(request: SearchVideosRequest): Promise<Video[]>;
   getVideo(videoId: string): Promise<Video>;
   addVideo(request: AddVideoRequest): Promise<Video>;

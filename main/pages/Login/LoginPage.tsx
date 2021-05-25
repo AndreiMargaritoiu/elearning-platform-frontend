@@ -36,9 +36,13 @@ const LoginPage = () => {
   const signIn = ({ email, password }: LoginFormValues) =>
     auth
       .signInWithEmailAndPassword(email, password)
-      .then((response) => {
-        router.push('dashboard');
-        return response.user;
+      .then(async (response) => {
+        if (response.user) {
+          const authToken: string = await response.user.getIdToken();
+          Context.apiService.setAuthToken(authToken);
+          router.push('dashboard');
+          return response.user;
+        }
       })
       .catch((error) => {
         return { error };
