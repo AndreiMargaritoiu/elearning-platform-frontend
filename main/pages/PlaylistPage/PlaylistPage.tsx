@@ -99,7 +99,7 @@ const PlaylistPage: FC<PlaylistPageProps & PlaylistDispatchProps> = (props) => {
                   href={`${Context.BASE_PATH}/profiles/[id]`}
                   as={`${Context.BASE_PATH}/profiles/${currentVideo.uid}`}
                 >
-                  <StyledVideoAuthor>caca</StyledVideoAuthor>
+                  <StyledVideoAuthor>Andrei</StyledVideoAuthor>
                 </Link>
               </StyledVideoUserDiv>
               <StyledMainVideoCardDescription>

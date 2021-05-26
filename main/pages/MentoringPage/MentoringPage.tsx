@@ -61,7 +61,8 @@ const MentoringPage: FC<MentoringPageProps & MentoringDispatchProps> = (
       mentorId,
       inquirerEmail: appUser.email,
     };
-    sendInquiry(request);
+    // sendInquiry(request);
+    Context.notificationsWebSocketService.onSendMessage(request);
   };
 
   const getUserProfilePic = (userId: string): string => {

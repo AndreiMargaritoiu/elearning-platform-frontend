@@ -7,12 +7,14 @@ import {
   GetInquiriesSuccessAction,
   InquiriesActionType,
   ReadInquiriesSuccessAction,
+  ReceiveInquirySuccessAction,
 } from './inquiriesActions';
 
 type ActionType =
   | SetInitialStateAction
   | GetInquiriesSuccessAction
-  | ReadInquiriesSuccessAction;
+  | ReadInquiriesSuccessAction
+  | ReceiveInquirySuccessAction;
 
 export const initialState: Inquiry[] = [];
 
@@ -25,6 +27,8 @@ export const inquiriesReducer = (
       return initialState;
     case InquiriesActionType.GET_INQUIRIES_SUCCESS:
       return action.payload.inquiries;
+    case InquiriesActionType.RECEIVE_INQUIRY_SUCCESS:
+      return [...inquiriesState, action.payload.inquiry];
     case InquiriesActionType.READ_INQUIRIES_SUCCESS:
       return inquiriesState.map((inquiry: Inquiry) =>
         action.payload.inquiries.includes(inquiry.id)

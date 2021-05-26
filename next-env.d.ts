@@ -23,3 +23,9 @@ declare const FIREBASE_MESSAGING_SENDER_ID: string = JSON.stringify(
 declare const FIREBASE_APP_ID: string = JSON.stringify(
   process.env.FIREBASE_APP_ID,
 );
+declare const WEB_SOCKET_BASE_URL: string = JSON.stringify(
+  process.env.WEB_SOCKET_BASE_URL,
+);
+declare const WEB_SOCKET_BASE_URL_SEND: string = JSON.stringify(
+  process.env.WEB_SOCKET_BASE_URL_SEND,
+);

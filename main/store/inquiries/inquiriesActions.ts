@@ -12,6 +12,7 @@ export enum InquiriesActionType {
   READ_INQUIRIES = 'READ_INQUIRIES',
   READ_INQUIRIES_SUCCESS = 'READ_INQUIRIES_SUCCESS',
   READ_INQUIRIES_ERROR = 'READ_INQUIRIES_ERROR',
+  RECEIVE_INQUIRY_SUCCESS = 'RECEIVE_INQUIRY_SUCCESS',
 }
 
 export interface GetInquiriesAction extends Action {
@@ -68,6 +69,13 @@ export interface SendInquiryErrorAction extends Action {
   };
 }
 
+export interface ReceiveInquirySuccessAction extends Action {
+  type: InquiriesActionType.RECEIVE_INQUIRY_SUCCESS;
+  payload: {
+    inquiry: Inquiry;
+  };
+}
+
 export const getInquiriesAction = (): GetInquiriesAction => ({
   type: InquiriesActionType.GET_INQUIRIES,
 });
@@ -120,4 +128,11 @@ export const sendInquiryErrorAction = (
 ): SendInquiryErrorAction => ({
   type: InquiriesActionType.SEND_INQUIRY_ERROR,
   payload: { error },
+});
+
+export const receiveInquirySuccessAction = (
+  inquiry: Inquiry,
+): ReceiveInquirySuccessAction => ({
+  type: InquiriesActionType.RECEIVE_INQUIRY_SUCCESS,
+  payload: { inquiry },
 });

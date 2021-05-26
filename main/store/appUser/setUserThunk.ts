@@ -1,4 +1,5 @@
 import { Dispatch } from 'redux';
+import { Context } from '../../Context';
 
 import { Result, resultFormatter } from '../../domain/Result';
 import { User } from '../../domain/User';
@@ -9,6 +10,8 @@ export const setUserThunk = (user: User) => async (
 ): Promise<Result<void, string>> => {
   try {
     dispatch(setUser(user));
+
+    Context.notificationsWebSocketService.initWebSocket(dispatch, user);
 
     return resultFormatter.ok<void, string>();
   } catch (e) {

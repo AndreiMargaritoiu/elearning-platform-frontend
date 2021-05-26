@@ -13,12 +13,14 @@ import { Context } from '../main/Context';
 import { HttpApiService } from '../main/services/HttpApiService';
 import { AppState } from '../main/store/AppState';
 import { MomentService } from '../main/services/MomentService';
+import { NotificationsWebSocketService } from '../main/services/NotificationsWebSocketService';
 
 Context.initialize({
   alertService: swal,
   apiService: new HttpApiService(),
   routerService: Router,
   dateService: new MomentService(),
+  notificationsWebSocketService: new NotificationsWebSocketService(),
 });
 
 const publicRoutes = ['', '/login', '/signup', '/reset-password'];

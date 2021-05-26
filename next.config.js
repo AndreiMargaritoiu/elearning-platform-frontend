@@ -13,6 +13,8 @@ module.exports = {
       FIREBASE_STORAGE_BUCKET: JSON.stringify(process.env.FIREBASE_STORAGE_BUCKET),
       FIREBASE_MESSAGING_SENDER_ID: JSON.stringify(process.env.FIREBASE_MESSAGING_SENDER_ID),
       FIREBASE_APP_ID: JSON.stringify(process.env.FIREBASE_APP_ID),
+      WEB_SOCKET_BASE_URL: JSON.stringify(process.env.WEB_SOCKET_BASE_URL),
+      WEB_SOCKET_BASE_URL_SEND: JSON.stringify(process.env.WEB_SOCKET_BASE_URL_SEND),
     });
 
     config.plugins.push(definePlugin);
