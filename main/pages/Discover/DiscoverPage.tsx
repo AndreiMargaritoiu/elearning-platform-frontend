@@ -91,7 +91,7 @@ const DiscoverPage: FC<DiscoverPageProps & DiscoverPageDispatchProps> = (
                   imgSrc={workshop.thumbnailUrl || ''}
                   role="img"
                 />
-                <StyledDiscoverWorkshopDetails>
+                <StyledDiscoverWorkshopDetails className="tag">
                   #{workshop.tag}
                 </StyledDiscoverWorkshopDetails>
                 <StyledDiscoverWorkshopDetailsDiv>

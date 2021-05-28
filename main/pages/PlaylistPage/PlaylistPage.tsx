@@ -23,13 +23,16 @@ import {
   StyledWatchNextLabel,
   StyledMainVideoCardTitle,
   StyledMainVideoCardDescription,
+  StyledNextEpisodeDescription,
 } from '../VideoPage/VideoPageStyles';
 import { TrackItemRequest } from '../../domain/Tracking';
 import { Context } from '../../Context';
+import { User } from '../../domain/User';
 
 const PlaylistPage: FC<PlaylistPageProps & PlaylistDispatchProps> = (props) => {
   const {
     appUser,
+    users,
     playlist,
     videos,
     trackings,
@@ -65,6 +68,13 @@ const PlaylistPage: FC<PlaylistPageProps & PlaylistDispatchProps> = (props) => {
     }
   };
 
+  const displayedUser = (userId: string): string => {
+    const foundUser: User | undefined = users.find(
+      (item) => item.uid === userId,
+    );
+    return foundUser ? foundUser.username : '';
+  };
+
   return (
     <StyledPlaylistPage>
       <StyledPlaylistName>{playlist.title}</StyledPlaylistName>
@@ -93,13 +103,15 @@ const PlaylistPage: FC<PlaylistPageProps & PlaylistDispatchProps> = (props) => {
                   />
                 </div>
               </ResizeObserver>
-              <StyledVideoUserDiv>
+              <StyledVideoUserDiv className="main-video">
                 by
                 <Link
                   href={`${Context.BASE_PATH}/profiles/[id]`}
                   as={`${Context.BASE_PATH}/profiles/${currentVideo.uid}`}
                 >
-                  <StyledVideoAuthor>caca</StyledVideoAuthor>
+                  <StyledVideoAuthor>
+                    {displayedUser(playlist.uid)}
+                  </StyledVideoAuthor>
                 </Link>
               </StyledVideoUserDiv>
               <StyledMainVideoCardDescription>
@@ -125,6 +137,9 @@ const PlaylistPage: FC<PlaylistPageProps & PlaylistDispatchProps> = (props) => {
                       <StyledNextEpisodeTitle>
                         {item.title}
                       </StyledNextEpisodeTitle>
+                      <StyledNextEpisodeDescription>
+                        {item.description}
+                      </StyledNextEpisodeDescription>
                     </StyledNextEpisodeDetails>
                   </StyledNextVideoCard>
                 ))}

@@ -19,6 +19,7 @@ import {
   StyledVideoUserDiv,
   StyledWatchNextLabel,
   StyledMainVideoCardDescription,
+  StyledNextEpisodeDescription,
 } from './VideoPageStyles';
 import { Context } from '../../Context';
 import { User } from '../../domain/User';
@@ -87,7 +88,7 @@ const VideoPage: FC<VideoPageProps & VideoPageDispatchProps> = (props) => {
                 />
               </div>
             </ResizeObserver>
-            <StyledVideoUserDiv>
+            <StyledVideoUserDiv className="main-video">
               by
               <Link
                 href={`${Context.BASE_PATH}/profiles/[id]`}
@@ -120,6 +121,9 @@ const VideoPage: FC<VideoPageProps & VideoPageDispatchProps> = (props) => {
                     <StyledNextEpisodeTitle>
                       {item.title}
                     </StyledNextEpisodeTitle>
+                    <StyledNextEpisodeDescription>
+                      {item.description}
+                    </StyledNextEpisodeDescription>
                     <StyledVideoUserDiv>
                       by
                       <Link

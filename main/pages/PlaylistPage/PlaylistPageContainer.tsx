@@ -16,6 +16,7 @@ export interface PlaylistPageProps {
   videos: Video[];
   playlist: Playlist;
   appUser: User;
+  users: User[];
   trackings: Tracking[];
 }
 
@@ -29,11 +30,13 @@ const mapStateToProps = ({
   videos,
   playlist,
   appUser,
+  users,
   trackings,
 }: AppState): PlaylistPageProps => ({
   videos,
   playlist,
   appUser,
+  users,
   trackings,
 });
 

@@ -5,6 +5,8 @@ import {
   NotificationsDispatchProps,
 } from './NotificationsPageContainer';
 import {
+  SeparatorStyles,
+  StyledNotificationsContainer,
   StyledNotificationsPage,
   StyledNotificationText,
 } from './NotificationsPageStyles';
@@ -28,12 +30,17 @@ const NotificationsPage: FC<
 
   return (
     <StyledNotificationsPage>
-      {inquiries.map((item) => (
-        <StyledNotificationText>
-          {item.inquirerEmail} wants to know more details about your mentorship
-          offer(s)
-        </StyledNotificationText>
-      ))}
+      <StyledNotificationsContainer>
+        {inquiries.map((item) => (
+          <>
+            <StyledNotificationText>
+              {item.inquirerEmail} wants to know more details about your
+              mentorship offer(s)
+            </StyledNotificationText>
+            <SeparatorStyles />
+          </>
+        ))}
+      </StyledNotificationsContainer>
     </StyledNotificationsPage>
   );
 };

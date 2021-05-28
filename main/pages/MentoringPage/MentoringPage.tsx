@@ -64,6 +64,13 @@ const MentoringPage: FC<MentoringPageProps & MentoringDispatchProps> = (
     sendInquiry(request);
   };
 
+  const displayedUser = (userId: string): string => {
+    const foundUser: User | undefined = users.find(
+      (item) => item.uid === userId,
+    );
+    return foundUser ? foundUser.username : '';
+  };
+
   const getUserProfilePic = (userId: string): string => {
     const foundUser: User | undefined = users.find(
       (item) => item.uid === userId,
@@ -103,7 +110,7 @@ const MentoringPage: FC<MentoringPageProps & MentoringDispatchProps> = (
                     role="img"
                   />
                   <StyledMentoringUsername>
-                    {mentorship.mentorEmail}
+                    {displayedUser(mentorship.mentorId)}
                   </StyledMentoringUsername>
                 </StyledMentoringCardUserDiv>
               </Link>

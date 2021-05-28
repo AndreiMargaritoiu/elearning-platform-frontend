@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import {
   Button,
   FormControl,
+  FormHelperText,
   InputLabel,
   OutlinedInput,
 } from '@material-ui/core';
@@ -9,6 +10,7 @@ import {
 import { StyledDontHaveAnAccount, StyledLoginPage } from './LoginPageStyles';
 import { Context } from '../../Context';
 import { auth } from '../../services/Firebase';
+import { Warning } from '@material-ui/icons';
 
 export interface LoginFormValues {
   email: string;
@@ -18,6 +20,7 @@ export interface LoginFormValues {
 const LoginPage = () => {
   const [currentEmail, setEmail] = useState<string>('');
   const [currentPassword, setPassword] = useState<string>('');
+  const [isSubmitPressed, setSubmitPressed] = useState<boolean>(false);
 
   const router = Context.routerService;
 
@@ -25,28 +28,39 @@ const LoginPage = () => {
     event.preventDefault();
 
     await signIn({
-      email: currentEmail,
-      password: currentPassword,
+      email: currentEmail.trim(),
+      password: currentPassword.trim(),
     });
   };
 
   const isSubmitButtonDisabled: boolean =
     currentEmail.trim().length === 0 || currentPassword.trim().length === 0;
 
-  const signIn = ({ email, password }: LoginFormValues) =>
-    auth
-      .signInWithEmailAndPassword(email, password)
-      .then(async (response) => {
-        if (response.user) {
-          const authToken: string = await response.user.getIdToken();
-          Context.apiService.setAuthToken(authToken);
-          router.push('dashboard');
-          return response.user;
-        }
-      })
-      .catch((error) => {
-        return { error };
-      });
+  const isEmailValid = (mailToCheck: string): boolean => {
+    const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    return re.test(mailToCheck.toLowerCase());
+  };
+
+  const signIn = ({ email, password }: LoginFormValues) => {
+    setSubmitPressed(true);
+    if (isEmailValid(email)) {
+      auth
+        .signInWithEmailAndPassword(email, password)
+        .then(async (response) => {
+          if (response.user) {
+            const authToken: string = await response.user.getIdToken();
+            Context.apiService.setAuthToken(authToken);
+            router.push('dashboard');
+            return response.user;
+          }
+        })
+        .catch((error) => {
+          Context.alertService.fire({
+            text: error,
+          });
+        });
+    }
+  };
 
   return (
     <StyledLoginPage>
@@ -60,6 +74,11 @@ const LoginPage = () => {
           }
           label="Email"
         />
+        {!isEmailValid(currentEmail) && isSubmitPressed && (
+          <FormHelperText className="error">
+            Invalid email format
+          </FormHelperText>
+        )}
       </FormControl>
       <FormControl variant="outlined" className="text-field">
         <InputLabel htmlFor="component-outlined">Password</InputLabel>

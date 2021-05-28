@@ -61,7 +61,11 @@ export const StyledVideoUserDiv = styled.div`
 
   @media ${queries.mobile} {
     font-size: 16px;
-    margin: 4px 16px 0 16px;
+    margin-top: 4px;
+
+    &.main-video {
+      margin: 4px 16px 0 16px;
+    }
   }
 `;
 
@@ -180,5 +184,15 @@ export const StyledNextEpisodeTitle = styled.label`
 
   @media ${queries.mobile} {
     font-size: 16px;
+  }
+`;
+
+export const StyledNextEpisodeDescription = styled.label`
+  font-size: 17px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+
+  @media ${queries.mobile} {
+    font-size: 15px;
   }
 `;

@@ -6,6 +6,8 @@ import { AppState } from '../store/AppState';
 import { connect } from 'react-redux';
 import { Inquiry } from '../domain/Inquiry';
 import { getMyInquiriesThunk } from '../store/inquiries/getMyInquiriesThunk';
+import { auth } from '../services/Firebase';
+import { Context } from '../Context';
 
 export interface LayoutStateProps {
   appUser: User;

@@ -13,6 +13,7 @@ import { Context } from '../main/Context';
 import { HttpApiService } from '../main/services/HttpApiService';
 import { AppState } from '../main/store/AppState';
 import { MomentService } from '../main/services/MomentService';
+import { auth } from '../main/services/Firebase';
 
 Context.initialize({
   alertService: swal,
@@ -33,6 +34,11 @@ class ElearningPlatform extends App<
 
     if (Component.getInitialProps) {
       pageProps = await Component.getInitialProps(ctx);
+    }
+
+    if (auth.currentUser) {
+      const token: string = await auth.currentUser.getIdToken();
+      Context.apiService.setAuthToken(token);
     }
 
     return { pageProps };

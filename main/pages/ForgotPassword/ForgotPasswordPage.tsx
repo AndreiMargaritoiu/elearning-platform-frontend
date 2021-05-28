@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import {
   Button,
   FormControl,
+  FormHelperText,
   InputLabel,
   OutlinedInput,
 } from '@material-ui/core';
@@ -15,26 +16,38 @@ import { auth } from '../../services/Firebase';
 
 const ForgotPasswordPage = () => {
   const [currentEmail, setEmail] = useState<string>('');
+  const [isSubmitPressed, setSubmitPressed] = useState<boolean>(false);
 
   const router = Context.routerService;
 
   const handleResetPassword = async (event: any) => {
     event.preventDefault();
 
-    await resetPassword(currentEmail);
+    await resetPassword(currentEmail.trim());
   };
 
   const isSubmitButtonDisabled: boolean = currentEmail.trim().length === 0;
 
-  const resetPassword = (email: string) =>
-    auth
-      .sendPasswordResetEmail(email)
-      .then((response) => {
-        router.push('login');
-      })
-      .catch((error) => {
-        return { error };
-      });
+  const isEmailValid = (mailToCheck: string): boolean => {
+    const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    return re.test(mailToCheck.toLowerCase());
+  };
+
+  const resetPassword = (email: string) => {
+    setSubmitPressed(true);
+    if (isEmailValid(email)) {
+      auth
+        .sendPasswordResetEmail(email)
+        .then((response) => {
+          router.push('login');
+        })
+        .catch((error) => {
+          Context.alertService.fire({
+            text: error,
+          });
+        });
+    }
+  };
 
   return (
     <StyledForgotPasswordPage>
@@ -48,6 +61,11 @@ const ForgotPasswordPage = () => {
           }
           label="Email"
         />
+        {!isEmailValid(currentEmail) && isSubmitPressed && (
+          <FormHelperText className="error">
+            Invalid email format
+          </FormHelperText>
+        )}
       </FormControl>
       <Button
         type="submit"

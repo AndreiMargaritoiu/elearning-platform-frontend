@@ -34,6 +34,10 @@ export const StyledSignupPage = styled.div`
       width: 100%;
     }
   }
+
+  .error {
+    color: ${color.accent.primary};
+  }
 `;
 
 export const StyledHaveAnAccount = styled.label`

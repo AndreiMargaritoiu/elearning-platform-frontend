@@ -34,6 +34,10 @@ export const StyledLoginPage = styled.div`
       width: 100%;
     }
   }
+
+  .error {
+    color: ${color.accent.primary};
+  }
 `;
 
 export const StyledDontHaveAnAccount = styled.label`
