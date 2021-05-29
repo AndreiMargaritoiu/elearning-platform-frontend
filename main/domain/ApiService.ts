@@ -57,4 +57,5 @@ export interface ApiService {
 
   getAllWorkshops(): Promise<Workshop[]>;
   addWorkshop(request: AddWorkshopRequest): Promise<Workshop>;
+  registerToWorkshop(workshopId: string): Promise<Workshop>;
 }

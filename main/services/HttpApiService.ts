@@ -178,4 +178,11 @@ export class HttpApiService implements ApiService {
       request,
     );
   }
+
+  registerToWorkshop(workshopId: string): Promise<Workshop> {
+    return this.axiosInstance.patch<string, Workshop>(
+      `workshops/${workshopId}`,
+      '',
+    );
+  }
 }

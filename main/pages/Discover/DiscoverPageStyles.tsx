@@ -75,6 +75,18 @@ export const StyledDiscoverContentCard = styled.div`
   background-color: ${color.light.secondary};
   border-radius: 5%;
   margin: 0 16px;
+
+  .register-button {
+    background-color: ${color.accent.primary};
+    color: ${color.light.primary};
+    font-weight: 600;
+  }
+
+  .unregister-button {
+    background-color: ${color.dark.primary};
+    color: ${color.light.primary};
+    font-weight: 600;
+  }
 `;
 
 export const StyledDiscoverWorkshopDescription = styled.label`

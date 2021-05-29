@@ -3,6 +3,7 @@ import React, { FC } from 'react';
 import Carousel from 'react-multi-carousel';
 import LocationOnIcon from '@material-ui/icons/LocationOn';
 import ScheduleIcon from '@material-ui/icons/Schedule';
+import { Button } from '@material-ui/core';
 
 import { Context } from '../../Context';
 import { User } from '../../domain/User';
@@ -28,7 +29,15 @@ import {
 const DiscoverPage: FC<DiscoverPageProps & DiscoverPageDispatchProps> = (
   props,
 ) => {
-  const { videos, workshops, users, getTrendingVideos, getWorkshops } = props;
+  const {
+    videos,
+    workshops,
+    users,
+    appUser,
+    getTrendingVideos,
+    getWorkshops,
+    registerToWorkshop,
+  } = props;
 
   console.log(videos);
 
@@ -106,6 +115,18 @@ const DiscoverPage: FC<DiscoverPageProps & DiscoverPageDispatchProps> = (
                     {DateService.timestampToDate(workshop.date)}
                   </StyledDiscoverWorkshopDetails>
                 </StyledDiscoverWorkshopDetailsDiv>
+                <Button
+                  className={
+                    workshop.participants.includes(appUser.email)
+                      ? 'unregister-button'
+                      : 'register-button'
+                  }
+                  onClick={() => registerToWorkshop(workshop.id)}
+                >
+                  {workshop.participants.includes(appUser.email)
+                    ? 'Unregister'
+                    : 'Register'}
+                </Button>
               </StyledDiscoverContentCard>
             );
           })}
