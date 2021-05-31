@@ -145,17 +145,33 @@ export const StyledDiscoverWorkshopDetails = styled.label`
   }
 
   &.tag {
-    padding: 0 16px;
+    padding: 0 16px 0 20px;
     margin-bottom: 8px;
 
     @media ${queries.tablet} {
-      padding: 0 12px;
+      padding: 0 12px 0 16px;
     }
 
     @media ${queries.mobile} {
       margin-bottom: 4px;
-      padding: 0 8px;
+      padding: 0 8px 0 12px;
     }
+  }
+`;
+
+export const StyledEventFullLabel = styled.label`
+  font-size: 18px;
+  color: ${color.accent.primary};
+  margin: 0 0 16px 16px;
+
+  @media ${queries.tablet} {
+    font-size: 16px;
+    margin: 0 0 16px 12px;
+  }
+
+  @media ${queries.mobile} {
+    font-size: 14px;
+    margin: 0 0 12px 12px;
   }
 `;
 

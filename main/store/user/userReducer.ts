@@ -14,6 +14,7 @@ export const initialState: User = {
   following: [],
   searchIndex: [],
   photoUrl: '',
+  admin: false,
 };
 
 export const userReducer = (

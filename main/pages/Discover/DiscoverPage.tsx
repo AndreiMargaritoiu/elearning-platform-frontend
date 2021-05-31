@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import React, { FC } from 'react';
+import React, { FC, useEffect } from 'react';
 import Carousel from 'react-multi-carousel';
 import LocationOnIcon from '@material-ui/icons/LocationOn';
 import ScheduleIcon from '@material-ui/icons/Schedule';
@@ -24,7 +24,12 @@ import {
   StyledDiscoverWorkshopDescription,
   StyledDiscoverWorkshopDetails,
   StyledDiscoverWorkshopDetailsDiv,
+  StyledEventFullLabel,
 } from './DiscoverPageStyles';
+import { Workshop } from '../../domain/Workshop';
+import { useRouter } from 'next/router';
+import { SearchVideosRequest } from '../../domain/SearchVideosRequest';
+import { setAuthTokenOnRefresh } from '../../utils/setAuthToken';
 
 const DiscoverPage: FC<DiscoverPageProps & DiscoverPageDispatchProps> = (
   props,
@@ -42,12 +47,32 @@ const DiscoverPage: FC<DiscoverPageProps & DiscoverPageDispatchProps> = (
   console.log(videos);
 
   const DateService = new MomentService();
+  const router = useRouter();
+
+  useEffect(() => {
+    setAuthTokenOnRefresh();
+    const getVideosReq = SearchVideosRequest.create({
+      trending: true,
+    });
+    getTrendingVideos(getVideosReq);
+    getWorkshops();
+  }, [router?.query]);
 
   const displayedUser = (userId: string): string => {
     const foundUser: User | undefined = users.find(
       (item) => item.uid === userId,
     );
     return foundUser ? foundUser.username : '';
+  };
+
+  const isEventAvailable = (workshop: Workshop): boolean => {
+    if (workshop.capacity) {
+      return (
+        workshop.participants.length < workshop.capacity ||
+        workshop.participants.includes(appUser.email)
+      );
+    }
+    return true;
   };
 
   const responsive = {
@@ -115,18 +140,22 @@ const DiscoverPage: FC<DiscoverPageProps & DiscoverPageDispatchProps> = (
                     {DateService.timestampToDate(workshop.date)}
                   </StyledDiscoverWorkshopDetails>
                 </StyledDiscoverWorkshopDetailsDiv>
-                <Button
-                  className={
-                    workshop.participants.includes(appUser.email)
-                      ? 'unregister-button'
-                      : 'register-button'
-                  }
-                  onClick={() => registerToWorkshop(workshop.id)}
-                >
-                  {workshop.participants.includes(appUser.email)
-                    ? 'Unregister'
-                    : 'Register'}
-                </Button>
+                {isEventAvailable(workshop) ? (
+                  <Button
+                    className={
+                      workshop.participants.includes(appUser.email)
+                        ? 'unregister-button'
+                        : 'register-button'
+                    }
+                    onClick={() => registerToWorkshop(workshop.id)}
+                  >
+                    {workshop.participants.includes(appUser.email)
+                      ? 'Unregister'
+                      : 'Register'}
+                  </Button>
+                ) : (
+                  <StyledEventFullLabel>The event is full</StyledEventFullLabel>
+                )}
               </StyledDiscoverContentCard>
             );
           })}

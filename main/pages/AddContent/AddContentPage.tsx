@@ -75,12 +75,16 @@ const AddContentPage: FC<AddContentPageProps & AddContentPageDispatchProps> = (
         >
           ADD PLAYLIST
         </StyledAddContentMenuItem>
-        <StyledAddContentMenuItem
-          className={`${currentPage === PageOptions.WORKSHOP ? 'active' : ''}`}
-          onClick={() => setCurrentPage(PageOptions.WORKSHOP)}
-        >
-          ADD WORKSHOP
-        </StyledAddContentMenuItem>
+        {appUser.admin && (
+          <StyledAddContentMenuItem
+            className={`${
+              currentPage === PageOptions.WORKSHOP ? 'active' : ''
+            }`}
+            onClick={() => setCurrentPage(PageOptions.WORKSHOP)}
+          >
+            ADD WORKSHOP
+          </StyledAddContentMenuItem>
+        )}
       </StyledAddContentPageSection>
       <StyledAddContentPicker>
         <StyledAddContentPickerElement
@@ -103,12 +107,16 @@ const AddContentPage: FC<AddContentPageProps & AddContentPageDispatchProps> = (
         >
           <PeopleOutlineIcon />
         </StyledAddContentPickerElement>
-        <StyledAddContentPickerElement
-          className={currentPage === PageOptions.WORKSHOP ? 'is-selected' : ''}
-          onClick={() => setCurrentPage(PageOptions.WORKSHOP)}
-        >
-          <EventIcon />
-        </StyledAddContentPickerElement>
+        {appUser.admin && (
+          <StyledAddContentPickerElement
+            className={
+              currentPage === PageOptions.WORKSHOP ? 'is-selected' : ''
+            }
+            onClick={() => setCurrentPage(PageOptions.WORKSHOP)}
+          >
+            <EventIcon />
+          </StyledAddContentPickerElement>
+        )}
       </StyledAddContentPicker>
       <StyledAddContentPageDiv>
         {currentPage === PageOptions.MENTORSHIP && (
@@ -124,7 +132,7 @@ const AddContentPage: FC<AddContentPageProps & AddContentPageDispatchProps> = (
             addPlaylist={addPlaylist}
           />
         )}
-        {currentPage === PageOptions.WORKSHOP && (
+        {currentPage === PageOptions.WORKSHOP && appUser.admin && (
           <AddWorkshopPage appUser={appUser} addWorkshop={addWorkshop} />
         )}
       </StyledAddContentPageDiv>

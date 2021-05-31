@@ -15,6 +15,7 @@ const user: User = {
   following: [],
   searchIndex: [],
   photoUrl: '',
+  admin: false,
 };
 
 export const appUserReducer = (

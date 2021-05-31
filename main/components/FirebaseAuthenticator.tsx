@@ -5,7 +5,8 @@ import Router from 'next/router';
 import { AppState } from '../store/AppState';
 import { User, userConverter } from '../domain/User';
 import { setUserThunk } from '../store/appUser/setUserThunk';
-import { app, database } from '../services/Firebase';
+import { app, auth, database } from '../services/Firebase';
+import { Context } from '../Context';
 
 interface StateProps {
   appUser: User;
@@ -40,6 +41,13 @@ export class UnconnectedFirebaseProvider extends React.Component<Props> {
         }
       } else {
         Router.push('/login');
+      }
+    });
+
+    app.auth().onIdTokenChanged(async () => {
+      if (auth.currentUser) {
+        const authToken: string = await auth.currentUser.getIdToken();
+        Context.apiService.setAuthToken(authToken);
       }
     });
   }

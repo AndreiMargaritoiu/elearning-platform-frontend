@@ -5,6 +5,7 @@ export interface CreateUserPayload {
   following: string[];
   searchIndex: string[];
   photoUrl?: string;
+  admin?: boolean;
 }
 
 export interface UpdateUserRequest {
@@ -23,9 +24,18 @@ export class User {
   readonly following: string[];
   readonly searchIndex: string[];
   readonly photoUrl?: string;
+  readonly admin?: boolean;
 
   constructor(payload: CreateUserPayload) {
-    const { uid, email, username, following, searchIndex, photoUrl } = payload;
+    const {
+      uid,
+      email,
+      username,
+      following,
+      searchIndex,
+      photoUrl,
+      admin,
+    } = payload;
 
     this.uid = uid;
     this.email = email;
@@ -33,6 +43,7 @@ export class User {
     this.following = following;
     this.searchIndex = searchIndex;
     this.photoUrl = photoUrl;
+    this.admin = admin;
   }
 }
 
@@ -45,6 +56,7 @@ export const userConverter = {
       following: user.following,
       searchIndex: user.searchIndex,
       photoUrl: user.photoUrl,
+      admin: user.admin,
     };
   },
   fromFirestore(snapshot: any, options: any) {
@@ -56,6 +68,7 @@ export const userConverter = {
       following: data.following,
       searchIndex: data.searchIndex,
       photoUrl: data.photoUrl,
+      admin: data.admin,
     };
     return new User(payload);
   },

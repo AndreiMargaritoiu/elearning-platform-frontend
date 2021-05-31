@@ -34,6 +34,7 @@ const AddWorkshopPage: FC<AddWorkshopPageProps> = (props) => {
     tag: '',
     location: '',
     thumbnailUrl: '',
+    capacity: 0,
     date: Date.now(),
     onlineEvent: true,
   });
@@ -111,6 +112,20 @@ const AddWorkshopPage: FC<AddWorkshopPageProps> = (props) => {
             </InputAdornment>
           }
           labelWidth={60}
+        />
+      </FormControl>
+      <FormControl variant="outlined" className="text-field">
+        <InputLabel htmlFor="component-outlined">Capacity</InputLabel>
+        <OutlinedInput
+          id="component-outlined"
+          value={newWorkshop.capacity || 0}
+          onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
+            setNewWorkshop({
+              ...newWorkshop,
+              capacity: parseInt(event.target.value, 10),
+            })
+          }
+          label="Capacity"
         />
       </FormControl>
       <TextField
