@@ -61,7 +61,6 @@ const PlaylistPage: FC<PlaylistPageProps & PlaylistDispatchProps> = (props) => {
         return;
       }
       const trackItemRequest: TrackItemRequest = {
-        uid: appUser.uid,
         vid: currentVideo.id,
       };
       saveTrackedItem(trackItemRequest);

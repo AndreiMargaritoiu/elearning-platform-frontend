@@ -6,6 +6,5 @@ export interface Tracking {
 }
 
 export interface TrackItemRequest {
-  uid: string;
   vid: string;
 }

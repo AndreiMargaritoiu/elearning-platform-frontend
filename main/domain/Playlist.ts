@@ -14,7 +14,6 @@ export interface AddPlaylistRequest {
   id: string;
   title: string;
   description: string;
-  uid: string;
   category: string;
   videoRefs: string[];
   searchIndex: string[];

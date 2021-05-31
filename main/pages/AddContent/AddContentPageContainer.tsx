@@ -21,10 +21,10 @@ export interface AddContentPageProps {
 }
 
 export interface AddContentPageDispatchProps {
-  addWorkshop(request: AddWorkshopRequest): void;
-  addMentorship(request: AddMentorshipRequest): void;
-  addVideo(request: AddVideoRequest): void;
-  addPlaylist(request: AddPlaylistRequest): void;
+  addWorkshop(request: AddWorkshopRequest): any;
+  addMentorship(request: AddMentorshipRequest): any;
+  addVideo(request: AddVideoRequest): any;
+  addPlaylist(request: AddPlaylistRequest): any;
   getVideos(request: SearchVideosRequest): void;
 }
 

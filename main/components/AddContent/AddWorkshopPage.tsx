@@ -10,7 +10,6 @@ import {
 import React, { FC, useState } from 'react';
 
 import { AddWorkshopRequest } from '../../domain/Workshop';
-import { User } from '../../domain/User';
 import {
   StyledAddContentContainer,
   StyledAddContentField,
@@ -20,14 +19,15 @@ import {
 import LocationOnIcon from '@material-ui/icons/LocationOn';
 import { MomentService } from '../../services/MomentService';
 import { storage } from '../../services/Firebase';
+import { SweetAlertResult } from 'sweetalert2';
+import { Context } from '../../Context';
 
 export interface AddWorkshopPageProps {
-  appUser: User;
-  addWorkshop(request: AddWorkshopRequest): void;
+  addWorkshop(request: AddWorkshopRequest): any;
 }
 
 const AddWorkshopPage: FC<AddWorkshopPageProps> = (props) => {
-  const { appUser, addWorkshop } = props;
+  const { addWorkshop } = props;
 
   const [newWorkshop, setNewWorkshop] = useState<AddWorkshopRequest>({
     description: '',
@@ -41,6 +41,11 @@ const AddWorkshopPage: FC<AddWorkshopPageProps> = (props) => {
   const [image, setImage] = useState<File | undefined>(undefined);
 
   const DateService = new MomentService();
+
+  const isAddDisabled: boolean =
+    newWorkshop.description.trim().length === 0 ||
+    newWorkshop.tag.trim().length === 0 ||
+    !image;
 
   const uploadFileAndGetURL = async (): Promise<any> => {
     if (image) {
@@ -58,7 +63,28 @@ const AddWorkshopPage: FC<AddWorkshopPageProps> = (props) => {
       ...newWorkshop,
       thumbnailUrl,
     };
-    addWorkshop(addWorkshopRequest);
+    const res = await addWorkshop(addWorkshopRequest);
+    if (res.isOk) {
+      const result: SweetAlertResult = await Context.alertService.fire({
+        text: 'Mentorship has been added successfully',
+      });
+
+      if (!result.dismiss) {
+        setNewWorkshop({
+          description: '',
+          tag: '',
+          location: '',
+          thumbnailUrl: '',
+          capacity: 0,
+          date: Date.now(),
+          onlineEvent: true,
+        });
+      }
+    } else {
+      await Context.alertService.fire({
+        text: 'An error has occured',
+      });
+    }
   };
 
   return (
@@ -171,7 +197,11 @@ const AddWorkshopPage: FC<AddWorkshopPageProps> = (props) => {
           }}
         />
       </StyledAddContentRowField>
-      <Button className="add-button" onClick={handleAddWorkshop}>
+      <Button
+        className={`add-button ${isAddDisabled ? 'disabled' : ''}`}
+        disabled={isAddDisabled}
+        onClick={handleAddWorkshop}
+      >
         ADD
       </Button>
     </StyledAddContentContainer>

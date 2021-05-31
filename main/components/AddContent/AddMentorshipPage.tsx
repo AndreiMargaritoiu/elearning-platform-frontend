@@ -8,38 +8,50 @@ import {
   Select,
 } from '@material-ui/core';
 import React, { FC, useState } from 'react';
+import { SweetAlertResult } from 'sweetalert2';
+import { Context } from '../../Context';
 
 import { FilterCategories } from '../../domain/FilterCategories';
 import { AddMentorshipRequest } from '../../domain/Mentorship';
-import { User } from '../../domain/User';
 import {
   StyledAddContentContainer,
   StyledAddContentSectionTitle,
 } from './AddContentStyles';
 
 export interface AddMentorshipPageProps {
-  appUser: User;
-  addMentorship(request: AddMentorshipRequest): void;
+  addMentorship(request: AddMentorshipRequest): any;
 }
 
 const AddMentorshipPage: FC<AddMentorshipPageProps> = (props) => {
-  const { appUser, addMentorship } = props;
+  const { addMentorship } = props;
 
   const [newMentorship, setNewMentorship] = useState<AddMentorshipRequest>({
     description: '',
     price: 0,
     category: FilterCategories.SCHOOL,
-    mentorId: '',
-    mentorEmail: '',
   });
 
-  const handleAddMentorship = () => {
-    const addMentroshipRequest: AddMentorshipRequest = {
-      ...newMentorship,
-      mentorId: appUser.uid,
-      mentorEmail: appUser.email,
-    };
-    addMentorship(addMentroshipRequest);
+  const isAddDisabled: boolean = newMentorship.description.trim().length === 0;
+
+  const handleAddMentorship = async () => {
+    const res = await addMentorship(newMentorship);
+    if (res.isOk) {
+      const result: SweetAlertResult = await Context.alertService.fire({
+        text: 'Mentorship has been added successfully',
+      });
+
+      if (!result.dismiss) {
+        setNewMentorship({
+          description: '',
+          price: 0,
+          category: FilterCategories.SCHOOL,
+        });
+      }
+    } else {
+      await Context.alertService.fire({
+        text: 'An error has occured',
+      });
+    }
   };
 
   return (
@@ -99,7 +111,11 @@ const AddMentorshipPage: FC<AddMentorshipPageProps> = (props) => {
           </MenuItem>
         </Select>
       </FormControl>
-      <Button className="add-button" onClick={handleAddMentorship}>
+      <Button
+        className={`add-button ${isAddDisabled ? 'disabled' : ''}`}
+        disabled={isAddDisabled}
+        onClick={handleAddMentorship}
+      >
         ADD
       </Button>
     </StyledAddContentContainer>

@@ -120,20 +120,16 @@ const AddContentPage: FC<AddContentPageProps & AddContentPageDispatchProps> = (
       </StyledAddContentPicker>
       <StyledAddContentPageDiv>
         {currentPage === PageOptions.MENTORSHIP && (
-          <AddMentorshipPage appUser={appUser} addMentorship={addMentorship} />
+          <AddMentorshipPage addMentorship={addMentorship} />
         )}
         {currentPage === PageOptions.VIDEO && (
-          <AddVideoPage appUser={appUser} addVideo={addVideo} />
+          <AddVideoPage addVideo={addVideo} />
         )}
         {currentPage === PageOptions.PLAYLIST && (
-          <AddPlaylistPage
-            appUser={appUser}
-            videos={videos}
-            addPlaylist={addPlaylist}
-          />
+          <AddPlaylistPage videos={videos} addPlaylist={addPlaylist} />
         )}
         {currentPage === PageOptions.WORKSHOP && appUser.admin && (
-          <AddWorkshopPage appUser={appUser} addWorkshop={addWorkshop} />
+          <AddWorkshopPage addWorkshop={addWorkshop} />
         )}
       </StyledAddContentPageDiv>
     </StyledAddContentPageContainer>

@@ -31,6 +31,11 @@ export const StyledAddContentContainer = styled.div`
     &:hover {
       color: ${color.dark.primary};
     }
+
+    &.disabled {
+      background-color: ${color.light.secondary};
+      color: ${color.dark.quaternary};
+    }
   }
 
   .text-field {

@@ -1,7 +1,6 @@
 import React, { FC, useState } from 'react';
 
 import { AddVideoRequest } from '../../domain/Video';
-import { User } from '../../domain/User';
 import {
   StyledAddContentContainer,
   StyledAddContentField,
@@ -17,18 +16,18 @@ import {
 import { database } from '../../services/Firebase';
 import { createSearchIndex } from '../../utils/createSearchIndex';
 import { uploadFileAndReturnURL } from '../../utils/uploadFileAndReturnURL';
+import { SweetAlertResult } from 'sweetalert2';
+import { Context } from '../../Context';
 
 export interface AddVideoPageProps {
-  appUser: User;
-  addVideo(request: AddVideoRequest): void;
+  addVideo(request: AddVideoRequest): any;
 }
 
 const AddVideoPage: FC<AddVideoPageProps> = (props) => {
-  const { appUser, addVideo } = props;
+  const { addVideo } = props;
 
   const [newVideo, setNewVideo] = useState<AddVideoRequest>({
     videoUrl: '',
-    uid: '',
     thumbnailUrl: '',
     description: '',
     id: '',
@@ -38,12 +37,17 @@ const AddVideoPage: FC<AddVideoPageProps> = (props) => {
   const [image, setImage] = useState<File | undefined>(undefined);
   const [video, setVideo] = useState<File | undefined>(undefined);
 
+  const isAddDisabled: boolean =
+    newVideo.description.trim().length === 0 ||
+    newVideo.title.trim().length === 0 ||
+    !image ||
+    !video;
+
   const handleAddVideo = async () => {
     const docRef = database.collection('videos').doc();
     let addVideoRequest: AddVideoRequest = {
       ...newVideo,
       id: docRef.id,
-      uid: appUser.uid,
       searchIndex: createSearchIndex(newVideo.title),
     };
     if (image) {
@@ -63,7 +67,27 @@ const AddVideoPage: FC<AddVideoPageProps> = (props) => {
       };
     }
     console.log(addVideoRequest);
-    addVideo(addVideoRequest);
+    const res = await addVideo(addVideoRequest);
+    if (res.isOk) {
+      const result: SweetAlertResult = await Context.alertService.fire({
+        text: 'User has been added successfully',
+      });
+
+      if (!result.dismiss) {
+        setNewVideo({
+          videoUrl: '',
+          thumbnailUrl: '',
+          description: '',
+          id: '',
+          title: '',
+          searchIndex: [],
+        });
+      }
+    } else {
+      await Context.alertService.fire({
+        text: 'An error has occured',
+      });
+    }
   };
 
   return (
@@ -105,7 +129,7 @@ const AddVideoPage: FC<AddVideoPageProps> = (props) => {
           type="file"
           accept="video/*"
           onChange={(e: any) => {
-            setImage(e.target.files[0]);
+            setVideo(e.target.files[0]);
           }}
         />
       </StyledAddContentRowField>
@@ -121,7 +145,11 @@ const AddVideoPage: FC<AddVideoPageProps> = (props) => {
           }}
         />
       </StyledAddContentRowField>
-      <Button className="add-button" onClick={handleAddVideo}>
+      <Button
+        className={`add-button ${isAddDisabled ? 'disabled' : ''}`}
+        disabled={isAddDisabled}
+        onClick={handleAddVideo}
+      >
         ADD
       </Button>
     </StyledAddContentContainer>

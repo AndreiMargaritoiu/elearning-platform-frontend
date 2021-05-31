@@ -60,7 +60,6 @@ const VideoPage: FC<VideoPageProps & VideoPageDispatchProps> = (props) => {
       return;
     }
     const trackItemRequest: TrackItemRequest = {
-      uid: appUser.uid,
       vid: video.id,
     };
     saveTrackedItem(trackItemRequest);

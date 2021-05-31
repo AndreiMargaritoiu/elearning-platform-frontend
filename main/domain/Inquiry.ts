@@ -8,5 +8,4 @@ export interface Inquiry {
 
 export interface SendInquiryRequest {
   mentorId: string;
-  inquirerEmail: string;
 }

@@ -59,7 +59,6 @@ const MentoringPage: FC<MentoringPageProps & MentoringDispatchProps> = (
   const handleSendInquiry = (mentorId: string) => {
     const request: SendInquiryRequest = {
       mentorId,
-      inquirerEmail: appUser.email,
     };
     sendInquiry(request);
   };

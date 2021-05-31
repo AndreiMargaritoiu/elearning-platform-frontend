@@ -49,14 +49,18 @@ const DiscoverPage: FC<DiscoverPageProps & DiscoverPageDispatchProps> = (
   const DateService = new MomentService();
   const router = useRouter();
 
-  useEffect(() => {
-    setAuthTokenOnRefresh();
-    const getVideosReq = SearchVideosRequest.create({
-      trending: true,
-    });
-    getTrendingVideos(getVideosReq);
-    getWorkshops();
-  }, [router?.query]);
+  // useEffect(() => {
+  //   const getVideosReq = SearchVideosRequest.create({
+  //     trending: true,
+  //   });
+  //   getTrendingVideos(getVideosReq);
+  //   getWorkshops();
+
+  //   return () => {
+  //     console.log('helau helau');
+  //     setAuthTokenOnRefresh();
+  //   };
+  // }, [router?.query]);
 
   const displayedUser = (userId: string): string => {
     const foundUser: User | undefined = users.find(

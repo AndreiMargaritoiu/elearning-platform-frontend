@@ -13,7 +13,6 @@ import { Autocomplete, AutocompleteRenderOptionState } from '@material-ui/lab';
 
 import { FilterCategories } from '../../domain/FilterCategories';
 import { AddPlaylistRequest } from '../../domain/Playlist';
-import { User } from '../../domain/User';
 import { Video } from '../../domain/Video';
 import {
   StyledAddContentContainer,
@@ -24,20 +23,20 @@ import {
 import { database } from '../../services/Firebase';
 import { createSearchIndex } from '../../utils/createSearchIndex';
 import { uploadFileAndReturnURL } from '../../utils/uploadFileAndReturnURL';
+import { SweetAlertResult } from 'sweetalert2';
+import { Context } from '../../Context';
 
 export interface AddPlaylistPageProps {
-  appUser: User;
   videos: Video[];
-  addPlaylist(request: AddPlaylistRequest): void;
+  addPlaylist(request: AddPlaylistRequest): any;
 }
 
 const AddPlaylistPage: FC<AddPlaylistPageProps> = (props) => {
-  const { appUser, videos, addPlaylist } = props;
+  const { videos, addPlaylist } = props;
 
   const [newPlaylist, setNewPlaylist] = useState<AddPlaylistRequest>({
     category: FilterCategories.SCHOOL,
     videoRefs: [],
-    uid: '',
     thumbnailUrl: '',
     description: '',
     id: '',
@@ -46,12 +45,16 @@ const AddPlaylistPage: FC<AddPlaylistPageProps> = (props) => {
   });
   const [image, setImage] = useState<File | undefined>(undefined);
 
+  const isAddDisabled: boolean =
+    newPlaylist.description.trim().length === 0 ||
+    newPlaylist.title.trim().length === 0 ||
+    !image;
+
   const handleAddPlaylist = async () => {
     const docRef = database.collection('playlists').doc();
     let addPlaylistRequest: AddPlaylistRequest = {
       ...newPlaylist,
       id: docRef.id,
-      uid: appUser.uid,
       searchIndex: createSearchIndex(newPlaylist.title),
     };
     if (image) {
@@ -63,7 +66,28 @@ const AddPlaylistPage: FC<AddPlaylistPageProps> = (props) => {
       };
     }
     console.log(addPlaylistRequest);
-    addPlaylist(addPlaylistRequest);
+    const res = await addPlaylist(addPlaylistRequest);
+    if (res.isOk) {
+      const result: SweetAlertResult = await Context.alertService.fire({
+        text: 'Playlist has been added successfully',
+      });
+
+      if (!result.dismiss) {
+        setNewPlaylist({
+          category: FilterCategories.SCHOOL,
+          videoRefs: [],
+          thumbnailUrl: '',
+          description: '',
+          id: '',
+          title: '',
+          searchIndex: [],
+        });
+      }
+    } else {
+      await Context.alertService.fire({
+        text: 'An error has occured',
+      });
+    }
   };
 
   const Pop = (popupProps: any) => {
@@ -184,7 +208,11 @@ const AddPlaylistPage: FC<AddPlaylistPageProps> = (props) => {
           />
         )}
       />
-      <Button className="add-button" onClick={handleAddPlaylist}>
+      <Button
+        className={`add-button ${isAddDisabled ? 'disabled' : ''}`}
+        disabled={isAddDisabled}
+        onClick={handleAddPlaylist}
+      >
         ADD
       </Button>
     </StyledAddContentContainer>

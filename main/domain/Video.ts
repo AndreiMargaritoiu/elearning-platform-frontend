@@ -11,7 +11,6 @@ export interface Video {
 
 export interface AddVideoRequest {
   videoUrl: string;
-  uid: string;
   thumbnailUrl: string;
   description: string;
   id: string;
