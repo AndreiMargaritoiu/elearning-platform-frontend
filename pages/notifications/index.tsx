@@ -21,21 +21,21 @@ const NotificationsNextPage: NextPage = () => {
   );
 };
 
-NotificationsNextPage.getInitialProps = async ({
-  reduxStore,
-  query,
-}: NextPageContext & { reduxStore: Store<AppState> }) => {
-  reduxStore.dispatch(setInitialStateAction());
+// NotificationsNextPage.getInitialProps = async ({
+//   reduxStore,
+//   query,
+// }: NextPageContext & { reduxStore: Store<AppState> }) => {
+//   reduxStore.dispatch(setInitialStateAction());
 
-  const result = await getMyInquiriesThunk(reduxStore.getState().appUser.uid)(
-    reduxStore.dispatch,
-  );
+//   const result = await getMyInquiriesThunk(reduxStore.getState().appUser.uid)(
+//     reduxStore.dispatch,
+//   );
 
-  if (!result.isOk) {
-    return { statusCode: result.error };
-  }
+//   if (!result.isOk) {
+//     return { statusCode: result.error };
+//   }
 
-  return { reduxStore: reduxStore.getState() };
-};
+//   return { reduxStore: reduxStore.getState() };
+// };
 
 export default NotificationsNextPage;

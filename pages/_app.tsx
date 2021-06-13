@@ -14,12 +14,14 @@ import { HttpApiService } from '../main/services/HttpApiService';
 import { AppState } from '../main/store/AppState';
 import { MomentService } from '../main/services/MomentService';
 import { auth } from '../main/services/Firebase';
+import { CookieAPI } from '../main/services/CookieAPI';
 
 Context.initialize({
   alertService: swal,
   apiService: new HttpApiService(),
   routerService: Router,
   dateService: new MomentService(),
+  cookieService: new CookieAPI(),
 });
 
 const publicRoutes = ['', '/login', '/signup', '/reset-password'];
@@ -36,8 +38,12 @@ class ElearningPlatform extends App<
       pageProps = await Component.getInitialProps(ctx);
     }
 
-    if (auth.currentUser) {
-      const token: string = await auth.currentUser.getIdToken();
+    const cookies = ctx.req?.headers.cookie;
+    if (cookies) {
+      const token: string = Context.cookieService.getCookieForSSR(
+        cookies,
+        'uat',
+      );
       Context.apiService.setAuthToken(token);
     }
 

@@ -111,6 +111,7 @@ export const NavigationBar: React.FC<NavigationProps> = (props) => {
   };
 
   const handleLogout = () => {
+    Context.cookieService.removeCookie('uat');
     auth
       .signOut()
       .then(() => {

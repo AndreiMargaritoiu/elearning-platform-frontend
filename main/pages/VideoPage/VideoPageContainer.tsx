@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { SearchUsersRequest } from '../../domain/SearchUsersRequest';
 
 import { SearchVideosRequest } from '../../domain/SearchVideosRequest';
 import { Tracking, TrackItemRequest } from '../../domain/Tracking';
@@ -8,6 +9,8 @@ import { Video } from '../../domain/Video';
 import { AppState } from '../../store/AppState';
 import { getTrackedItemsThunk } from '../../store/tracking/getTrackedItemsThunk';
 import { saveTrackedItemThunk } from '../../store/tracking/saveTrackedItemThunk';
+import { getUsersThunk } from '../../store/users/getUsersThunks';
+import { getVideoThunk } from '../../store/video/getVideoThunk';
 import { getVideosThunk } from '../../store/videos/getVideosThunk';
 import { VideoPage } from './VideoPage';
 
@@ -20,9 +23,11 @@ export interface VideoPageProps {
 }
 
 export interface VideoPageDispatchProps {
+  getVideo(videoId: string): any;
   getVideos(request: SearchVideosRequest): void;
+  getUsers(request: SearchUsersRequest): void;
+  getTrackedItems(): void;
   saveTrackedItem(request: TrackItemRequest): void;
-  getTrackedItems(userId: string): void;
 }
 
 const mapStateToProps = ({
@@ -40,9 +45,11 @@ const mapStateToProps = ({
 });
 
 const mapDispatch: VideoPageDispatchProps = {
+  getVideo: getVideoThunk,
   getVideos: getVideosThunk,
-  saveTrackedItem: saveTrackedItemThunk,
+  getUsers: getUsersThunk,
   getTrackedItems: getTrackedItemsThunk,
+  saveTrackedItem: saveTrackedItemThunk,
 };
 
 export const VideoPageContainer = connect<

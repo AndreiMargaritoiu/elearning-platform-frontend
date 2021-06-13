@@ -30,6 +30,7 @@ import { Workshop } from '../../domain/Workshop';
 import { useRouter } from 'next/router';
 import { SearchVideosRequest } from '../../domain/SearchVideosRequest';
 import { setAuthTokenOnRefresh } from '../../utils/setAuthToken';
+import { SearchUsersRequest } from '../../domain/SearchUsersRequest';
 
 const DiscoverPage: FC<DiscoverPageProps & DiscoverPageDispatchProps> = (
   props,
@@ -42,25 +43,25 @@ const DiscoverPage: FC<DiscoverPageProps & DiscoverPageDispatchProps> = (
     getTrendingVideos,
     getWorkshops,
     registerToWorkshop,
+    getUsers,
   } = props;
-
-  console.log(videos);
 
   const DateService = new MomentService();
   const router = useRouter();
 
-  // useEffect(() => {
-  //   const getVideosReq = SearchVideosRequest.create({
-  //     trending: true,
-  //   });
-  //   getTrendingVideos(getVideosReq);
-  //   getWorkshops();
+  useEffect(() => {
+    const getVideosReq = SearchVideosRequest.create({
+      trending: true,
+    });
+    getTrendingVideos(getVideosReq);
+    const getUsersRequest = SearchUsersRequest.create();
+    getUsers(getUsersRequest);
+    getWorkshops();
 
-  //   return () => {
-  //     console.log('helau helau');
-  //     setAuthTokenOnRefresh();
-  //   };
-  // }, [router?.query]);
+    return () => {
+      setAuthTokenOnRefresh();
+    };
+  }, []);
 
   const displayedUser = (userId: string): string => {
     const foundUser: User | undefined = users.find(

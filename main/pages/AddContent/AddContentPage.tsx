@@ -20,6 +20,7 @@ import {
   StyledAddContentPicker,
   StyledAddContentPickerElement,
 } from './AddContentPageStyles';
+import { SearchVideosRequest } from '../../domain/SearchVideosRequest';
 
 export enum PageOptions {
   MENTORSHIP = 'mentorship',
@@ -41,12 +42,12 @@ const AddContentPage: FC<AddContentPageProps & AddContentPageDispatchProps> = (
     getVideos,
   } = props;
 
-  // useEffect(() => {
-  //   const request = SearchVideosRequest.create({
-  //     uid: appUser.uid,
-  //   });
-  //   getVideos(request);
-  // });
+  useEffect(() => {
+    const request = SearchVideosRequest.create({
+      uid: appUser.uid,
+    });
+    getVideos(request);
+  }, []);
 
   const [currentPage, setCurrentPage] = useState<string>(
     PageOptions.MENTORSHIP,

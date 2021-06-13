@@ -24,20 +24,20 @@ import {
   StyledPlaylistUsername,
   StyledPlaylistUserProfilePic,
 } from '../PlaylistsFeedPage/PlaylistsFeedPageStyles';
+import { SearchVideosRequest } from '../../domain/SearchVideosRequest';
+import { SearchUsersRequest } from '../../domain/SearchUsersRequest';
 
 const DashboardPage: FC<DashboardPageProps & DashboardDispatchProps> = (
   props,
 ) => {
-  const { videos, users, getVideos } = props;
+  const { videos, users, getVideos, getUsers } = props;
 
-  // useEffect(() => {
-  //   const getPlaylistsRequest: GetPlaylistsRequest = {};
-  //   getPlaylists(getPlaylistsRequest);
-  //   const getVideosRequest: GetPlaylistsRequest = {};
-  //   getVideos(getVideosRequest);
-  // });
-
-  console.log(videos);
+  useEffect(() => {
+    const getUsersRequest = SearchUsersRequest.create();
+    getUsers(getUsersRequest);
+    const getVideosRequest = SearchVideosRequest.create();
+    getVideos(getVideosRequest);
+  }, []);
 
   const displayedUser = (userId: string): string => {
     const foundUser: User | undefined = users.find(

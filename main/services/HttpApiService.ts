@@ -147,13 +147,13 @@ export class HttpApiService implements ApiService {
     );
   }
 
-  getTrackedItems(userId: string): Promise<Tracking[]> {
-    return this.axiosInstance.get<string, Tracking[]>(`tracking/${userId}`);
+  getTrackedItems(): Promise<Tracking[]> {
+    return this.axiosInstance.get<any, Tracking[]>('tracking');
   }
 
   // Inquiries
-  getMyInquiries(userId: string): Promise<Inquiry[]> {
-    return this.axiosInstance.get<string, Inquiry[]>(`inquiries/${userId}`);
+  getMyInquiries(): Promise<Inquiry[]> {
+    return this.axiosInstance.get<string, Inquiry[]>('inquiries');
   }
 
   sendInquiry(request: SendInquiryRequest): Promise<Inquiry> {

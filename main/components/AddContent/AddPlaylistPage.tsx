@@ -65,7 +65,6 @@ const AddPlaylistPage: FC<AddPlaylistPageProps> = (props) => {
         thumbnailUrl,
       };
     }
-    console.log(addPlaylistRequest);
     const res = await addPlaylist(addPlaylistRequest);
     if (res.isOk) {
       const result: SweetAlertResult = await Context.alertService.fire({
@@ -150,6 +149,7 @@ const AddPlaylistPage: FC<AddPlaylistPageProps> = (props) => {
           labelId="demo-simple-select-outlined-label"
           id="demo-simple-select-outlined"
           value={newPlaylist.category}
+          label="Category"
           onChange={(event: any) => {
             setNewPlaylist({
               ...newPlaylist,

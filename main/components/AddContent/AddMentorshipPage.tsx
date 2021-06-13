@@ -93,6 +93,7 @@ const AddMentorshipPage: FC<AddMentorshipPageProps> = (props) => {
           labelId="demo-simple-select-outlined-label"
           id="demo-simple-select-outlined"
           value={newMentorship.category}
+          label="Category"
           onChange={(event: any) => {
             setNewMentorship({
               ...newMentorship,

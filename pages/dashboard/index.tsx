@@ -24,27 +24,27 @@ const Dashboard: NextPage = () => {
   );
 };
 
-Dashboard.getInitialProps = async ({
-  reduxStore,
-  query,
-}: NextPageContext & { reduxStore: Store<AppState> }) => {
-  reduxStore.dispatch(setInitialStateAction());
+// Dashboard.getInitialProps = async ({
+//   reduxStore,
+//   query,
+// }: NextPageContext & { reduxStore: Store<AppState> }) => {
+//   reduxStore.dispatch(setInitialStateAction());
 
-  const request = SearchVideosRequest.create(query);
-  const result = await getVideosThunk(request)(reduxStore.dispatch);
+//   const request = SearchVideosRequest.create(query);
+//   const result = await getVideosThunk(request)(reduxStore.dispatch);
 
-  const request2 = SearchUsersRequest.create();
-  const result2 = await getUsersThunk(request2)(reduxStore.dispatch);
+//   const request2 = SearchUsersRequest.create();
+//   const result2 = await getUsersThunk(request2)(reduxStore.dispatch);
 
-  if (!result.isOk) {
-    return { statusCode: result.error };
-  }
+//   if (!result.isOk) {
+//     return { statusCode: result.error };
+//   }
 
-  if (!result2.isOk) {
-    return { statusCode: result2.error };
-  }
+//   if (!result2.isOk) {
+//     return { statusCode: result2.error };
+//   }
 
-  return { reduxStore: reduxStore.getState() };
-};
+//   return { reduxStore: reduxStore.getState() };
+// };
 
 export default Dashboard;

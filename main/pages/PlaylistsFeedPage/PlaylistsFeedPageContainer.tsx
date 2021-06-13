@@ -3,9 +3,11 @@ import { connect } from 'react-redux';
 
 import { Playlist } from '../../domain/Playlist';
 import { SearchPlaylistsRequest } from '../../domain/SearchPlaylistsRequest';
+import { SearchUsersRequest } from '../../domain/SearchUsersRequest';
 import { User } from '../../domain/User';
 import { AppState } from '../../store/AppState';
 import { getPlaylistsThunk } from '../../store/playlists/getPlaylistsThunk';
+import { getUsersThunk } from '../../store/users/getUsersThunks';
 import { PlaylistsFeedPage } from './PlaylistsFeedPage';
 
 export interface PlaylistsFeedPageProps {
@@ -15,6 +17,7 @@ export interface PlaylistsFeedPageProps {
 
 export interface PlaylistsFeedDispatchProps {
   getPlaylists(request: SearchPlaylistsRequest): void;
+  getUsers(request: SearchUsersRequest): void;
 }
 
 const mapStateToProps = ({
@@ -27,6 +30,7 @@ const mapStateToProps = ({
 
 const mapDispatch: PlaylistsFeedDispatchProps = {
   getPlaylists: getPlaylistsThunk,
+  getUsers: getUsersThunk,
 };
 
 export const PlaylistsFeedPageContainer = connect<

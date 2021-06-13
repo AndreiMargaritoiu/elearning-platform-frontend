@@ -14,7 +14,7 @@ export interface NotificationsPageProps {
 }
 
 export interface NotificationsDispatchProps {
-  getMyNotifications(userId: string): void;
+  getMyNotifications(): void;
   readNotifications(notifications: string[]): void;
 }
 

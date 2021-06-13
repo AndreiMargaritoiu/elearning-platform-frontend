@@ -28,48 +28,48 @@ const ProfileNextPage: NextPage = () => {
   );
 };
 
-ProfileNextPage.getInitialProps = async ({
-  reduxStore,
-}: NextPageContext & { reduxStore: Store<AppState> }) => {
-  reduxStore.dispatch(setInitialStateAction());
+// ProfileNextPage.getInitialProps = async ({
+//   reduxStore,
+// }: NextPageContext & { reduxStore: Store<AppState> }) => {
+//   reduxStore.dispatch(setInitialStateAction());
 
-  const request = SearchPlaylistsRequest.create({
-    uid: reduxStore.getState().appUser.uid,
-  });
-  const result = await getPlaylistsThunk(request)(reduxStore.dispatch);
+//   const request = SearchPlaylistsRequest.create({
+//     uid: reduxStore.getState().appUser.uid,
+//   });
+//   const result = await getPlaylistsThunk(request)(reduxStore.dispatch);
 
-  const request2 = SearchVideosRequest.create({
-    uid: reduxStore.getState().appUser.uid,
-  });
-  const result2 = await getVideosThunk(request2)(reduxStore.dispatch);
+//   const request2 = SearchVideosRequest.create({
+//     uid: reduxStore.getState().appUser.uid,
+//   });
+//   const result2 = await getVideosThunk(request2)(reduxStore.dispatch);
 
-  const request3 = SearchMentorshipsRequest.create({
-    uid: reduxStore.getState().appUser.uid,
-  });
-  const result3 = await getMentorshipsThunk(request3)(reduxStore.dispatch);
+//   const request3 = SearchMentorshipsRequest.create({
+//     uid: reduxStore.getState().appUser.uid,
+//   });
+//   const result3 = await getMentorshipsThunk(request3)(reduxStore.dispatch);
 
-  const request4 = SearchUsersRequest.create({
-    followedBy: reduxStore.getState().appUser.uid,
-  });
-  const result4 = await getUsersThunk(request4)(reduxStore.dispatch);
+//   const request4 = SearchUsersRequest.create({
+//     followedBy: reduxStore.getState().appUser.uid,
+//   });
+//   const result4 = await getUsersThunk(request4)(reduxStore.dispatch);
 
-  if (!result.isOk) {
-    return { statusCode: result.error };
-  }
+//   if (!result.isOk) {
+//     return { statusCode: result.error };
+//   }
 
-  if (!result2.isOk) {
-    return { statusCode: result2.error };
-  }
+//   if (!result2.isOk) {
+//     return { statusCode: result2.error };
+//   }
 
-  if (!result3.isOk) {
-    return { statusCode: result3.error };
-  }
+//   if (!result3.isOk) {
+//     return { statusCode: result3.error };
+//   }
 
-  if (!result4.isOk) {
-    return { statusCode: result4.error };
-  }
+//   if (!result4.isOk) {
+//     return { statusCode: result4.error };
+//   }
 
-  return { reduxStore: reduxStore.getState() };
-};
+//   return { reduxStore: reduxStore.getState() };
+// };
 
 export default ProfileNextPage;

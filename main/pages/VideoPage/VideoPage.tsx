@@ -24,6 +24,7 @@ import {
 import { Context } from '../../Context';
 import { User } from '../../domain/User';
 import { TrackItemRequest } from '../../domain/Tracking';
+import { useRouter } from 'next/router';
 
 const VideoPage: FC<VideoPageProps & VideoPageDispatchProps> = (props) => {
   const {
@@ -34,14 +35,25 @@ const VideoPage: FC<VideoPageProps & VideoPageDispatchProps> = (props) => {
     trackings,
     saveTrackedItem,
     getTrackedItems,
+    getVideo,
+    getVideos,
+    getUsers,
   } = props;
 
   const [videoPlayerHeight, setVideoPlayerHeight] = useState<number>(0);
   const videoPlayerRef = React.createRef<HTMLDivElement>();
+  const router = useRouter();
 
   useEffect(() => {
+    const videoId = (router.query?.id as string) || '';
     setVideoPlayerHeight(videoPlayerRef.current?.clientHeight || 0);
-    // getTrackedItems(appUser.uid);
+    (async () => {
+      await getVideo(videoId);
+    })().then(() => {
+      getTrackedItems();
+      getVideos({});
+      getUsers({});
+    });
   }, []);
 
   const displayedUser = (userId: string): string => {

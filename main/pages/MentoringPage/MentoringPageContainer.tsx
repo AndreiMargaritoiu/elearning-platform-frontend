@@ -4,10 +4,12 @@ import { SendInquiryRequest } from '../../domain/Inquiry';
 
 import { Mentorship } from '../../domain/Mentorship';
 import { SearchMentorshipsRequest } from '../../domain/SearchMentorshipsRequest';
+import { SearchUsersRequest } from '../../domain/SearchUsersRequest';
 import { User } from '../../domain/User';
 import { AppState } from '../../store/AppState';
 import { sendInquiryThunk } from '../../store/inquiries/SendInquiryThunk';
 import { getMentorshipsThunk } from '../../store/mentoring/getMentorshipsThunk';
+import { getUsersThunk } from '../../store/users/getUsersThunks';
 import { MentoringPage } from './MentoringPage';
 
 export interface MentoringPageProps {
@@ -18,6 +20,7 @@ export interface MentoringPageProps {
 
 export interface MentoringDispatchProps {
   getMentorships(request: SearchMentorshipsRequest): void;
+  getUsers(request: SearchUsersRequest): void;
   sendInquiry(request: SendInquiryRequest): void;
 }
 
@@ -33,6 +36,7 @@ const mapStateToProps = ({
 
 const mapDispatch: MentoringDispatchProps = {
   getMentorships: getMentorshipsThunk,
+  getUsers: getUsersThunk,
   sendInquiry: sendInquiryThunk,
 };
 

@@ -1,11 +1,12 @@
 import { Grid } from '@material-ui/core';
 import Link from 'next/link';
-import React, { FC, useState } from 'react';
+import React, { FC, useEffect, useState } from 'react';
 
 import { Context } from '../../Context';
 import { FilterCategories } from '../../domain/FilterCategories';
 import { Playlist } from '../../domain/Playlist';
 import { SearchPlaylistsRequest } from '../../domain/SearchPlaylistsRequest';
+import { SearchUsersRequest } from '../../domain/SearchUsersRequest';
 import { User } from '../../domain/User';
 import {
   StyledFilterItem,
@@ -34,9 +35,16 @@ import {
 const PlaylistsFeedPage: FC<
   PlaylistsFeedPageProps & PlaylistsFeedDispatchProps
 > = (props) => {
-  const { playlists, users, getPlaylists } = props;
+  const { playlists, users, getPlaylists, getUsers } = props;
 
   const [chosenFilter, setChosenFilter] = useState<string>('All');
+
+  useEffect(() => {
+    const getUsersRequest = SearchUsersRequest.create();
+    getUsers(getUsersRequest);
+    const getPlaylistsReq = SearchPlaylistsRequest.create();
+    getPlaylists(getPlaylistsReq);
+  }, []);
 
   const predefinedFilters = [
     'All',

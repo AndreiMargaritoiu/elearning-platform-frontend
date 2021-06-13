@@ -9,17 +9,13 @@ import {
 } from './inquiriesActions';
 import { Inquiry } from '../../domain/Inquiry';
 
-export const getMyInquiriesThunk = (userId: string) => async (
+export const getMyInquiriesThunk = () => async (
   dispatch: Dispatch,
 ): Promise<Result<void, string>> => {
   try {
     dispatch(getInquiriesAction());
 
-    const inquiriesResponse: Inquiry[] = await Context.apiService.getMyInquiries(
-      userId,
-    );
-
-    console.log(inquiriesResponse);
+    const inquiriesResponse: Inquiry[] = await Context.apiService.getMyInquiries();
 
     dispatch(getInquiriesSuccessAction(inquiriesResponse));
 

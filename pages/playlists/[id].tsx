@@ -26,44 +26,44 @@ const PlaylistNextPage: NextPage = () => {
   );
 };
 
-PlaylistNextPage.getInitialProps = async ({
-  reduxStore,
-  query,
-}: NextPageContext & { reduxStore: Store<AppState> }) => {
-  reduxStore.dispatch(setInitialStateAction());
+// PlaylistNextPage.getInitialProps = async ({
+//   reduxStore,
+//   query,
+// }: NextPageContext & { reduxStore: Store<AppState> }) => {
+//   reduxStore.dispatch(setInitialStateAction());
 
-  const playlistId = (query?.id as string) || '';
-  const result = await getPlaylistThunk(playlistId)(reduxStore.dispatch);
+//   const playlistId = (query?.id as string) || '';
+//   const result = await getPlaylistThunk(playlistId)(reduxStore.dispatch);
 
-  if (!result.isOk) {
-    return { statusCode: result.error };
-  }
+//   if (!result.isOk) {
+//     return { statusCode: result.error };
+//   }
 
-  const request2 = SearchVideosRequest.create({
-    playlistId,
-  });
-  const result2 = await getVideosThunk(request2)(reduxStore.dispatch);
+//   const request2 = SearchVideosRequest.create({
+//     playlistId,
+//   });
+//   const result2 = await getVideosThunk(request2)(reduxStore.dispatch);
 
-  if (!result2.isOk) {
-    return { statusCode: result2.error };
-  }
+//   if (!result2.isOk) {
+//     return { statusCode: result2.error };
+//   }
 
-  const result3 = await getTrackedItemsThunk(reduxStore.getState().appUser.uid)(
-    reduxStore.dispatch,
-  );
+//   const result3 = await getTrackedItemsThunk(reduxStore.getState().appUser.uid)(
+//     reduxStore.dispatch,
+//   );
 
-  if (!result3.isOk) {
-    return { statusCode: result3.error };
-  }
+//   if (!result3.isOk) {
+//     return { statusCode: result3.error };
+//   }
 
-  const request4 = SearchUsersRequest.create();
-  const result4 = await getUsersThunk(request4)(reduxStore.dispatch);
+//   const request4 = SearchUsersRequest.create();
+//   const result4 = await getUsersThunk(request4)(reduxStore.dispatch);
 
-  if (!result4.isOk) {
-    return { statusCode: result4.error };
-  }
+//   if (!result4.isOk) {
+//     return { statusCode: result4.error };
+//   }
 
-  return { reduxStore: reduxStore.getState() };
-};
+//   return { reduxStore: reduxStore.getState() };
+// };
 
 export default PlaylistNextPage;

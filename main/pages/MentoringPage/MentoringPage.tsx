@@ -1,6 +1,6 @@
 import { Button } from '@material-ui/core';
 import Link from 'next/link';
-import React, { FC, useState } from 'react';
+import React, { FC, useEffect, useState } from 'react';
 import Media from 'react-media';
 
 import { Context } from '../../Context';
@@ -8,6 +8,7 @@ import { FilterCategories } from '../../domain/FilterCategories';
 import { SendInquiryRequest } from '../../domain/Inquiry';
 import { Mentorship } from '../../domain/Mentorship';
 import { SearchMentorshipsRequest } from '../../domain/SearchMentorshipsRequest';
+import { SearchUsersRequest } from '../../domain/SearchUsersRequest';
 import { User } from '../../domain/User';
 import {
   MentoringDispatchProps,
@@ -31,9 +32,23 @@ import {
 const MentoringPage: FC<MentoringPageProps & MentoringDispatchProps> = (
   props,
 ) => {
-  const { appUser, mentorships, users, getMentorships, sendInquiry } = props;
+  const {
+    appUser,
+    mentorships,
+    users,
+    getMentorships,
+    getUsers,
+    sendInquiry,
+  } = props;
 
   const [chosenFilter, setChosenFilter] = useState<string>('All');
+
+  useEffect(() => {
+    const searchMentorshipReq = SearchMentorshipsRequest.create();
+    getMentorships(searchMentorshipReq);
+    const searchUsersReq = SearchUsersRequest.create();
+    getUsers(searchUsersReq);
+  }, []);
 
   const predefinedFilters = [
     'All',
@@ -41,8 +56,6 @@ const MentoringPage: FC<MentoringPageProps & MentoringDispatchProps> = (
     FilterCategories.FACULTY,
     FilterCategories.OTHER,
   ];
-
-  // console.log(mentorships);
 
   const handlePredefinedFilter = (filterItem: string) => {
     setChosenFilter(filterItem);

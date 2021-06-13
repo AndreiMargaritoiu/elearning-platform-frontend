@@ -32,6 +32,11 @@ import {
   FollowingListModal,
   FollowingListModalState,
 } from '../../components/ProfilePage/FollowingList/FollowingListModal';
+import { SearchMentorshipsRequest } from '../../domain/SearchMentorshipsRequest';
+import { SearchPlaylistsRequest } from '../../domain/SearchPlaylistsRequest';
+import { SearchVideosRequest } from '../../domain/SearchVideosRequest';
+import { SearchUsersRequest } from '../../domain/SearchUsersRequest';
+import { useRouter } from 'next/router';
 
 const OthersProfilePage: FC<
   OthersProfilePageProps & OthersProfileDispatchProps
@@ -46,8 +51,36 @@ const OthersProfilePage: FC<
     getPlaylists,
     getVideos,
     getMentorships,
+    getUsers,
+    getUser,
     updateAppUser,
   } = props;
+
+  const router = useRouter();
+
+  useEffect(() => {
+    const userId = (router.query?.id as string) || '';
+    (async () => {
+      await getUser(userId);
+    })().then(() => {
+      const getPlaylistsRequest = SearchPlaylistsRequest.create({
+        uid: userId,
+      });
+      getPlaylists(getPlaylistsRequest);
+      const getVideosRequest = SearchVideosRequest.create({
+        uid: userId,
+      });
+      getVideos(getVideosRequest);
+      const getMentorshipsReq = SearchMentorshipsRequest.create({
+        uid: userId,
+      });
+      getMentorships(getMentorshipsReq);
+      const getUsersReq = SearchUsersRequest.create({
+        followedBy: userId,
+      });
+      getUsers(getUsersReq);
+    });
+  }, []);
 
   const [isPlaylistPage, setPlaylistPage] = useState<boolean>(true);
   const [isVideoPage, setVideoPage] = useState<boolean>(false);
@@ -55,15 +88,6 @@ const OthersProfilePage: FC<
   const [modalState, setModalState] = useState<FollowingListModalState>({
     isOpen: false,
   });
-
-  // useEffect(() => {
-  //   const getPlaylistsRequest: GetPlaylistsRequest = {};
-  //   getPlaylists(getPlaylistsRequest);
-  //   const getVideosRequest: GetPlaylistsRequest = {};
-  //   getVideos(getVideosRequest);
-  // });
-
-  console.log('>>>>>', users);
 
   const setPage = (page?: string) => {
     switch (page) {

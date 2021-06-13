@@ -21,21 +21,21 @@ const AddContentNextPage: NextPage = () => {
   );
 };
 
-AddContentNextPage.getInitialProps = async ({
-  reduxStore,
-}: NextPageContext & { reduxStore: Store<AppState> }) => {
-  reduxStore.dispatch(setInitialStateAction());
+// AddContentNextPage.getInitialProps = async ({
+//   reduxStore,
+// }: NextPageContext & { reduxStore: Store<AppState> }) => {
+//   reduxStore.dispatch(setInitialStateAction());
 
-  const request = SearchVideosRequest.create({
-    uid: reduxStore.getState().appUser.uid,
-  });
-  const result = await getVideosThunk(request)(reduxStore.dispatch);
+//   const request = SearchVideosRequest.create({
+//     uid: reduxStore.getState().appUser.uid,
+//   });
+//   const result = await getVideosThunk(request)(reduxStore.dispatch);
 
-  if (!result.isOk) {
-    return { statusCode: result.error };
-  }
+//   if (!result.isOk) {
+//     return { statusCode: result.error };
+//   }
 
-  return { reduxStore: reduxStore.getState() };
-};
+//   return { reduxStore: reduxStore.getState() };
+// };
 
 export default AddContentNextPage;

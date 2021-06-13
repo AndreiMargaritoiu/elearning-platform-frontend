@@ -20,8 +20,6 @@ export const getPlaylistsThunk = (request: SearchPlaylistsRequest) => async (
       request,
     );
 
-    console.log(playlistsResponse);
-
     dispatch(getPlaylistsSuccessAction(playlistsResponse));
 
     return resultFormatter.ok<void, string>();

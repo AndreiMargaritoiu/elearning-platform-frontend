@@ -25,35 +25,35 @@ const DiscoverNextPage: NextPage = () => {
   );
 };
 
-DiscoverNextPage.getInitialProps = async ({
-  reduxStore,
-}: NextPageContext & { reduxStore: Store<AppState> }) => {
-  reduxStore.dispatch(setInitialStateAction());
+// DiscoverNextPage.getInitialProps = async ({
+//   reduxStore,
+// }: NextPageContext & { reduxStore: Store<AppState> }) => {
+//   reduxStore.dispatch(setInitialStateAction());
 
-  const result = await getAllWorkshopsThunk()(reduxStore.dispatch);
+//   const result = await getAllWorkshopsThunk()(reduxStore.dispatch);
 
-  const request2 = SearchVideosRequest.create({
-    trending: true,
-  });
+//   const request2 = SearchVideosRequest.create({
+//     trending: true,
+//   });
 
-  const result2 = await getVideosThunk(request2)(reduxStore.dispatch);
+//   const result2 = await getVideosThunk(request2)(reduxStore.dispatch);
 
-  const request3 = SearchUsersRequest.create();
-  const result3 = await getUsersThunk(request3)(reduxStore.dispatch);
+//   const request3 = SearchUsersRequest.create();
+//   const result3 = await getUsersThunk(request3)(reduxStore.dispatch);
 
-  if (!result.isOk) {
-    return { statusCode: result.error };
-  }
+//   if (!result.isOk) {
+//     return { statusCode: result.error };
+//   }
 
-  if (!result2.isOk) {
-    return { statusCode: result2.error };
-  }
+//   if (!result2.isOk) {
+//     return { statusCode: result2.error };
+//   }
 
-  if (!result3.isOk) {
-    return { statusCode: result3.error };
-  }
+//   if (!result3.isOk) {
+//     return { statusCode: result3.error };
+//   }
 
-  return { reduxStore: reduxStore.getState() };
-};
+//   return { reduxStore: reduxStore.getState() };
+// };
 
 export default DiscoverNextPage;

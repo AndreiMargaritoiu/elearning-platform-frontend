@@ -19,8 +19,6 @@ export const saveTrackedItemThunk = (request: TrackItemRequest) => async (
       request,
     );
 
-    console.log(request);
-
     dispatch(saveTrackedItemSuccessAction(tracketItem));
 
     return resultFormatter.ok<void, string>();

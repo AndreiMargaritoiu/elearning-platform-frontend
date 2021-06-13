@@ -14,8 +14,13 @@ import {
 const NotificationsPage: FC<
   NotificationsPageProps & NotificationsDispatchProps
 > = (props) => {
-  const { appUser, inquiries, getMyNotifications, readNotifications } = props;
+  const { inquiries, getMyNotifications, readNotifications } = props;
+
   const [unreadNotifications, setUnreadNotifications] = useState<string[]>([]);
+
+  useEffect(() => {
+    getMyNotifications();
+  }, []);
 
   useEffect(() => {
     inquiries.map((item) => {

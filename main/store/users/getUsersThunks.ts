@@ -18,8 +18,6 @@ export const getUsersThunk = (request: SearchUsersRequest) => async (
 
     const usersResponse: User[] = await Context.apiService.getUsers(request);
 
-    console.log(usersResponse);
-
     dispatch(getUsersSuccessAction(usersResponse));
 
     return resultFormatter.ok<void, string>();

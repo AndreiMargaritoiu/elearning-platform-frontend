@@ -1,8 +1,9 @@
-import React, { FC, useState } from 'react';
+import React, { FC, useState, useEffect } from 'react';
 import ReactPlayer from 'react-player';
 import Grid from '@material-ui/core/Grid';
 import ResizeObserver from 'rc-resize-observer';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 
 import {
   PlaylistDispatchProps,
@@ -27,18 +28,19 @@ import {
 } from '../VideoPage/VideoPageStyles';
 import { TrackItemRequest } from '../../domain/Tracking';
 import { Context } from '../../Context';
-import { User } from '../../domain/User';
 
 const PlaylistPage: FC<PlaylistPageProps & PlaylistDispatchProps> = (props) => {
   const {
     appUser,
-    users,
+    user,
     playlist,
     videos,
     trackings,
     getVideos,
     saveTrackedItem,
     getTrackedItems,
+    getPlaylist,
+    getUser,
   } = props;
 
   const [currentVideoId, setCurrentVideoId] = useState<string>(
@@ -46,10 +48,28 @@ const PlaylistPage: FC<PlaylistPageProps & PlaylistDispatchProps> = (props) => {
   );
   const [videoPlayerHeight, setVideoPlayerHeight] = useState<number>(0);
   const videoPlayerRef = React.createRef<HTMLDivElement>();
+  const router = useRouter();
 
   const currentVideo: Video | undefined = videos.find(
     (it: Video) => it.id === currentVideoId,
   );
+
+  useEffect(() => {
+    const playlistId = (router.query?.id as string) || '';
+    setVideoPlayerHeight(videoPlayerRef.current?.clientHeight || 0);
+    (async () => {
+      const res = await getPlaylist(playlistId);
+    })().then(() => {
+      getTrackedItems();
+      getVideos({
+        playlistId,
+      });
+      if (playlist.uid) {
+        getUser(playlist.uid);
+      }
+      setCurrentVideoId(playlist.videoRefs[0]);
+    });
+  }, []);
 
   const handleTrackPlayVideo = () => {
     if (currentVideo) {
@@ -65,13 +85,6 @@ const PlaylistPage: FC<PlaylistPageProps & PlaylistDispatchProps> = (props) => {
       };
       saveTrackedItem(trackItemRequest);
     }
-  };
-
-  const displayedUser = (userId: string): string => {
-    const foundUser: User | undefined = users.find(
-      (item) => item.uid === userId,
-    );
-    return foundUser ? foundUser.username : '';
   };
 
   return (
@@ -108,9 +121,7 @@ const PlaylistPage: FC<PlaylistPageProps & PlaylistDispatchProps> = (props) => {
                   href={`${Context.BASE_PATH}/profiles/[id]`}
                   as={`${Context.BASE_PATH}/profiles/${currentVideo.uid}`}
                 >
-                  <StyledVideoAuthor>
-                    {displayedUser(playlist.uid)}
-                  </StyledVideoAuthor>
+                  <StyledVideoAuthor>{user.username}</StyledVideoAuthor>
                 </Link>
               </StyledVideoUserDiv>
               <StyledMainVideoCardDescription>

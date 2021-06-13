@@ -2,6 +2,7 @@ import { NextRouter } from 'next/router';
 import { AlertService } from './domain/AlertService';
 
 import { ApiService } from './domain/ApiService';
+import { CookieService } from './domain/CookieService';
 import { DateService } from './domain/DateService';
 
 interface ContextDependencies {
@@ -9,6 +10,7 @@ interface ContextDependencies {
   apiService: ApiService;
   dateService: DateService;
   routerService: NextRouter;
+  cookieService: CookieService;
 }
 
 export class Context {
@@ -16,6 +18,7 @@ export class Context {
   static apiService: ApiService;
   static dateService: DateService;
   static routerService: NextRouter;
+  static cookieService: CookieService;
   static BASE_PATH: string = '';
 
   static initialize(dependencies: ContextDependencies) {
@@ -23,5 +26,6 @@ export class Context {
     Context.apiService = dependencies.apiService;
     Context.dateService = dependencies.dateService;
     Context.routerService = dependencies.routerService;
+    Context.cookieService = dependencies.cookieService;
   }
 }

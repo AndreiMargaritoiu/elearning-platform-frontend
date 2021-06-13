@@ -26,42 +26,42 @@ const VideoNextPage: NextPage = () => {
   );
 };
 
-VideoNextPage.getInitialProps = async ({
-  reduxStore,
-  query,
-}: NextPageContext & { reduxStore: Store<AppState> }) => {
-  reduxStore.dispatch(setInitialStateAction());
+// VideoNextPage.getInitialProps = async ({
+//   reduxStore,
+//   query,
+// }: NextPageContext & { reduxStore: Store<AppState> }) => {
+//   reduxStore.dispatch(setInitialStateAction());
 
-  const videoId = (query?.id as string) || '';
-  const result = await getVideoThunk(videoId)(reduxStore.dispatch);
+//   const videoId = (query?.id as string) || '';
+//   const result = await getVideoThunk(videoId)(reduxStore.dispatch);
 
-  if (!result.isOk) {
-    return { statusCode: result.error };
-  }
+//   if (!result.isOk) {
+//     return { statusCode: result.error };
+//   }
 
-  const request2 = SearchVideosRequest.create(query);
-  const result2 = await getVideosThunk(request2)(reduxStore.dispatch);
+//   const request2 = SearchVideosRequest.create(query);
+//   const result2 = await getVideosThunk(request2)(reduxStore.dispatch);
 
-  if (!result2.isOk) {
-    return { statusCode: result2.error };
-  }
+//   if (!result2.isOk) {
+//     return { statusCode: result2.error };
+//   }
 
-  const request3 = SearchUsersRequest.create();
-  const result3 = await getUsersThunk(request3)(reduxStore.dispatch);
+//   const request3 = SearchUsersRequest.create();
+//   const result3 = await getUsersThunk(request3)(reduxStore.dispatch);
 
-  if (!result3.isOk) {
-    return { statusCode: result3.error };
-  }
+//   if (!result3.isOk) {
+//     return { statusCode: result3.error };
+//   }
 
-  const result4 = await getTrackedItemsThunk(reduxStore.getState().appUser.uid)(
-    reduxStore.dispatch,
-  );
+//   const result4 = await getTrackedItemsThunk(reduxStore.getState().appUser.uid)(
+//     reduxStore.dispatch,
+//   );
 
-  if (!result4.isOk) {
-    return { statusCode: result4.error };
-  }
+//   if (!result4.isOk) {
+//     return { statusCode: result4.error };
+//   }
 
-  return { reduxStore: reduxStore.getState() };
-};
+//   return { reduxStore: reduxStore.getState() };
+// };
 
 export default VideoNextPage;

@@ -7,6 +7,7 @@ import { User, userConverter } from '../domain/User';
 import { setUserThunk } from '../store/appUser/setUserThunk';
 import { app, auth, database } from '../services/Firebase';
 import { Context } from '../Context';
+import { setAuthTokenOnRefresh } from '../utils/setAuthToken';
 
 interface StateProps {
   appUser: User;
@@ -23,7 +24,7 @@ interface DispatchProps {
 type Props = StateProps & PianoProviderProps & DispatchProps;
 
 export class UnconnectedFirebaseProvider extends React.Component<Props> {
-  componentDidMount() {
+  async componentDidMount() {
     const { setUser } = this.props;
 
     app.auth().onAuthStateChanged(async (user) => {
@@ -35,8 +36,10 @@ export class UnconnectedFirebaseProvider extends React.Component<Props> {
           .get();
         if (userData.data()) {
           const currentUser: User | undefined = userData.data();
-          if (currentUser) {
+          if (currentUser && auth.currentUser) {
             setUser(currentUser);
+            const token = await auth.currentUser.getIdToken();
+            Context.cookieService.setCookie('uat', token);
           }
         }
       } else {
@@ -50,6 +53,8 @@ export class UnconnectedFirebaseProvider extends React.Component<Props> {
         Context.apiService.setAuthToken(authToken);
       }
     });
+
+    Context.apiService.setAuthToken(Context.cookieService.getCookie('uat'));
   }
 
   render() {

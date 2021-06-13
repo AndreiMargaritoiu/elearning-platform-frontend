@@ -14,6 +14,9 @@ import { getMentorshipsThunk } from '../../store/mentoring/getMentorshipsThunk';
 import { getPlaylistsThunk } from '../../store/playlists/getPlaylistsThunk';
 import { getVideosThunk } from '../../store/videos/getVideosThunk';
 import { OthersProfilePage } from './OthersProfilePage';
+import { SearchUsersRequest } from '../../domain/SearchUsersRequest';
+import { getUsersThunk } from '../../store/users/getUsersThunks';
+import { getUserThunk } from '../../store/user/getUserThunk';
 
 export interface OthersProfilePageProps {
   appUser: User;
@@ -28,6 +31,8 @@ export interface OthersProfileDispatchProps {
   getPlaylists(request: SearchPlaylistsRequest): void;
   getVideos(request: SearchVideosRequest): void;
   getMentorships(request: SearchMentorshipsRequest): void;
+  getUsers(request: SearchUsersRequest): void;
+  getUser(userId: string): any;
   updateAppUser(userId: string, request: UpdateUserRequest): void;
 }
 
@@ -51,6 +56,8 @@ const mapDispatch: OthersProfileDispatchProps = {
   getPlaylists: getPlaylistsThunk,
   getVideos: getVideosThunk,
   getMentorships: getMentorshipsThunk,
+  getUsers: getUsersThunk,
+  getUser: getUserThunk,
   updateAppUser: updateAppUserThunk,
 };
 

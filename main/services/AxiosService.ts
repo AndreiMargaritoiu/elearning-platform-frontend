@@ -4,6 +4,7 @@ import axios, {
   AxiosRequestConfig,
   AxiosResponse,
 } from 'axios';
+import { auth } from './Firebase';
 
 export class AxiosService {
   private _apiConfig: AxiosRequestConfig;
@@ -12,6 +13,7 @@ export class AxiosService {
   constructor(apiConfig: AxiosRequestConfig) {
     this._apiConfig = apiConfig;
     this._AXIOS = createAxiosInstance(this._apiConfig);
+    this._AXIOS.defaults.headers.common.Authorization = auth.currentUser?.getIdToken();
   }
 
   async get<P, R>(

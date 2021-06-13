@@ -9,17 +9,13 @@ import {
 } from './trackingActions';
 import { Tracking } from '../../domain/Tracking';
 
-export const getTrackedItemsThunk = (userId: string) => async (
+export const getTrackedItemsThunk = () => async (
   dispatch: Dispatch,
 ): Promise<Result<void, string>> => {
   try {
     dispatch(getTrackedItemsAction());
 
-    const tracketItems: Tracking[] = await Context.apiService.getTrackedItems(
-      userId,
-    );
-
-    console.log(tracketItems);
+    const tracketItems: Tracking[] = await Context.apiService.getTrackedItems();
 
     dispatch(getTrackedItemsSuccessAction(tracketItems));
 

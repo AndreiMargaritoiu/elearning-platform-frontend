@@ -49,10 +49,10 @@ export interface ApiService {
   updateUser(userId: string, request: UpdateUserRequest): Promise<User>;
 
   saveTrackedItem(request: TrackItemRequest): Promise<Tracking>;
-  getTrackedItems(userId: string): Promise<Tracking[]>;
+  getTrackedItems(): Promise<Tracking[]>;
 
   sendInquiry(request: SendInquiryRequest): Promise<Inquiry>;
-  getMyInquiries(userId: string): Promise<Inquiry[]>;
+  getMyInquiries(): Promise<Inquiry[]>;
   readInquiries(inquiries: string[]): Promise<void>;
 
   getAllWorkshops(): Promise<Workshop[]>;

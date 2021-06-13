@@ -66,7 +66,6 @@ const AddVideoPage: FC<AddVideoPageProps> = (props) => {
         videoUrl,
       };
     }
-    console.log(addVideoRequest);
     const res = await addVideo(addVideoRequest);
     if (res.isOk) {
       const result: SweetAlertResult = await Context.alertService.fire({

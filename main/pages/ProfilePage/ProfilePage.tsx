@@ -24,6 +24,10 @@ import {
   FollowingListModal,
   FollowingListModalState,
 } from '../../components/ProfilePage/FollowingList/FollowingListModal';
+import { SearchPlaylistsRequest } from '../../domain/SearchPlaylistsRequest';
+import { SearchVideosRequest } from '../../domain/SearchVideosRequest';
+import { SearchMentorshipsRequest } from '../../domain/SearchMentorshipsRequest';
+import { SearchUsersRequest } from '../../domain/SearchUsersRequest';
 
 const ProfilePage: FC<ProfilePageProps & ProfileDispatchProps> = (props) => {
   const {
@@ -42,6 +46,7 @@ const ProfilePage: FC<ProfilePageProps & ProfileDispatchProps> = (props) => {
     deleteMentorship,
     updateMentorship,
     updateAppUser,
+    getUsers,
   } = props;
 
   const [isPlaylistPage, setPlaylistPage] = useState<boolean>(true);
@@ -51,14 +56,24 @@ const ProfilePage: FC<ProfilePageProps & ProfileDispatchProps> = (props) => {
     isOpen: false,
   });
 
-  console.log('>>', users);
-
-  // useEffect(() => {
-  //   const getPlaylistsRequest: GetPlaylistsRequest = {};
-  //   getPlaylists(getPlaylistsRequest);
-  //   const getVideosRequest: GetPlaylistsRequest = {};
-  //   getVideos(getVideosRequest);
-  // });
+  useEffect(() => {
+    const getPlaylistsRequest = SearchPlaylistsRequest.create({
+      uid: appUser.uid,
+    });
+    getPlaylists(getPlaylistsRequest);
+    const getVideosRequest = SearchVideosRequest.create({
+      uid: appUser.uid,
+    });
+    getVideos(getVideosRequest);
+    const getMentorshipsReq = SearchMentorshipsRequest.create({
+      uid: appUser.uid,
+    });
+    getMentorships(getMentorshipsReq);
+    const getUsersReq = SearchUsersRequest.create({
+      followedBy: appUser.uid,
+    });
+    getUsers(getUsersReq);
+  }, []);
 
   const setPage = (page?: string) => {
     switch (page) {
