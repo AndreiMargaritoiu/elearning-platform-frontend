@@ -13,8 +13,9 @@ import { Context } from '../main/Context';
 import { HttpApiService } from '../main/services/HttpApiService';
 import { AppState } from '../main/store/AppState';
 import { MomentService } from '../main/services/MomentService';
-import { auth } from '../main/services/Firebase';
 import { CookieAPI } from '../main/services/CookieAPI';
+import { User } from '../main/domain/User';
+import { setUserThunk } from '../main/store/appUser/setUserThunk';
 
 Context.initialize({
   alertService: swal,

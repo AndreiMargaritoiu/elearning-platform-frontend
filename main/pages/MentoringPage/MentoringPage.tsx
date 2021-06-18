@@ -1,5 +1,6 @@
 import { Button } from '@material-ui/core';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 import React, { FC, useEffect, useState } from 'react';
 import Media from 'react-media';
 
@@ -42,9 +43,16 @@ const MentoringPage: FC<MentoringPageProps & MentoringDispatchProps> = (
   } = props;
 
   const [chosenFilter, setChosenFilter] = useState<string>('All');
+  const router = useRouter();
 
   useEffect(() => {
-    const searchMentorshipReq = SearchMentorshipsRequest.create();
+    const formattedQuery = SearchMentorshipsRequest.extractDataFromQuery(
+      router.query,
+    );
+    if (formattedQuery.category) {
+      setChosenFilter(formattedQuery.category);
+    }
+    const searchMentorshipReq = SearchMentorshipsRequest.create(formattedQuery);
     getMentorships(searchMentorshipReq);
     const searchUsersReq = SearchUsersRequest.create();
     getUsers(searchUsersReq);
@@ -60,6 +68,10 @@ const MentoringPage: FC<MentoringPageProps & MentoringDispatchProps> = (
   const handlePredefinedFilter = (filterItem: string) => {
     setChosenFilter(filterItem);
     if (filterItem !== 'All') {
+      const newPath: string = `${Context.BASE_PATH}/mentoring?category=${filterItem}`;
+      router.push(newPath, newPath, {
+        shallow: true,
+      });
       const request: SearchMentorshipsRequest = {
         category: [filterItem],
       };
@@ -96,8 +108,9 @@ const MentoringPage: FC<MentoringPageProps & MentoringDispatchProps> = (
         Inspire others, get inspired
       </StyledMentoringOwnerTitle>
       <StyledFiltersBar>
-        {predefinedFilters.map((filterItem) => (
+        {predefinedFilters.map((filterItem, index) => (
           <StyledFilterItem
+            key={`filter-item-${index}`}
             active={chosenFilter === filterItem}
             onClick={() => handlePredefinedFilter(filterItem)}
           >
@@ -110,8 +123,8 @@ const MentoringPage: FC<MentoringPageProps & MentoringDispatchProps> = (
           .filter(
             (mentorship: Mentorship) => mentorship.mentorId !== appUser.uid,
           )
-          .map((mentorship: Mentorship) => (
-            <StyledMentoringCard>
+          .map((mentorship, index) => (
+            <StyledMentoringCard key={`mentorship-card-${index}`}>
               <Link
                 href={`${Context.BASE_PATH}/profiles/[id]`}
                 as={`${Context.BASE_PATH}/profiles/${mentorship.mentorId}`}

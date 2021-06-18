@@ -63,8 +63,11 @@ export const UsersMentorshipsFeed: React.FC<UsersMentorshipsFeedProps> = (
           />
         )}
       </>
-      {mentorships.map((mentorship: Mentorship) => (
-        <StyledProfileContentCard className="mentorship-card">
+      {mentorships.map((mentorship, index) => (
+        <StyledProfileContentCard
+          key={`profile-mentroship-item-${index}`}
+          className="mentorship-card"
+        >
           <StyledProfileContentCardDetails>
             <StyledProfileContentTitle>
               {mentorship.description}

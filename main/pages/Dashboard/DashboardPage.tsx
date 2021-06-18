@@ -56,8 +56,8 @@ const DashboardPage: FC<DashboardPageProps & DashboardDispatchProps> = (
   return (
     <StyledDashboard>
       <Grid container spacing={3}>
-        {videos.map((video: Video) => (
-          <Grid item xs={12} sm={6} md={4}>
+        {videos.map((video, index) => (
+          <Grid item xs={12} sm={6} md={4} key={`video-card-${index}`}>
             <StyledVideoCard>
               <Link
                 href={`${Context.BASE_PATH}/profiles/[id]`}

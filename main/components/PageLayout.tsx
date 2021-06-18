@@ -1,13 +1,11 @@
 import React from 'react';
+import { connect } from 'react-redux';
 
 import { User } from '../domain/User';
 import { Header } from '../components/Header/Header';
 import { AppState } from '../store/AppState';
-import { connect } from 'react-redux';
 import { Inquiry } from '../domain/Inquiry';
 import { getMyInquiriesThunk } from '../store/inquiries/getMyInquiriesThunk';
-import { auth } from '../services/Firebase';
-import { Context } from '../Context';
 
 export interface LayoutStateProps {
   appUser: User;

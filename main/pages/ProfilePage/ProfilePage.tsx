@@ -1,8 +1,8 @@
 import React, { FC, useEffect, useState } from 'react';
+
 import PlaylistPlayIcon from '@material-ui/icons/PlaylistPlay';
 import VideoLibraryIcon from '@material-ui/icons/VideoLibrary';
 import PeopleOutlineIcon from '@material-ui/icons/PeopleOutline';
-
 import { ProfileDispatchProps, ProfilePageProps } from './ProfilePageContainer';
 import {
   StyledProfileContentPicker,
@@ -28,6 +28,14 @@ import { SearchPlaylistsRequest } from '../../domain/SearchPlaylistsRequest';
 import { SearchVideosRequest } from '../../domain/SearchVideosRequest';
 import { SearchMentorshipsRequest } from '../../domain/SearchMentorshipsRequest';
 import { SearchUsersRequest } from '../../domain/SearchUsersRequest';
+import { Context } from '../../Context';
+import { useRouter } from 'next/router';
+
+export enum PageOptions {
+  PLAYLIST = 'playlist',
+  VIDEOS = 'video',
+  MENTORSHIPS = 'mentorships',
+}
 
 const ProfilePage: FC<ProfilePageProps & ProfileDispatchProps> = (props) => {
   const {
@@ -49,17 +57,21 @@ const ProfilePage: FC<ProfilePageProps & ProfileDispatchProps> = (props) => {
     getUsers,
   } = props;
 
-  const [isPlaylistPage, setPlaylistPage] = useState<boolean>(true);
-  const [isVideoPage, setVideoPage] = useState<boolean>(false);
-  const [isMentoringPage, setMentoringPage] = useState<boolean>(false);
+  const [currentPage, setCurrentPage] = useState<string>(PageOptions.PLAYLIST);
   const [modalState, setModalState] = useState<FollowingListModalState>({
     isOpen: false,
   });
+  const router = useRouter();
 
   useEffect(() => {
+    if (router.query.page) {
+      setCurrentPage(router.query.page.toString());
+    }
     const getPlaylistsRequest = SearchPlaylistsRequest.create({
       uid: appUser.uid,
     });
+    console.log('>> ', appUser.uid);
+    console.log(getPlaylistsRequest);
     getPlaylists(getPlaylistsRequest);
     const getVideosRequest = SearchVideosRequest.create({
       uid: appUser.uid,
@@ -75,24 +87,14 @@ const ProfilePage: FC<ProfilePageProps & ProfileDispatchProps> = (props) => {
     getUsers(getUsersReq);
   }, []);
 
-  const setPage = (page?: string) => {
-    switch (page) {
-      case 'Playlists':
-        setPlaylistPage(true);
-        setVideoPage(false);
-        setMentoringPage(false);
-        break;
-      case 'Videos':
-        setPlaylistPage(false);
-        setVideoPage(true);
-        setMentoringPage(false);
-        break;
-      case 'Mentorships':
-        setPlaylistPage(false);
-        setVideoPage(false);
-        setMentoringPage(true);
-        break;
-    }
+  const setPage = (page: string) => {
+    setCurrentPage(page);
+    const newPath: string = `${Context.BASE_PATH}/me${
+      page === PageOptions.PLAYLIST ? '' : `?page=${page}`
+    }`;
+    router.push(newPath, newPath, {
+      shallow: true,
+    });
   };
 
   return (
@@ -141,28 +143,30 @@ const ProfilePage: FC<ProfilePageProps & ProfileDispatchProps> = (props) => {
       </StyledProfileDetails>
       <StyledProfileContentPicker>
         <StyledProfilePickerElement
-          className={isPlaylistPage ? 'is-selected' : ''}
-          onClick={() => setPage('Playlists')}
+          className={currentPage === PageOptions.PLAYLIST ? 'is-selected' : ''}
+          onClick={() => setPage(PageOptions.PLAYLIST)}
         >
           <PlaylistPlayIcon />
           <StyledProfilePickerLabel>Playlists</StyledProfilePickerLabel>
         </StyledProfilePickerElement>
         <StyledProfilePickerElement
-          className={isVideoPage ? 'is-selected' : ''}
-          onClick={() => setPage('Videos')}
+          className={currentPage === PageOptions.VIDEOS ? 'is-selected' : ''}
+          onClick={() => setPage(PageOptions.VIDEOS)}
         >
           <VideoLibraryIcon />
           <StyledProfilePickerLabel>Videos</StyledProfilePickerLabel>
         </StyledProfilePickerElement>
         <StyledProfilePickerElement
-          className={isMentoringPage ? 'is-selected' : ''}
-          onClick={() => setPage('Mentorships')}
+          className={
+            currentPage === PageOptions.MENTORSHIPS ? 'is-selected' : ''
+          }
+          onClick={() => setPage(PageOptions.MENTORSHIPS)}
         >
           <PeopleOutlineIcon />
           <StyledProfilePickerLabel>Mentorships</StyledProfilePickerLabel>
         </StyledProfilePickerElement>
       </StyledProfileContentPicker>
-      {isPlaylistPage && (
+      {currentPage === PageOptions.PLAYLIST && (
         <PersonalPlaylistsFeed
           playlists={playlists}
           videos={videos}
@@ -170,14 +174,14 @@ const ProfilePage: FC<ProfilePageProps & ProfileDispatchProps> = (props) => {
           updatePlaylist={updatePlaylist}
         />
       )}
-      {isVideoPage && (
+      {currentPage === PageOptions.VIDEOS && (
         <PersonalVideosFeed
           videos={videos}
           deleteVideo={deleteVideo}
           updateVideo={updateVideo}
         />
       )}
-      {isMentoringPage && (
+      {currentPage === PageOptions.MENTORSHIPS && (
         <UsersMentorshipsFeed
           mentorships={mentorships}
           deleteMentorship={deleteMentorship}

@@ -1,10 +1,10 @@
 import { Grid } from '@material-ui/core';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 import React, { FC, useEffect, useState } from 'react';
 
 import { Context } from '../../Context';
 import { FilterCategories } from '../../domain/FilterCategories';
-import { Playlist } from '../../domain/Playlist';
 import { SearchPlaylistsRequest } from '../../domain/SearchPlaylistsRequest';
 import { SearchUsersRequest } from '../../domain/SearchUsersRequest';
 import { User } from '../../domain/User';
@@ -38,11 +38,18 @@ const PlaylistsFeedPage: FC<
   const { playlists, users, getPlaylists, getUsers } = props;
 
   const [chosenFilter, setChosenFilter] = useState<string>('All');
+  const router = useRouter();
 
   useEffect(() => {
+    const formattedQuery = SearchPlaylistsRequest.extractDataFromQuery(
+      router.query,
+    );
+    if (formattedQuery.category) {
+      setChosenFilter(formattedQuery.category);
+    }
     const getUsersRequest = SearchUsersRequest.create();
     getUsers(getUsersRequest);
-    const getPlaylistsReq = SearchPlaylistsRequest.create();
+    const getPlaylistsReq = SearchPlaylistsRequest.create(formattedQuery);
     getPlaylists(getPlaylistsReq);
   }, []);
 
@@ -56,6 +63,10 @@ const PlaylistsFeedPage: FC<
   const handlePredefinedFilter = (filterItem: string) => {
     setChosenFilter(filterItem);
     if (filterItem !== 'All') {
+      const newPath: string = `${Context.BASE_PATH}/playlists?category=${filterItem}`;
+      router.push(newPath, newPath, {
+        shallow: true,
+      });
       const request: SearchPlaylistsRequest = {
         category: filterItem,
       };
@@ -85,8 +96,9 @@ const PlaylistsFeedPage: FC<
         Learn more, discover more
       </StyledPlaylistFeedTitle>
       <StyledFiltersBar>
-        {predefinedFilters.map((filterItem) => (
+        {predefinedFilters.map((filterItem, index) => (
           <StyledFilterItem
+            key={`filter-item-${index}`}
             active={chosenFilter === filterItem}
             onClick={() => handlePredefinedFilter(filterItem)}
           >
@@ -95,8 +107,8 @@ const PlaylistsFeedPage: FC<
         ))}
       </StyledFiltersBar>
       <Grid container spacing={3}>
-        {playlists.map((playlist: Playlist) => (
-          <Grid item xs={12} sm={6} md={4}>
+        {playlists.map((playlist, index) => (
+          <Grid item xs={12} sm={6} md={4} key={`playlist-card-${index}`}>
             <StyledPlaylistCard>
               <Link
                 href={`${Context.BASE_PATH}/profiles/[id]`}

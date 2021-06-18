@@ -56,8 +56,8 @@ export const PersonalVideosFeed: React.FC<PersonalVideosFeedProps> = (
           />
         )}
       </>
-      {videos.map((video: Video) => (
-        <StyledProfileContentCard>
+      {videos.map((video, index) => (
+        <StyledProfileContentCard key={`profile-video-item-${index}`}>
           <StyledProfileContentThumbnail
             imgSrc={video.thumbnailUrl || ''}
             role="img"

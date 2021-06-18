@@ -61,8 +61,8 @@ export const FollowingListModal: React.FC<FollowingListModalProps> = (
       <FollowingModalContainer>
         <FollowingModalHeaderContainer>Following</FollowingModalHeaderContainer>
         <FollowingModalBodyContainer>
-          {followingList.map((item) => (
-            <FollowingCard>
+          {followingList.map((item, index) => (
+            <FollowingCard key={`following-card-${index}`}>
               <StyledFollowingProfileImage
                 imgSrc={item.photoUrl || ''}
                 role="img"

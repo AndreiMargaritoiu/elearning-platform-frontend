@@ -64,8 +64,8 @@ export const PersonalPlaylistsFeed: React.FC<PersonalPlaylistsFeedProps> = (
           />
         )}
       </>
-      {playlists.map((playlist: Playlist) => (
-        <StyledProfileContentCard>
+      {playlists.map((playlist, index) => (
+        <StyledProfileContentCard key={`profile-playlist-card-${index}`}>
           <StyledProfilePlaylistThumbnailDiv>
             <StyledProfileContentThumbnail
               imgSrc={playlist.thumbnailUrl || ''}

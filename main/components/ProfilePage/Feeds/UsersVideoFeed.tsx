@@ -23,8 +23,9 @@ export const UsersVideosFeed: React.FC<UsersVideosFeedProps> = (
 
   return (
     <StyledProfileContent>
-      {videos.map((video: Video) => (
+      {videos.map((video, index) => (
         <Link
+          key={`users-video-item-${index}`}
           href={`${Context.BASE_PATH}/videos/[id]`}
           as={`${Context.BASE_PATH}/videos/${video.id}`}
         >

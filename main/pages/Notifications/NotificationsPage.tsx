@@ -36,14 +36,14 @@ const NotificationsPage: FC<
   return (
     <StyledNotificationsPage>
       <StyledNotificationsContainer>
-        {inquiries.map((item) => (
-          <>
+        {inquiries.map((item, index) => (
+          <div key={`notification-item-${index}`}>
             <StyledNotificationText>
               {item.inquirerEmail} wants to know more details about your
               mentorship offer(s)
             </StyledNotificationText>
             <SeparatorStyles />
-          </>
+          </div>
         ))}
       </StyledNotificationsContainer>
     </StyledNotificationsPage>

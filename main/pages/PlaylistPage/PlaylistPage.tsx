@@ -134,8 +134,9 @@ const PlaylistPage: FC<PlaylistPageProps & PlaylistDispatchProps> = (props) => {
             <StyledNextVideosContainer height={videoPlayerHeight}>
               {videos
                 .filter((item) => item.id !== currentVideo.id)
-                .map((item) => (
+                .map((item, index) => (
                   <StyledNextVideoCard
+                    key={`next-video-item-${index}`}
                     onClick={() => setCurrentVideoId(item.id)}
                   >
                     <StyledNextImageContainer>

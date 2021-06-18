@@ -29,7 +29,6 @@ import {
 import { Workshop } from '../../domain/Workshop';
 import { useRouter } from 'next/router';
 import { SearchVideosRequest } from '../../domain/SearchVideosRequest';
-import { setAuthTokenOnRefresh } from '../../utils/setAuthToken';
 import { SearchUsersRequest } from '../../domain/SearchUsersRequest';
 
 const DiscoverPage: FC<DiscoverPageProps & DiscoverPageDispatchProps> = (
@@ -57,10 +56,6 @@ const DiscoverPage: FC<DiscoverPageProps & DiscoverPageDispatchProps> = (
     const getUsersRequest = SearchUsersRequest.create();
     getUsers(getUsersRequest);
     getWorkshops();
-
-    return () => {
-      setAuthTokenOnRefresh();
-    };
   }, []);
 
   const displayedUser = (userId: string): string => {
@@ -122,7 +117,9 @@ const DiscoverPage: FC<DiscoverPageProps & DiscoverPageDispatchProps> = (
         >
           {workshops.map((workshop, index) => {
             return (
-              <StyledDiscoverContentCard key={index}>
+              <StyledDiscoverContentCard
+                key={`discover-card-workshop-${index}`}
+              >
                 <StyledDiscoverWorkshopDescription>
                   {workshop.description}
                 </StyledDiscoverWorkshopDescription>
@@ -185,10 +182,11 @@ const DiscoverPage: FC<DiscoverPageProps & DiscoverPageDispatchProps> = (
           {videos.map((currentVideo, index) => {
             return (
               <Link
+                key={`discover-card-video-${index}`}
                 href={`${Context.BASE_PATH}/videos/[id]`}
                 as={`${Context.BASE_PATH}/videos/${currentVideo.id}`}
               >
-                <StyledDiscoverContentCard key={index}>
+                <StyledDiscoverContentCard>
                   <StyledDiscoverVideoTitle>
                     {currentVideo.title}
                   </StyledDiscoverVideoTitle>

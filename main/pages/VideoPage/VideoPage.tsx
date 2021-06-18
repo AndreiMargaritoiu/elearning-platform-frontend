@@ -118,8 +118,9 @@ const VideoPage: FC<VideoPageProps & VideoPageDispatchProps> = (props) => {
         <Grid item xs={12} sm={12} md={4}>
           <StyledWatchNextLabel>Watch Next</StyledWatchNextLabel>
           <StyledNextVideosContainer height={videoPlayerHeight}>
-            {videos.map((item) => (
+            {videos.map((item, index) => (
               <Link
+                key={`video-item-${index}`}
                 href={`${Context.BASE_PATH}/videos/[id]`}
                 as={`${Context.BASE_PATH}/videos/${item.id}`}
                 passHref

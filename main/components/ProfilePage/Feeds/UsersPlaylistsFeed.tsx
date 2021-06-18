@@ -25,8 +25,9 @@ export const UsersPlaylistsFeed: React.FC<UsersPlaylistsFeedProps> = (
 
   return (
     <StyledProfileContent>
-      {playlists.map((playlist: Playlist) => (
+      {playlists.map((playlist, index) => (
         <Link
+          key={`users-playlist-item-${index}`}
           href={`${Context.BASE_PATH}/playlists/[id]`}
           as={`${Context.BASE_PATH}/playlists/${playlist.id}`}
         >
