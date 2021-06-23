@@ -15,7 +15,7 @@ export interface AppState {
   playlist: Playlist;
   playlists: Playlist[];
   mentorships: Mentorship[];
-  inquiries: Inquiry[];
   workshops: Workshop[];
   trackings: Tracking[];
+  inquiries: Inquiry[];
 }

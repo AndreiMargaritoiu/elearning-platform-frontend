@@ -11,9 +11,9 @@ import { usersReducer } from './users/usersReducer';
 import { videoReducer } from './video/videoReducer';
 import { playlistReducer } from './playlist/playlistReducer';
 import { userReducer } from './user/userReducer';
-import { inquiriesReducer } from './inquiries/inquiriesReducer';
 import { workshopsReducer } from './workshops/workshopsReducer';
 import { trackingReducer } from './tracking/trackingReducer';
+import { inquiriesReducer } from './inquiries/inquiriesReducers';
 
 const rootReducer: Reducer<AppState> = combineReducers<AppState>({
   appUser: appUserReducer,
@@ -24,9 +24,9 @@ const rootReducer: Reducer<AppState> = combineReducers<AppState>({
   playlist: playlistReducer,
   playlists: playlistsReducer,
   mentorships: mentorshipsReducer,
-  inquiries: inquiriesReducer,
   workshops: workshopsReducer,
   trackings: trackingReducer,
+  inquiries: inquiriesReducer,
 });
 
 export const initializeStore = (initialState?: AppState) =>

@@ -6,15 +6,16 @@ import {
 import {
   GetInquiriesSuccessAction,
   InquiriesActionType,
+  ReadInquiriesAction,
   ReadInquiriesSuccessAction,
 } from './inquiriesActions';
+
+export const initialState: Inquiry[] = [];
 
 type ActionType =
   | SetInitialStateAction
   | GetInquiriesSuccessAction
   | ReadInquiriesSuccessAction;
-
-export const initialState: Inquiry[] = [];
 
 export const inquiriesReducer = (
   inquiriesState = initialState,

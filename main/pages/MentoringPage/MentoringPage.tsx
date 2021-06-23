@@ -39,7 +39,6 @@ const MentoringPage: FC<MentoringPageProps & MentoringDispatchProps> = (
     users,
     getMentorships,
     getUsers,
-    sendInquiry,
   } = props;
 
   const [chosenFilter, setChosenFilter] = useState<string>('All');
@@ -85,7 +84,7 @@ const MentoringPage: FC<MentoringPageProps & MentoringDispatchProps> = (
     const request: SendInquiryRequest = {
       mentorId,
     };
-    sendInquiry(request);
+    // sendInquiry(request);
   };
 
   const displayedUser = (userId: string): string => {
