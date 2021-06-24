@@ -11,6 +11,7 @@ export enum InquiriesActionType {
   READ_INQUIRIES_SUCCESS = 'READ_INQUIRIES_SUCCESS',
   READ_INQUIRIES_ERROR = 'READ_INQUIRIES_ERROR',
 }
+
 export interface GetInquiriesAction extends Action {
   type: InquiriesActionType.GET_INQUIRIES;
 }
