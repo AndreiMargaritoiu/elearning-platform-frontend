@@ -4,6 +4,7 @@ interface Payload {
   readonly uid?: string;
   readonly playlistId?: string;
   readonly trending?: boolean;
+  readonly followers?: boolean;
 }
 
 export interface SearchParams {
@@ -20,6 +21,7 @@ export class SearchVideosRequest {
       uid: query.uid && (query.uid as string),
       playlistId: query.playlistId && (query.playlistId as string),
       trending: query.trending && (query.trending as string),
+      followers: query.followers && (query.followers as string),
     };
     return formattedQuery;
   }
@@ -30,6 +32,7 @@ export class SearchVideosRequest {
         uid: search.uid,
         playlistId: search.playlistId,
         trending: search.trending,
+        followers: search.followers,
       },
       { skipNull: true },
     );
@@ -38,8 +41,9 @@ export class SearchVideosRequest {
   readonly uid?: string;
   readonly playlistId?: string;
   readonly trending?: boolean;
+  readonly followers?: boolean;
 
-  private constructor({ uid, playlistId, trending }: Payload) {
+  private constructor({ uid, playlistId, trending, followers }: Payload) {
     if (uid) {
       this.uid = uid;
     }
@@ -50,6 +54,10 @@ export class SearchVideosRequest {
 
     if (trending) {
       this.trending = trending;
+    }
+
+    if (followers) {
+      this.followers = followers;
     }
   }
 }

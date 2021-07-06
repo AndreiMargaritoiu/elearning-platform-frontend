@@ -2,8 +2,8 @@ import { NextPage, NextPageContext } from 'next';
 import Head from 'next/head';
 import React from 'react';
 import { Store } from 'redux';
-import { SearchUsersRequest } from '../../main/domain/SearchUsersRequest';
 
+import { SearchUsersRequest } from '../../main/domain/SearchUsersRequest';
 import { SearchVideosRequest } from '../../main/domain/SearchVideosRequest';
 import { DiscoverPageContainer } from '../../main/pages/Discover/DiscoverPageContainer';
 import { AppState } from '../../main/store/AppState';

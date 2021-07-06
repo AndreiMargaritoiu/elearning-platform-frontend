@@ -1,5 +1,6 @@
 import Modal from 'react-modal';
-import React, { useState } from 'react';
+import React from 'react';
+import { Button } from '@material-ui/core';
 
 import { UpdateUserRequest, User } from '../../../domain/User';
 import {
@@ -10,7 +11,6 @@ import {
   modalStyles,
   StyledFollowingProfileImage,
 } from './FollowingListModalStyles';
-import { Button } from '@material-ui/core';
 
 export interface FollowingListModalState {
   isOpen: boolean;

@@ -1,4 +1,3 @@
-import { useReducer } from 'react';
 import { Workshop } from '../../domain/Workshop';
 import {
   InitialStateActionType,

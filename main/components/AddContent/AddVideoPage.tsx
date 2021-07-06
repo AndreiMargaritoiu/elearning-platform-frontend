@@ -69,7 +69,8 @@ const AddVideoPage: FC<AddVideoPageProps> = (props) => {
     const res = await addVideo(addVideoRequest);
     if (res.isOk) {
       const result: SweetAlertResult = await Context.alertService.fire({
-        text: 'User has been added successfully',
+        text: 'Video has been added successfully',
+        icon: 'success',
       });
 
       if (!result.dismiss) {
@@ -81,10 +82,13 @@ const AddVideoPage: FC<AddVideoPageProps> = (props) => {
           title: '',
           searchIndex: [],
         });
+        setImage(undefined);
+        setVideo(undefined);
       }
     } else {
       await Context.alertService.fire({
         text: 'An error has occured',
+        icon: 'error',
       });
     }
   };

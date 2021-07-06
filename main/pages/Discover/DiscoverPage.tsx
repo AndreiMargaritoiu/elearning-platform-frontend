@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import React, { FC, useEffect } from 'react';
+import { useRouter } from 'next/router';
 import Carousel from 'react-multi-carousel';
 import LocationOnIcon from '@material-ui/icons/LocationOn';
 import ScheduleIcon from '@material-ui/icons/Schedule';
@@ -27,7 +28,6 @@ import {
   StyledEventFullLabel,
 } from './DiscoverPageStyles';
 import { Workshop } from '../../domain/Workshop';
-import { useRouter } from 'next/router';
 import { SearchVideosRequest } from '../../domain/SearchVideosRequest';
 import { SearchUsersRequest } from '../../domain/SearchUsersRequest';
 

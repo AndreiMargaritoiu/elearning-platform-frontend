@@ -1,10 +1,10 @@
 import React from 'react';
 import { connect } from 'react-redux';
+
 import { AddMentorshipRequest } from '../../domain/Mentorship';
 import { AddPlaylistRequest } from '../../domain/Playlist';
 import { SearchVideosRequest } from '../../domain/SearchVideosRequest';
 import { User } from '../../domain/User';
-
 import { AddVideoRequest, Video } from '../../domain/Video';
 import { AddWorkshopRequest } from '../../domain/Workshop';
 import { AppState } from '../../store/AppState';

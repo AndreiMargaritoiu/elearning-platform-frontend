@@ -2,7 +2,6 @@ import React, { FC, useEffect } from 'react';
 import Grid from '@material-ui/core/Grid';
 import Link from 'next/link';
 
-import { Video } from '../../domain/Video';
 import {
   DashboardDispatchProps,
   DashboardPageProps,
@@ -11,9 +10,7 @@ import {
   StyledDashboard,
   StyledVideoCard,
   StyledVideoCardContentDiv,
-  StyledVideoCardDescription,
   StyledVideoCardThumbnail,
-  StyledVideoCardTitle,
 } from './DashboardPageStyles';
 import { Context } from '../../Context';
 import { User } from '../../domain/User';
@@ -35,7 +32,9 @@ const DashboardPage: FC<DashboardPageProps & DashboardDispatchProps> = (
   useEffect(() => {
     const getUsersRequest = SearchUsersRequest.create();
     getUsers(getUsersRequest);
-    const getVideosRequest = SearchVideosRequest.create();
+    const getVideosRequest = SearchVideosRequest.create({
+      followers: true,
+    });
     getVideos(getVideosRequest);
   }, []);
 

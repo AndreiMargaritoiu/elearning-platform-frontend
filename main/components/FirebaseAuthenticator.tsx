@@ -40,6 +40,7 @@ export class UnconnectedFirebaseProvider extends React.Component<Props> {
             setUser(currentUser);
             const token = await auth.currentUser.getIdToken();
             Context.cookieService.setCookie('uat', token);
+            Context.cookieService.setCookie('uid', currentUser.uid);
           }
         }
       } else {

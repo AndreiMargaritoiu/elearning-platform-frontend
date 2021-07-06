@@ -9,8 +9,8 @@ import {
 } from '@material-ui/core';
 import React, { FC, useState } from 'react';
 import { SweetAlertResult } from 'sweetalert2';
-import { Context } from '../../Context';
 
+import { Context } from '../../Context';
 import { FilterCategories } from '../../domain/FilterCategories';
 import { AddMentorshipRequest } from '../../domain/Mentorship';
 import {
@@ -38,6 +38,7 @@ const AddMentorshipPage: FC<AddMentorshipPageProps> = (props) => {
     if (res.isOk) {
       const result: SweetAlertResult = await Context.alertService.fire({
         text: 'Mentorship has been added successfully',
+        icon: 'success',
       });
 
       if (!result.dismiss) {
@@ -50,6 +51,7 @@ const AddMentorshipPage: FC<AddMentorshipPageProps> = (props) => {
     } else {
       await Context.alertService.fire({
         text: 'An error has occured',
+        icon: 'error',
       });
     }
   };

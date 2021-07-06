@@ -44,6 +44,7 @@ const ForgotPasswordPage = () => {
         .catch((error) => {
           Context.alertService.fire({
             text: error,
+            icon: 'error',
           });
         });
     }

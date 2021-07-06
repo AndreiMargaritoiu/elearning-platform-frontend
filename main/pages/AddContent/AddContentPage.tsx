@@ -21,6 +21,7 @@ import {
   StyledAddContentPickerElement,
 } from './AddContentPageStyles';
 import { SearchVideosRequest } from '../../domain/SearchVideosRequest';
+import { Context } from '../../Context';
 
 export enum PageOptions {
   MENTORSHIP = 'mentorship',
@@ -43,8 +44,11 @@ const AddContentPage: FC<AddContentPageProps & AddContentPageDispatchProps> = (
   } = props;
 
   useEffect(() => {
+    const userId: string = appUser.uid
+      ? appUser.uid
+      : Context.cookieService.getCookie('uid');
     const request = SearchVideosRequest.create({
-      uid: appUser.uid,
+      uid: userId,
     });
     getVideos(request);
   }, []);

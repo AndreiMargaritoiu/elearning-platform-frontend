@@ -2,8 +2,8 @@ import { NextPage, NextPageContext } from 'next';
 import Head from 'next/head';
 import React from 'react';
 import { Store } from 'redux';
-import { SearchMentorshipsRequest } from '../../main/domain/SearchMentorshipsRequest';
 
+import { SearchMentorshipsRequest } from '../../main/domain/SearchMentorshipsRequest';
 import { SearchPlaylistsRequest } from '../../main/domain/SearchPlaylistsRequest';
 import { SearchUsersRequest } from '../../main/domain/SearchUsersRequest';
 import { SearchVideosRequest } from '../../main/domain/SearchVideosRequest';
@@ -52,7 +52,7 @@ const OtherProfileNextPage: NextPage = () => {
 //   });
 //   const result3 = await getMentorshipsThunk(request3)(reduxStore.dispatch);
 
-  // const result4 = await getUserThunk(userId)(reduxStore.dispatch);
+// const result4 = await getUserThunk(userId)(reduxStore.dispatch);
 
 //   const request5 = SearchUsersRequest.create({
 //     followedBy: reduxStore.getState().appUser.uid,

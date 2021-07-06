@@ -66,7 +66,8 @@ const AddWorkshopPage: FC<AddWorkshopPageProps> = (props) => {
     const res = await addWorkshop(addWorkshopRequest);
     if (res.isOk) {
       const result: SweetAlertResult = await Context.alertService.fire({
-        text: 'Mentorship has been added successfully',
+        text: 'Workshop has been added successfully',
+        icon: 'success',
       });
 
       if (!result.dismiss) {
@@ -83,6 +84,7 @@ const AddWorkshopPage: FC<AddWorkshopPageProps> = (props) => {
     } else {
       await Context.alertService.fire({
         text: 'An error has occured',
+        icon: 'error',
       });
     }
   };

@@ -10,7 +10,6 @@ import {
 import { StyledDontHaveAnAccount, StyledLoginPage } from './LoginPageStyles';
 import { Context } from '../../Context';
 import { auth } from '../../services/Firebase';
-import { Warning } from '@material-ui/icons';
 
 export interface LoginFormValues {
   email: string;
@@ -57,6 +56,7 @@ const LoginPage = () => {
         .catch((error) => {
           Context.alertService.fire({
             text: error,
+            icon: 'error',
           });
         });
     }

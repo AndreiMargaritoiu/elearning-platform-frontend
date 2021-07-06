@@ -1,6 +1,6 @@
 import { NextRouter } from 'next/router';
-import { AlertService } from './domain/AlertService';
 
+import { AlertService } from './domain/AlertService';
 import { ApiService } from './domain/ApiService';
 import { CookieService } from './domain/CookieService';
 import { DateService } from './domain/DateService';

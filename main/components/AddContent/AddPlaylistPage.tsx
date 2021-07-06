@@ -69,6 +69,7 @@ const AddPlaylistPage: FC<AddPlaylistPageProps> = (props) => {
     if (res.isOk) {
       const result: SweetAlertResult = await Context.alertService.fire({
         text: 'Playlist has been added successfully',
+        icon: 'success',
       });
 
       if (!result.dismiss) {
@@ -85,6 +86,7 @@ const AddPlaylistPage: FC<AddPlaylistPageProps> = (props) => {
     } else {
       await Context.alertService.fire({
         text: 'An error has occured',
+        icon: 'error',
       });
     }
   };

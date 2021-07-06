@@ -1,8 +1,9 @@
 import React, { FC, useEffect, useState } from 'react';
-
+import { useRouter } from 'next/router';
 import PlaylistPlayIcon from '@material-ui/icons/PlaylistPlay';
 import VideoLibraryIcon from '@material-ui/icons/VideoLibrary';
 import PeopleOutlineIcon from '@material-ui/icons/PeopleOutline';
+
 import { ProfileDispatchProps, ProfilePageProps } from './ProfilePageContainer';
 import {
   StyledProfileContentPicker,
@@ -29,7 +30,6 @@ import { SearchVideosRequest } from '../../domain/SearchVideosRequest';
 import { SearchMentorshipsRequest } from '../../domain/SearchMentorshipsRequest';
 import { SearchUsersRequest } from '../../domain/SearchUsersRequest';
 import { Context } from '../../Context';
-import { useRouter } from 'next/router';
 
 export enum PageOptions {
   PLAYLIST = 'playlist',
@@ -64,25 +64,26 @@ const ProfilePage: FC<ProfilePageProps & ProfileDispatchProps> = (props) => {
   const router = useRouter();
 
   useEffect(() => {
+    const userId: string = appUser.uid
+      ? appUser.uid
+      : Context.cookieService.getCookie('uid');
     if (router.query.page) {
       setCurrentPage(router.query.page.toString());
     }
     const getPlaylistsRequest = SearchPlaylistsRequest.create({
-      uid: appUser.uid,
+      uid: userId,
     });
-    console.log('>> ', appUser.uid);
-    console.log(getPlaylistsRequest);
     getPlaylists(getPlaylistsRequest);
     const getVideosRequest = SearchVideosRequest.create({
-      uid: appUser.uid,
+      uid: userId,
     });
     getVideos(getVideosRequest);
     const getMentorshipsReq = SearchMentorshipsRequest.create({
-      uid: appUser.uid,
+      uid: userId,
     });
     getMentorships(getMentorshipsReq);
     const getUsersReq = SearchUsersRequest.create({
-      followedBy: appUser.uid,
+      followedBy: userId,
     });
     getUsers(getUsersReq);
   }, []);

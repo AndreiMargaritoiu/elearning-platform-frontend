@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { SendInquiryRequest } from '../../domain/Inquiry';
 
+import { SendInquiryRequest } from '../../domain/Inquiry';
 import { Mentorship } from '../../domain/Mentorship';
 import { SearchMentorshipsRequest } from '../../domain/SearchMentorshipsRequest';
 import { SearchUsersRequest } from '../../domain/SearchUsersRequest';

@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { SearchUsersRequest } from '../../domain/SearchUsersRequest';
 
+import { SearchUsersRequest } from '../../domain/SearchUsersRequest';
 import { SearchVideosRequest } from '../../domain/SearchVideosRequest';
 import { User } from '../../domain/User';
 import { Video } from '../../domain/Video';

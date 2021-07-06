@@ -88,6 +88,7 @@ const SignUpPage = () => {
         .catch((error) => {
           Context.alertService.fire({
             text: error,
+            icon: 'error',
           });
         });
     }

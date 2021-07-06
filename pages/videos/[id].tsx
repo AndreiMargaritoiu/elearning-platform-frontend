@@ -2,9 +2,9 @@ import { NextPage, NextPageContext } from 'next';
 import Head from 'next/head';
 import React from 'react';
 import { Store } from 'redux';
+
 import { SearchUsersRequest } from '../../main/domain/SearchUsersRequest';
 import { SearchVideosRequest } from '../../main/domain/SearchVideosRequest';
-
 import { VideoPageContainer } from '../../main/pages/VideoPage/VideoPageContainer';
 import { AppState } from '../../main/store/AppState';
 import { setInitialStateAction } from '../../main/store/setInitialStateAction';

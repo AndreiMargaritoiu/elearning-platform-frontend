@@ -83,7 +83,7 @@ export const NavigationBar: React.FC<NavigationProps> = (props) => {
 
   useEffect(() => {
     isMobile = window.innerWidth < 768;
-    // setInterval(() => getMyNotifications(appUser.uid), 60000*10);
+    // setInterval(() => getMyNotifications(appUser.uid), 60000 * 1);
   });
 
   useOnClickOutside(
@@ -112,6 +112,7 @@ export const NavigationBar: React.FC<NavigationProps> = (props) => {
 
   const handleLogout = () => {
     Context.cookieService.removeCookie('uat');
+    Context.cookieService.removeCookie('uid');
     auth
       .signOut()
       .then(() => {
@@ -129,7 +130,7 @@ export const NavigationBar: React.FC<NavigationProps> = (props) => {
       </NavButton>
       <Link href="/dashboard" as="/dashboard">
         <a>
-          <Logo src="/images/connect_logo.png" />
+          <Logo src="/images/log_el.jpg" />
         </a>
       </Link>
       <NavList
