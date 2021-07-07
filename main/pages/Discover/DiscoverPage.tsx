@@ -183,8 +183,8 @@ const DiscoverPage: FC<DiscoverPageProps & DiscoverPageDispatchProps> = (
             return (
               <Link
                 key={`discover-card-video-${index}`}
-                href={`${Context.BASE_PATH}/videos/[id]`}
-                as={`${Context.BASE_PATH}/videos/${currentVideo.id}`}
+                href={`${Context.BASE_PATH}/videos/[id]?fromTrending=true`}
+                as={`${Context.BASE_PATH}/videos/${currentVideo.id}?fromTrending=true`}
               >
                 <StyledDiscoverContentCard>
                   <StyledDiscoverVideoTitle>

@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useState } from 'react';
+import React, { FC, useEffect } from 'react';
 
 import {
   NotificationsPageProps,
@@ -16,7 +16,7 @@ const NotificationsPage: FC<
 > = (props) => {
   const { inquiries, getMyNotifications, readNotifications } = props;
 
-  const [unreadNotifications, setUnreadNotifications] = useState<string[]>([]);
+  const unreadNotifications: string[] = [];
 
   useEffect(() => {
     getMyNotifications();
@@ -25,13 +25,13 @@ const NotificationsPage: FC<
   useEffect(() => {
     inquiries.map((item) => {
       if (!item.read) {
-        setUnreadNotifications([...unreadNotifications, item.id]);
+        unreadNotifications.push(item.id);
       }
     });
     if (unreadNotifications.length > 0) {
       readNotifications(unreadNotifications);
     }
-  }, [inquiries]);
+  }, [inquiries.length]);
 
   return (
     <StyledNotificationsPage>

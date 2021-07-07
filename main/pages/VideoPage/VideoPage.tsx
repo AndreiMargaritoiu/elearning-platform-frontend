@@ -25,6 +25,7 @@ import { Context } from '../../Context';
 import { User } from '../../domain/User';
 import { TrackItemRequest } from '../../domain/Tracking';
 import { useRouter } from 'next/router';
+import { SearchVideosRequest } from '../../domain/SearchVideosRequest';
 
 const VideoPage: FC<VideoPageProps & VideoPageDispatchProps> = (props) => {
   const {
@@ -51,7 +52,10 @@ const VideoPage: FC<VideoPageProps & VideoPageDispatchProps> = (props) => {
       await getVideo(videoId);
     })().then(() => {
       getTrackedItems();
-      getVideos({});
+      const getVideosRequest: SearchVideosRequest = router.query.fromTrending
+        ? { trending: true }
+        : {};
+      getVideos(getVideosRequest);
       getUsers({});
     });
   }, []);
@@ -118,39 +122,43 @@ const VideoPage: FC<VideoPageProps & VideoPageDispatchProps> = (props) => {
         <Grid item xs={12} sm={12} md={4}>
           <StyledWatchNextLabel>Watch Next</StyledWatchNextLabel>
           <StyledNextVideosContainer height={videoPlayerHeight}>
-            {videos.map((item, index) => (
-              <Link
-                key={`video-item-${index}`}
-                href={`${Context.BASE_PATH}/videos/[id]`}
-                as={`${Context.BASE_PATH}/videos/${item.id}`}
-                passHref
-              >
-                <StyledNextVideoCard>
-                  <StyledNextImageContainer>
-                    <StyledNextEpisodeImageWrapper imgSrc={item.thumbnailUrl} />
-                  </StyledNextImageContainer>
-                  <StyledNextEpisodeDetails>
-                    <StyledNextEpisodeTitle>
-                      {item.title}
-                    </StyledNextEpisodeTitle>
-                    <StyledNextEpisodeDescription>
-                      {item.description}
-                    </StyledNextEpisodeDescription>
-                    <StyledVideoUserDiv>
-                      by
-                      <Link
-                        href={`${Context.BASE_PATH}/profiles/[id]`}
-                        as={`${Context.BASE_PATH}/profiles/${item.uid}`}
-                      >
-                        <StyledVideoAuthor>
-                          {displayedUser(item.uid)}
-                        </StyledVideoAuthor>
-                      </Link>
-                    </StyledVideoUserDiv>
-                  </StyledNextEpisodeDetails>
-                </StyledNextVideoCard>
-              </Link>
-            ))}
+            {videos
+              .filter((item) => item.id !== video.id)
+              .map((item, index) => (
+                <Link
+                  key={`video-item-${index}`}
+                  href={`${Context.BASE_PATH}/videos/[id]`}
+                  as={`${Context.BASE_PATH}/videos/${item.id}`}
+                  passHref
+                >
+                  <StyledNextVideoCard>
+                    <StyledNextImageContainer>
+                      <StyledNextEpisodeImageWrapper
+                        imgSrc={item.thumbnailUrl}
+                      />
+                    </StyledNextImageContainer>
+                    <StyledNextEpisodeDetails>
+                      <StyledNextEpisodeTitle>
+                        {item.title}
+                      </StyledNextEpisodeTitle>
+                      <StyledNextEpisodeDescription>
+                        {item.description}
+                      </StyledNextEpisodeDescription>
+                      <StyledVideoUserDiv>
+                        by
+                        <Link
+                          href={`${Context.BASE_PATH}/profiles/[id]`}
+                          as={`${Context.BASE_PATH}/profiles/${item.uid}`}
+                        >
+                          <StyledVideoAuthor>
+                            {displayedUser(item.uid)}
+                          </StyledVideoAuthor>
+                        </Link>
+                      </StyledVideoUserDiv>
+                    </StyledNextEpisodeDetails>
+                  </StyledNextVideoCard>
+                </Link>
+              ))}
           </StyledNextVideosContainer>
         </Grid>
       </Grid>
